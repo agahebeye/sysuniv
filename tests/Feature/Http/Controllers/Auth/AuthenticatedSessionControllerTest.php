@@ -16,10 +16,28 @@ it('sees a login page', function () {
     );
 });
 
-it('logs in users', function () {
+it('can authenticate users', function () {
     $user = User::factory()->createQuietly(['password' => 'password']);
-
     $response = post('/login', ['email' => $user->email, 'password' => 'password']);
     $this->assertAuthenticated();
     $response->assertRedirect(RouteServiceProvider::HOME);
 });
+
+it('can not authenticate users with invalid password', function () {
+    $user = User::factory()->createQuietly();
+    $response = post('/login', [
+        'email' => $user->email,
+        'password' => 'wrong-password',
+    ]);
+    $response->assertSessionHasErrors(['email']);
+    test()->assertGuest();
+});
+
+
+it('can log users out', function() {
+    $user = User::factory()->createQuietly(['password' => 'password']);
+    test()->actingAs($user, 'web');
+    post('/logout');
+    test()->assertGuest();
+});
+
