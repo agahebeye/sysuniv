@@ -1,22 +1,28 @@
+import { createApp, h } from "vue";
 
-import { createApp, h } from 'vue';
-import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue3';
+import {
+    App as InertiaApp,
+    plugin as InertiaPlugin,
+} from "@inertiajs/inertia-vue3";
 
-const app = document.getElementById('app');
- 
-const pages = import.meta.glob('./Pages/**/*.vue');
- 
+const app = document.getElementById("app");
+
+const pages = import.meta.glob("./pages/**/*.vue");
+
 createApp({
     render: () =>
         h(InertiaApp, {
             initialPage: JSON.parse(app.dataset.page),
-            resolveComponent: name => {
+            resolveComponent: async (name) => {
                 const importPage = pages[`./Pages/${name}.vue`];
                 if (!importPage) {
-                    throw new Error(`Unknown page ${name}. Is it located under Pages with a .vue extension?`);
+                    throw new Error(
+                        `Unknown page ${name}. Is it located under Pages with a .vue extension?`
+                    );
                 }
-                return importPage().then(module => module.default)
-            }
+                const module = await importPage();
+                return module.default;
+            },
         }),
 })
     .use(InertiaPlugin)

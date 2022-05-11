@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ESNext",
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "NodeNext",
+        "types": ["node", "vite/client"],
+        "baseUrl": "resouces/js",
+        "paths": {
+            "~": ["."],
+            "~/*": ["./*"]
+        }
+    }
+}
