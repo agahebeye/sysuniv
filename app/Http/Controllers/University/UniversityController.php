@@ -4,28 +4,39 @@ namespace App\Http\Controllers\University;
 
 use App\Http\Controllers\Controller;
 use App\Models\University;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class UniversityController extends Controller
 {
-    public function index(): \Inertia\Response {
+    public function index(): \Inertia\Response
+    {
         return Inertia::render('universities/index', [
             'universities' => University::with(['photo'])->get()
         ]);
     }
 
-    public function edit(University $university): \Inertia\Response {
+    public function edit(University $university): \Inertia\Response
+    {
         return Inertia::render('universities/edit', [
             'university' => $university
         ]);
     }
 
-    public function update(string $univId): \Inertia\Response {
-        $university = University::query()->find($univId);
+    public function update(University $university): \Illuminate\Http\RedirectResponse
+    {
 
-        return Inertia::render('universities/edit', [
-            'university' => $university
-        ]);
+        $data = request()->validate([
+            'nom' => ['sometimes'],
+            'email' => ['sometimes', 'email'],
+            'nif' => ['sometimes', 'min:10'],
+            'siteweb' => ['sometimes', 'url'],
+            'adresse' => ['sometimes', 'string']
+        ], request()->all());
+
+        $university->update($data);
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

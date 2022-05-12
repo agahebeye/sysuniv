@@ -34,3 +34,12 @@ it('can edit universities', function () {
                 ->where('university.id', $university->id)
         );
 });
+
+it('can update universities', function () {
+    $user = User::factory()->forRole()->createQuietly();
+    $university = University::factory()->createQuietly();
+    test()->actingAs($user);
+
+    $response = put(route('universities.update', $university->id));
+    dd($response->json())
+});
