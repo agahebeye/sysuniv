@@ -26,5 +26,11 @@ it('can edit universities', function () {
     $university = University::factory()->createQuietly();
     test()->actingAs($user);
     get(route('universities.edit', $university->id))
-        ->assertOk();
+        ->assertOk()
+        ->assertInertia(
+            fn (AssertableInertia $page) =>
+            $page->component('universities/edit')
+                ->has('university')
+                ->where('university.id', $university->id)
+        );
 });

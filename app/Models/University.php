@@ -14,6 +14,8 @@ class University extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $fillable = ['id'];
+
     protected static function booted()
     {
         static::creating(
