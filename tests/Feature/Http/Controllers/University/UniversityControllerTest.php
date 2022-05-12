@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\RoleStatus;
+use App\Models\Role;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
@@ -16,4 +18,9 @@ it('can see universities page', function () {
             $page->component('universities/index')
                 ->count('universities', 0)
         );
+});
+
+it('updates universities', function () {
+    $user = User::factory()->create(['role_id' => 1]);
+    dd($user->load('role')->toArray());
 });

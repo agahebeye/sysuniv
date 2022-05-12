@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nif');
             $table->string('siteweb')->nullable();
             $table->text('adresse')->nullable();
+            $table->tinyInteger('suspendu')->default(0);
             $table->timestamps();
         });
     }
