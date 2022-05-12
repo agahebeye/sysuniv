@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Role;
 use App\Models\University;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
@@ -38,8 +37,11 @@ it('can edit universities', function () {
 it('can update universities', function () {
     $user = User::factory()->forRole()->createQuietly();
     $university = University::factory()->createQuietly();
+    $data = University::factory()->raw();
     test()->actingAs($user);
 
-    $response = put(route('universities.update', $university->id));
-    dd($response->json())
+    $response = put(route('universities.update', [
+        'university' => $university->id,
+        'nom' => $data['nom']
+    ]));
 });

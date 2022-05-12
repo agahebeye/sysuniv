@@ -14,7 +14,14 @@ class University extends Model
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = ['id'];
+    protected $fillable = [
+        'nom',
+        'email',
+        'password',
+        'nif',
+        'siteweb',
+        'adresse'
+    ];
 
     protected static function booted()
     {

@@ -24,18 +24,19 @@ class UniversityController extends Controller
         ]);
     }
 
-    public function update(University $university): \Illuminate\Http\RedirectResponse
+    public function update(Request $request, University $university): \Illuminate\Http\RedirectResponse
     {
 
-        $data = request()->validate([
+        $data = $request->validate([
             'nom' => ['sometimes'],
             'email' => ['sometimes', 'email'],
             'nif' => ['sometimes', 'min:10'],
             'siteweb' => ['sometimes', 'url'],
             'adresse' => ['sometimes', 'string']
-        ], request()->all());
+        ]);
 
-        $university->update($data);
+        $university->fill($data);
+        $university->push();
 
         return redirect(RouteServiceProvider::HOME);
     }
