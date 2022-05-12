@@ -21,7 +21,7 @@ it('can register new users', function () {
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => 'secretsecret',
-        'password_confirmation' => 'secretsecret'
+        'password_confirmation' => 'secretsecret',
     ]);
 
     Event::assertDispatched(Registered::class);
