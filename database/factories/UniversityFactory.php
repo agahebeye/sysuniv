@@ -22,7 +22,7 @@ class UniversityFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'password' => 'secretsecret',
             'nif' => Str::random(8),
-            'siteweb' => $this->faker->domainWord(),
+            'siteweb' => $this->faker->domainWord().'.com',
             'addresse' => $this->faker->address()
         ];
     }

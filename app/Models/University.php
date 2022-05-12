@@ -10,6 +10,8 @@ class University extends Model
 {
     use HasFactory;
 
+    const UPDATED_AT = null;
+
     public function photo() {
         return $this->morphOne(Photo::class, 'photoable');
     }
