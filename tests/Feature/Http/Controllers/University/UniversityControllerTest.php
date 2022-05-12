@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Models\University;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
@@ -20,9 +21,10 @@ it('can see universities', function () {
         );
 });
 
-it('can update universities', function () {
-    $user = User::factory()->forRole()->create();
+it('can edit universities', function () {
+    $user = User::factory()->forRole()->createQuietly();
+    $university = University::factory()->createQuietly();
     test()->actingAs($user);
-   /* $response = put(route('universties.update.create'))
-        ->assertOk();*/
+    get(route('universities.edit', $university->id))
+        ->assertOk();
 });

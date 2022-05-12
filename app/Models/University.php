@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Photo;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,9 +11,20 @@ class University extends Model
 {
     use HasFactory;
 
-    const UPDATED_AT = null;
+    protected $keyType = 'string';
+    public $incrementing = false;
 
-    public function photo() {
+    protected static function booted()
+    {
+        static::creating(
+            function ($university) {
+                $this->attributes['id'] = Str::random(3);
+            }
+        );
+    }
+
+    public function photo()
+    {
         return $this->morphOne(Photo::class, 'photoable');
     }
 }

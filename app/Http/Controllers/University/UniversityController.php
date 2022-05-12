@@ -15,7 +15,7 @@ class UniversityController extends Controller
         ]);
     }
 
-    public function edit(int $univId): \Inertia\Response {
+    public function edit(string $univId): \Inertia\Response {
         $university = University::query()->find($univId);
 
         return Inertia::render('universities/index', [
