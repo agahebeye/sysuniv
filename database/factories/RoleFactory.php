@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoleStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class RoleFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'type' => RoleStatus::REDACTEUR
         ];
     }
 }

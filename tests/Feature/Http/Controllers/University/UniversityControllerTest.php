@@ -21,6 +21,6 @@ it('can see universities page', function () {
 });
 
 it('updates universities', function () {
-    $user = User::factory()->create(['role_id' => 1]);
-    dd($user->load('role')->toArray());
+    $user = User::factory()->admin()->create();
+    dd($user->role->toArray());
 });
