@@ -14,4 +14,12 @@ class UniversityController extends Controller
             'universities' => University::with(['photo'])->get()
         ]);
     }
+
+    public function edit(int $univId): \Inertia\Response {
+        $university = University::query()->find($univId);
+
+        return Inertia::render('universities/index', [
+            'university' => $university
+        ]);
+    }
 }
