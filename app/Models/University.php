@@ -5,13 +5,14 @@ namespace App\Models;
 use App\Models\Photo;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 
 class University extends Authenticatable implements MustVerifyEmail 
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $keyType = 'string';
     public $incrementing = false;
