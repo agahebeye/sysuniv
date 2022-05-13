@@ -65,3 +65,10 @@ it('can delete universities', function() {
         'nom' => $university->nom
     ]);
 });
+
+it('cannot delete universities for redacteurs', function() {
+    test()->actingAs(User::factory()->create());
+    $university = University::factory()->createQuietly();
+    $response = delete(route('universities.destroy', $university->id));
+    $response->assertForbidden();
+});
