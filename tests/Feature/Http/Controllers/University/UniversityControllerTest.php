@@ -5,9 +5,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
-use function Pest\Laravel\delete;
-use function Pest\Laravel\get;
-use function Pest\Laravel\put;
+use function Pest\Laravel\{delete, get, post, put};
 
 it('can see universities', function () {
     //assuming writter logged in
@@ -22,8 +20,12 @@ it('can see universities', function () {
         );
 });
 
-it('can create universities', function() {
-
+it('can create universities', function () {
+    $user = User::factory()->createQuietly();
+    test()->actingAs($user);
+    $response = get(route('universities.create'))
+    ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('universities/create'));
 });
 
 it('can edit universities', function () {
@@ -59,7 +61,7 @@ it('can update universities', function () {
     ]);
 });
 
-it('can delete universities', function() {
+it('can delete universities', function () {
     test()->actingAs(User::factory()->admin()->create());
     $university = University::factory()->createQuietly();
     $response = delete(route('universities.destroy', $university->id));
@@ -69,7 +71,7 @@ it('can delete universities', function() {
     ]);
 });
 
-it('cannot delete universities for redacteurs', function() {
+it('cannot delete universities for redacteurs', function () {
     test()->actingAs(User::factory()->create());
     $university = University::factory()->createQuietly();
     $response = delete(route('universities.destroy', $university->id));

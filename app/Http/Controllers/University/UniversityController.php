@@ -18,6 +18,11 @@ class UniversityController extends Controller
         ]);
     }
 
+     public function create(): \Inertia\Response
+    {
+        return Inertia::render('universities/create');
+    }
+
     public function edit(University $university): \Inertia\Response
     {
         return Inertia::render('universities/edit', [
