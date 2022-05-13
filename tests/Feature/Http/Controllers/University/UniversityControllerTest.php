@@ -31,8 +31,9 @@ it('can create universities', function () {
 it('can store universities', function () {
     $user = User::factory()->createQuietly();
     test()->actingAs($user);
-    $response = get(route('universities.store'))
-        ->assertRedirect(RouteServiceProvider::HOME);
+    $response = post(route('universities.store'));
+    dump($response->json());
+        //->assertRedirect(RouteServiceProvider::HOME);
 });
 
 it('can edit universities', function () {

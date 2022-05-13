@@ -23,6 +23,18 @@ class UniversityController extends Controller
         return Inertia::render('universities/create');
     }
 
+    public function store(Request $request): \Illuminate\Http\RedirectResponse {
+        $data = $request->validate([
+            'nom' => ['string', 'required'],
+            'email' => ['email', 'required'],
+            'nif' => ['string', 'required', 'min:10'],
+            'siteweb' => ['string', 'required', 'url'],
+            'adresse' => ['string', 'required', 'string'],
+            'suspendu' => ['required', 'integer']
+        ]);
+        return redirect(RouteServiceProvider::HOME);
+    }
+
     public function edit(University $university): \Inertia\Response
     {
         return Inertia::render('universities/edit', [
