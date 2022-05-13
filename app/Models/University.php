@@ -26,6 +26,20 @@ class University extends Authenticatable implements MustVerifyEmail
         'suspendu'
     ];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime'
+    ];
+
     protected static function booted()
     {
         static::creating(

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('id')->primary()->unique();
             $table->string('nom')->unique()->index();
             $table->string('email');
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->string('nif');
