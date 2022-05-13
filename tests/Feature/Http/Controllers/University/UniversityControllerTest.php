@@ -24,8 +24,15 @@ it('can create universities', function () {
     $user = User::factory()->createQuietly();
     test()->actingAs($user);
     $response = get(route('universities.create'))
-    ->assertOk()
+        ->assertOk()
         ->assertInertia(fn ($page) => $page->component('universities/create'));
+});
+
+it('can store universities', function () {
+    $user = User::factory()->createQuietly();
+    test()->actingAs($user);
+    $response = get(route('universities.store'))
+        ->assertRedirect(RouteServiceProvider::HOME);
 });
 
 it('can edit universities', function () {
