@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Models\Photo;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class University extends Model
+
+class University extends Authenticatable implements MustVerifyEmail 
 {
     use HasFactory;
 

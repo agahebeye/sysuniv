@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('universities', function (Blueprint $table) {
-            $table->string('id')->primary()->unique()->index();
-            $table->string('nom');
+            $table->string('id')->primary()->unique();
+            $table->string('nom')->unique()->index();
             $table->string('email');
             $table->string('password');
+            $table->rememberToken();
             $table->string('nif');
             $table->string('siteweb')->nullable();
             $table->text('adresse')->nullable();
