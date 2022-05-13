@@ -2,6 +2,7 @@
 
 use App\Models\University;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\get;
@@ -42,6 +43,13 @@ it('can update universities', function () {
 
     $response = put(route('universities.update', [
         'university' => $university->id,
-        'nom' => $data['nom']
+        'nom' => $data['nom'],
+        'suspendu' => 1
     ]));
+
+    $response->assertRedirect(RouteServiceProvider::HOME);
+    test()->assertDatabaseHas('universities', [
+        'nom' => $data['nom'],
+        'suspendu' => 1
+    ]);
 });

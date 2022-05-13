@@ -20,7 +20,8 @@ class University extends Model
         'password',
         'nif',
         'siteweb',
-        'adresse'
+        'adresse',
+        'suspendu'
     ];
 
     protected static function booted()
