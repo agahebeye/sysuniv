@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
+use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\put;
@@ -56,7 +57,11 @@ it('can update universities', function () {
 });
 
 it('can delete universities', function() {
+    test()->actingAs(User::factory()->admin()->create());
     $university = University::factory()->createQuietly();
-    $respone = delete(route('universities.destroy'));
-    dump($respone->json());
+    $response = delete(route('universities.destroy', $university->id));
+    $response->assertRedirect(RouteServiceProvider::HOME);
+    assertDatabaseMissing('universities', [
+        'nom' => $university->nom
+    ]);
 });

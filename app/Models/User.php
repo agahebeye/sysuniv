@@ -50,6 +50,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class)->withDefault(['type' => RoleStatus::REDACTEUR]);
     }
 
+    public function getIsAdminAttribute() {
+        return $this->attributes['role_id'] === 1;
+    }
+
     /**
      * Set Password attribute value
      */

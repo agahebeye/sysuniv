@@ -37,4 +37,5 @@ class University extends Model
     {
         return $this->morphOne(Photo::class, 'photoable');
     }
+
 }

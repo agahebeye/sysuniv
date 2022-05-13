@@ -5,6 +5,7 @@ namespace App\Http\Controllers\University;
 use App\Http\Controllers\Controller;
 use App\Models\University;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -34,13 +35,14 @@ class UniversityController extends Controller
             'adresse' => ['sometimes', 'string'],
             'suspendu' => ['sometimes', 'integer']
         ]);
-        
+
         $university->update($data);
         return redirect(RouteServiceProvider::HOME);
     }
 
     public function destroy(University $university): \Illuminate\Http\RedirectResponse
     {
+        throw_unless(request()->user()->isAdmin, AuthorizationException::class, "Vous n'avez pas d'accès á cette page");
         $university->delete();
         return redirect(RouteServiceProvider::HOME);
     }
