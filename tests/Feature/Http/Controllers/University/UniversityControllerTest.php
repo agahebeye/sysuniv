@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
+use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\put;
 
@@ -52,4 +53,10 @@ it('can update universities', function () {
         'nom' => $data['nom'],
         'suspendu' => 1
     ]);
+});
+
+it('can delete universities', function() {
+    $university = University::factory()->createQuietly();
+    $respone = delete(route('universities.destroy'));
+    dump($respone->json());
 });

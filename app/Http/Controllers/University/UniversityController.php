@@ -38,4 +38,10 @@ class UniversityController extends Controller
         $university->update($data);
         return redirect(RouteServiceProvider::HOME);
     }
+
+    public function destroy(University $university): \Illuminate\Http\RedirectResponse
+    {
+        $university->delete();
+        return redirect(RouteServiceProvider::HOME);
+    }
 }
