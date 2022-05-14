@@ -35,7 +35,7 @@ class AuthenticatedUniversityController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return to_route('universities.show');
     }
 
     /**
