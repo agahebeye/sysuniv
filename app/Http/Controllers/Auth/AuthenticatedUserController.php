@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-class AuthenticatedSessionController extends Controller
+class AuthenticatedUserController extends Controller
 {
     /**
      * Display the login view.
