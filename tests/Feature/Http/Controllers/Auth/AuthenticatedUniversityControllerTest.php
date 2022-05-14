@@ -21,3 +21,13 @@ it('can store university login', function () {
 
     test()->assertAuthenticated('university');
 });
+
+it('can destroy university login', function () {
+    $university = University::factory()->create();
+    test()->actingAs($university, 'university');
+
+    post(route('universities.logout'))
+        ->assertRedirect(route('universities.login'));
+
+    test()->assertGuest('university');
+});

@@ -52,6 +52,6 @@ class AuthenticatedUniversityController extends Controller
 
         $request->session()->regenerateToken();
 
-        return to_route('university.login');
+        return to_route('universities.login');
     }
 }

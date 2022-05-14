@@ -19,10 +19,13 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedUserController::class, 'store']);
 
-     Route::post('universities/login', [AuthenticatedUniversityController::class, 'store']);
+    Route::post('universities/login', [AuthenticatedUniversityController::class, 'store']);
 });
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedUserController::class, 'destroy'])
         ->name('logout');
+
+    Route::post('universities/logout', [AuthenticatedUniversityController::class, 'destroy'])
+        ->name('universities.logout');
 });
