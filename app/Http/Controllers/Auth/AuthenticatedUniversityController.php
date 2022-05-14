@@ -18,7 +18,7 @@ class AuthenticatedUniversityController extends Controller
      */
     public function create()
     {
-        return Inertia::render('university/auth/login', [
+        return Inertia::render('universities/auth/login', [
             'status' => session('status'),
         ]);
     }
