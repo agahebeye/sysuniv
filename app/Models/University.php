@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 
-class University extends Authenticatable implements MustVerifyEmail 
+class University extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -44,9 +44,8 @@ class University extends Authenticatable implements MustVerifyEmail
     protected static function booted()
     {
         static::creating(
-            function ($university) {
-                $this->attributes['id'] = Str::random(3);
-            }
+            fn ($university) =>
+            $university->setId(Str::random(6))
         );
     }
 
@@ -55,4 +54,8 @@ class University extends Authenticatable implements MustVerifyEmail
         return $this->morphOne(Photo::class, 'photoable');
     }
 
+    public function setId($id)
+    {
+        $this->attributes['id'] = $id;
+    }
 }

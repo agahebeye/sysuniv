@@ -18,12 +18,11 @@ class UniversityFactory extends Factory
     public function definition()
     {
         return [
-            'id' => Str::random(8),
             'nom' => $this->faker->sentence(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $this->faker->unique()->companyEmail(),
             'password' => 'secretsecret',
             'nif' => Str::random(),
-            'siteweb' => $this->faker->domainWord().'.com',
+            'siteweb' => "https://{$this->faker->domainName()}",
             'adresse' => $this->faker->address()
         ];
     }

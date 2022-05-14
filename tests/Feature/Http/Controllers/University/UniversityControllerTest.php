@@ -5,11 +5,11 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
-use function Pest\Laravel\{delete, get, post, put};
+use function Pest\Laravel\{assertDatabaseHas, delete, get, post, put};
+
+beforeEach(fn () => $this->actingAs(User::factory()->createQuietly()));
 
 it('can see universities', function () {
-    //assuming writter logged in
-    test()->actingAs(User::factory()->create());
     $reponse = get('/universities');
     $reponse
         ->assertOk()
@@ -21,25 +21,24 @@ it('can see universities', function () {
 });
 
 it('can create universities', function () {
-    $user = User::factory()->createQuietly();
-    test()->actingAs($user);
     $response = get(route('universities.create'))
         ->assertOk()
         ->assertInertia(fn ($page) => $page->component('universities/create'));
 });
 
 it('can store universities', function () {
-    $user = User::factory()->createQuietly();
-    test()->actingAs($user);
-    $response = post(route('universities.store'));
-    dump($response->json());
-        //->assertRedirect(RouteServiceProvider::HOME);
+    $data = University::factory()->raw();
+    $response = post(route('universities.store', [
+        ...$data, 'password_confirmation' => 'secretsecret'
+    ]));
+    $response->assertRedirect(RouteServiceProvider::HOME);
+    assertDatabaseHas('universities', [
+        'nom' => $data['nom']
+    ]);
 });
 
 it('can edit universities', function () {
-    $user = User::factory()->forRole()->createQuietly();
     $university = University::factory()->createQuietly();
-    test()->actingAs($user);
     get(route('universities.edit', $university->id))
         ->assertOk()
         ->assertInertia(
@@ -51,10 +50,8 @@ it('can edit universities', function () {
 });
 
 it('can update universities', function () {
-    $user = User::factory()->forRole()->createQuietly();
     $university = University::factory()->createQuietly();
     $data = University::factory()->raw();
-    test()->actingAs($user);
 
     $response = put(route('universities.update', [
         'university' => $university->id,
@@ -80,7 +77,6 @@ it('can delete universities', function () {
 });
 
 it('cannot delete universities for redacteurs', function () {
-    test()->actingAs(User::factory()->create());
     $university = University::factory()->createQuietly();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertForbidden();

@@ -27,11 +27,14 @@ class UniversityController extends Controller
         $data = $request->validate([
             'nom' => ['string', 'required'],
             'email' => ['email', 'required'],
+            'password'=> ['string', 'confirmed', 'min:6'],
             'nif' => ['string', 'required', 'min:10'],
             'siteweb' => ['string', 'required', 'url'],
             'adresse' => ['string', 'required', 'string'],
-            'suspendu' => ['required', 'integer']
         ]);
+
+        University::create($data);
+
         return redirect(RouteServiceProvider::HOME);
     }
 
