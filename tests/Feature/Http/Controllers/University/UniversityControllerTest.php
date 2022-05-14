@@ -20,6 +20,13 @@ it('can see universities', function () {
         );
 });
 
+it('can show universities dashboard', function () {
+    test()->actingAs(University::factory()->create(), 'university');
+    $response = get(route('universities.show'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('universities/dashboard'));
+});
+
 it('can create universities', function () {
     $response = get(route('universities.create'))
         ->assertOk()
