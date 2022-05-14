@@ -7,7 +7,7 @@ use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\{assertDatabaseHas, delete, get, post, put};
 
-beforeEach(fn () => $this->actingAs(User::factory()->createQuietly()));
+beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
 it('can see universities', function () {
     $reponse = get('/universities');
@@ -38,7 +38,7 @@ it('can store universities', function () {
 });
 
 it('can edit universities', function () {
-    $university = University::factory()->createQuietly();
+    $university = University::factory()->create();
     get(route('universities.edit', $university->id))
         ->assertOk()
         ->assertInertia(
@@ -50,7 +50,7 @@ it('can edit universities', function () {
 });
 
 it('can update universities', function () {
-    $university = University::factory()->createQuietly();
+    $university = University::factory()->create();
     $data = University::factory()->raw();
 
     $response = put(route('universities.update', [
@@ -68,7 +68,7 @@ it('can update universities', function () {
 
 it('can delete universities', function () {
     test()->actingAs(User::factory()->admin()->create());
-    $university = University::factory()->createQuietly();
+    $university = University::factory()->create();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertRedirect(RouteServiceProvider::HOME);
     test()->assertDatabaseMissing('universities', [
@@ -77,7 +77,7 @@ it('can delete universities', function () {
 });
 
 it('cannot delete universities for redacteurs', function () {
-    $university = University::factory()->createQuietly();
+    $university = University::factory()->create();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertForbidden();
 });
