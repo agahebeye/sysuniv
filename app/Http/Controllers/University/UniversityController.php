@@ -44,7 +44,8 @@ class UniversityController extends Controller
             'adresse' => ['string', 'required', 'string'],
         ]);
 
-        University::create($data);
+        $university = University::query()->create($data);
+        $university->sendEmailVerificationNotification();
 
         return redirect(RouteServiceProvider::HOME);
     }

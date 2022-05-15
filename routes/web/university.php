@@ -8,7 +8,7 @@ Route::prefix('universities')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/', [UniversityController::class, 'index'])->name('universities.index');
-        Route::get('/dashboard', [UniversityController::class, 'show'])->name('universities.show')->middleware('verified');
+        Route::get('/dashboard', [UniversityController::class, 'show'])->name('universities.show');
         Route::get('/create', [UniversityController::class, 'create'])->name('universities.create');
         Route::post('/store', [UniversityController::class, 'store'])->name('universities.store');
         Route::get('/{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');

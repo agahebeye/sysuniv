@@ -23,7 +23,9 @@ it('can see universities', function () {
 
 it('can show universities dashboard', function () {
     test()->actingAs(University::factory()->create(), 'university');
-    $response = get(route('universities.show'))
+    $response = get(route('universities.show'));
+    dd($response->json());
+    $response
         ->assertOk()
         ->assertInertia(fn ($page) => $page->component('universities/dashboard'));
 });
