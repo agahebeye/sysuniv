@@ -51,7 +51,7 @@ it('can store universities', function () {
 });
 
 it('can verify universities', function () {
-    $university = University::create();
+    $university = University::factory()->create();
     Event::fake();
     $verificationLink = URL::temporarySignedRoute(
         'verification.verify',
@@ -59,12 +59,11 @@ it('can verify universities', function () {
         ['id' => $university->id, 'hash' => sha1($university->email)]
     );
 
-    dd($university);
-
     $response = test()->actingAs($university, 'university')->get($verificationLink);
-
+    
     Event::assertDispatched(Verified::class);
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
+    $response->assertRedirect(route('universities.show').'?verified=1');
 });
 
 it('can edit universities', function () {
