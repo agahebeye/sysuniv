@@ -3,17 +3,16 @@
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
-use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\{get, post};
 
-get('/register')->assertOk();
-
-it('can see the register page', function () {
-    get('/register')->assertInertia(fn (AssertableInertia $page) => $page->component('auth/register'));
+it('can create registered users', function () {
+    get('/register')
+    ->assertOk()
+    ->assertInertia(fn ($page) => $page->component('auth/register'));
 });
 
-it('can register new users', function () {
+it('can store registered users', function () {
     Event::fake();
 
     $data = User::factory()->raw();
