@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\University;
 
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Models\University;
 use App\Providers\RouteServiceProvider;
@@ -72,6 +73,7 @@ class UniversityController extends Controller
 
     public function destroy(University $university): \Illuminate\Http\RedirectResponse
     {
+        abort_unless(request()->user()->type == UserType::ADMIN, 403);
         $university->delete();
         return redirect(RouteServiceProvider::HOME);
     }
