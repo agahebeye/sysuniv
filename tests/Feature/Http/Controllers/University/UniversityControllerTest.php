@@ -41,6 +41,22 @@ it('can show universities dashboard', function () {
         );
 });
 
+it('cannot show dashboard for unverified universities', function () {
+    test()->actingAs(
+        $university = University::factory()->create(),
+        'university'
+    );
+
+    $response = get(route('universities.show'));
+    $response
+        ->assertOk()
+        ->assertInertia(
+            fn (AssertableInertia $page) =>
+            $page->component('universities/dashboard')
+                ->where('isVerified', null)
+        );
+});
+
 it('can create universities', function () {
     $response = get(route('universities.create'))
         ->assertOk()
