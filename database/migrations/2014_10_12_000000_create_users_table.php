@@ -1,9 +1,9 @@
 <?php
 
-use App\Enums\Role;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use UserType;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->tinyInteger('is_admin')->default(UserType::ADMIN);
 
-            $table->foreignId('role_id')->default(2)->constrained()->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
