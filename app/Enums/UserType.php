@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums;
 
-enum UserType {
-    case REDACTEUR;
-    case ADMIN;
+enum UserType: int {
+    case REDACTEUR = 0;
+    case ADMIN = 1;
 }

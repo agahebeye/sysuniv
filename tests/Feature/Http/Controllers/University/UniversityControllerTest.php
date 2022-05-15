@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -84,6 +85,7 @@ it('can delete universities', function () {
 });
 
 it('cannot delete universities for redacteurs', function () {
+    test()->actingAs($user = User::factory()->create());
     $university = University::factory()->create();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertForbidden();

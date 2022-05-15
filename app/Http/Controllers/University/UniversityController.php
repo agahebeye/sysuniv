@@ -72,7 +72,6 @@ class UniversityController extends Controller
 
     public function destroy(University $university): \Illuminate\Http\RedirectResponse
     {
-        throw_unless(request()->user()->isAdmin, AuthorizationException::class, "Vous n'avez pas d'accès á cette page");
         $university->delete();
         return redirect(RouteServiceProvider::HOME);
     }
