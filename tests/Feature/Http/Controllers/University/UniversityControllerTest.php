@@ -25,12 +25,20 @@ it('can see universities', function () {
 });
 
 it('can show universities dashboard', function () {
-    test()->actingAs(University::factory()->create(), 'university');
+    test()->actingAs(
+        $university = University::factory()->create(['email_verified_at' => now()]),
+        'university'
+    );
+
     $response = get(route('universities.show'));
-    dd($response->json());
     $response
         ->assertOk()
-        ->assertInertia(fn ($page) => $page->component('universities/dashboard'));
+        ->assertInertia(
+            fn (AssertableInertia $page) =>
+            $page->component('universities/dashboard')
+                ->where('university.nom', $university->nom)
+                ->whereContains('isVerified', $university->email_verified_at->toDateTime())
+        );
 });
 
 it('can create universities', function () {
@@ -60,10 +68,10 @@ it('can verify universities', function () {
     );
 
     $response = test()->actingAs($university, 'university')->get($verificationLink);
-    
+
     Event::assertDispatched(Verified::class);
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
-    $response->assertRedirect(route('universities.show').'?verified=1');
+    $response->assertRedirect(route('universities.show') . '?verified=1');
 });
 
 it('can edit universities', function () {

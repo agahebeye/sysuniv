@@ -23,8 +23,10 @@ class UniversityController extends Controller
     public function show(): \Inertia\Response
     {
         $university = request()->user('university');
+//        dd($university->email_verified_at->toDateTime());
         return Inertia::render('universities/dashboard', [
-            'university' => $university?->load(['photo'])
+            'university' => $university->load(['photo']),
+            'isVerified' => $university?->email_verified_at?->toDateTime(),
         ]);
     }
 
