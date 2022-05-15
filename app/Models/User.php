@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Enums\RoleStatus;
+use App\Enums\UserType;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'is_admin'
     ];
 
     /**
@@ -43,15 +44,12 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
+        'is_admin' => UserType::class
     ];
 
-    public function role() {
-        return $this->belongsTo(Role::class)->withDefault(['type' => RoleStatus::REDACTEUR]);
-    }
-
     public function getIsAdminAttribute() {
-        return $this->attributes['role_id'] === 1;
+        return $this->attributes['is_admin'] === UserType::ADMIN;
     }
 
     /**

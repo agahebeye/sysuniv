@@ -1,6 +1,6 @@
 <?php
 
-use UserType;
+use App\Enums\UserType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->tinyInteger('is_admin')->default(UserType::ADMIN);
+            $table->tinyInteger('is_admin')->default(UserType::REDACTEUR);
 
         });
     }
