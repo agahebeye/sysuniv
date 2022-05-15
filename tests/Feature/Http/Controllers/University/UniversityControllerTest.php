@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserType;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
