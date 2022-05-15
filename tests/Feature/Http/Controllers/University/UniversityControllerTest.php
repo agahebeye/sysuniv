@@ -4,6 +4,9 @@ use App\Enums\UserType;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\URL;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\{assertDatabaseHas, delete, get, post, put};
@@ -45,6 +48,23 @@ it('can store universities', function () {
     assertDatabaseHas('universities', [
         'nom' => $data['nom']
     ]);
+});
+
+it('can verify universities', function () {
+    $university = University::create();
+    Event::fake();
+    $verificationLink = URL::temporarySignedRoute(
+        'verification.verify',
+        now()->addMinutes(60),
+        ['id' => $university->id, 'hash' => sha1($university->email)]
+    );
+
+    dd($university);
+
+    $response = test()->actingAs($university, 'university')->get($verificationLink);
+
+    Event::assertDispatched(Verified::class);
+    test()->assertTrue($university->fresh()->hasVerifiedEmail());
 });
 
 it('can edit universities', function () {
