@@ -17,7 +17,7 @@ class FacultyFactory extends Factory
     public function definition()
     {
         return [
-            'nom' => $this->faker->word()
+            'nom' => $this->faker->unique()->word()
         ];
     }
 }
