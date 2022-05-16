@@ -42,6 +42,16 @@ it('can store faculties', function () {
     ]);
 });
 
+it('can edit faculties', function () {
+    get(route('faculties.edit'))
+        ->assertOk()
+        ->assertInertia(
+            fn ($page) =>
+            $page->component('faculties/edit')
+                ->has('faculty')
+        );
+});
+
 it('can soft-delete faculties', function () {
     $faculty = Faculty::factory()->createQuietly();
     $response = delete(route('faculties.destroy', ['faculty' => $faculty->id]))
