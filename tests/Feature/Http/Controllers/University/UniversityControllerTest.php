@@ -26,7 +26,8 @@ it('can see universities', function () {
 
 it('can show universities dashboard', function () {
     $university = University::factory()
-        ->has(Faculty::factory()->count(3))
+        ->hasFaculties(3)
+        ->hasInstitutes(3)
         ->create(['email_verified_at' => now()]);
 
     test()->actingAs(
@@ -41,7 +42,8 @@ it('can show universities dashboard', function () {
             fn (AssertableInertia $page) =>
             $page->component('universities/dashboard')
                 ->where('university.nom', $university->nom)
-                ->has('university.faculties', 3)
+                ->where('university.faculties_count', 3)
+                ->where('university.institutes_count', 3)
                 ->whereContains('isVerified', $university->email_verified_at->toDateTime())
         );
 });

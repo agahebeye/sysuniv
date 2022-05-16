@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('institues', function (Blueprint $table) {
+         Schema::create('institutes', function (Blueprint $table) {
             $table->id();
+            $table->string('nom')->unique();
             $table->timestamps();
+        });
+
+         Schema::create('universities_institutes', function (Blueprint $table) {
+            $table->bigInteger('university_id');
+            $table->bigInteger('institute_id');
         });
     }
 

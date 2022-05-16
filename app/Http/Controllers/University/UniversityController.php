@@ -22,11 +22,12 @@ class UniversityController extends Controller
 
     public function show(): \Inertia\Response
     {
+        /**@var \Illuminate\Database\Eloquent\Model $university */
         $university = request()->user('university');
-//        dd($university->email_verified_at->toDateTime());
+
         return Inertia::render('universities/dashboard', [
-            'university' => $university->load(['photo', 'faculties']),
-            'isVerified' => $university?->email_verified_at?->toDateTime(),
+            'university' => $university->load(['photo'])->loadCount(['faculties', 'institutes']),
+            'isVerified' => $university->email_verified_at->toDateTime(),
         ]);
     }
 
