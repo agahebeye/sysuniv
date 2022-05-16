@@ -4,6 +4,8 @@ use App\Models\Faculty;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\assertSoftDeleted;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
@@ -54,8 +56,16 @@ it('can edit faculties', function () {
 });
 
 it('can update faculties', function() {
-    $response = put(route('faculties.update'));
-    dd($response->json());
+    $faculty = Faculty::factory()->createQuietly();
+    $response = put(route('faculties.update', [
+        'faculty' => $faculty->id,
+        'nom' => 'new faculty'
+    ]));
+
+    $response->assertRedirect(route('faculties.index'));
+    assertDatabaseHas('faculties', ['nom' => 'new faculty']);
+    assertDatabaseMissing('faculties', ['nom' => $faculty->nom]);
+//    dd($response->json());
 });
 
 it('can soft-delete faculties', function () {

@@ -81,7 +81,13 @@ class FacultyController extends Controller
      */
     public function update(Request $request, Faculty $faculty)
     {
-        //
+        $data = $request->validate([
+            'nom' => ['required', 'string']
+        ]);
+
+        $faculty->update($data);
+
+        return to_route('faculties.index');
     }
 
     /**
