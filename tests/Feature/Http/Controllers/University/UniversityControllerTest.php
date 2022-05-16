@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Faculty;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
