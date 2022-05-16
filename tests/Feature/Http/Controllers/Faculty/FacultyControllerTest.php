@@ -4,6 +4,8 @@ use App\Models\Faculty;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
+use function Pest\Laravel\assertSoftDeleted;
+use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
@@ -37,5 +39,15 @@ it('can store faculties', function () {
     $response = post(route('faculties.store', ['nom' => 'faculty']));
     $response->assertSessionHasErrors([
         'nom'
+    ]);
+});
+
+it('can soft-delete faculties', function () {
+    $faculty = Faculty::factory()->createQuietly();
+    $response = delete(route('faculties.destroy', ['faculty' => $faculty->id]))
+        ->assertRedirect(route('faculties.index'));
+
+    assertSoftDeleted('faculties', [
+        'nom' => $faculty->nom
     ]);
 });

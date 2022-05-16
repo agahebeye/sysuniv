@@ -90,6 +90,7 @@ class FacultyController extends Controller
      */
     public function destroy(Faculty $faculty)
     {
-        //
+        $faculty->delete();
+        return to_route('faculties.index');
     }
 }
