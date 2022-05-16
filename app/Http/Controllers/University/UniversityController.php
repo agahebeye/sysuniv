@@ -25,7 +25,7 @@ class UniversityController extends Controller
         $university = request()->user('university');
 //        dd($university->email_verified_at->toDateTime());
         return Inertia::render('universities/dashboard', [
-            'university' => $university->load(['photo']),
+            'university' => $university->load(['photo', 'faculties']),
             'isVerified' => $university?->email_verified_at?->toDateTime(),
         ]);
     }

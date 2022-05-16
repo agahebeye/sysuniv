@@ -49,17 +49,24 @@ class University extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function photo()
-    {
-        return $this->morphOne(Photo::class, 'photoable');
-    }
+
 
     public function setId($id)
     {
         $this->attributes['id'] = $id;
     }
 
-    public function setPasswordAttribute($value) {
+    public function setPasswordAttribute($value)
+    {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function photo()
+    {
+        return $this->morphOne(Photo::class, 'photoable');
+    }
+
+    public function faculties() {
+        return $this->belongsToMany(Faculty::class, 'universities_faculties');
     }
 }

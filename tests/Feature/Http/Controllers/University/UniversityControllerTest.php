@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Faculty;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -24,8 +25,12 @@ it('can see universities', function () {
 });
 
 it('can show universities dashboard', function () {
+    $university = University::factory()
+        ->has(Faculty::factory()->count(3))
+        ->create(['email_verified_at' => now()]);
+
     test()->actingAs(
-        $university = University::factory()->create(['email_verified_at' => now()]),
+        $university,
         'university'
     );
 
@@ -36,6 +41,7 @@ it('can show universities dashboard', function () {
             fn (AssertableInertia $page) =>
             $page->component('universities/dashboard')
                 ->where('university.nom', $university->nom)
+                ->has('university.faculties', 3)
                 ->whereContains('isVerified', $university->email_verified_at->toDateTime())
         );
 });
