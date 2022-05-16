@@ -25,3 +25,17 @@ it('can create faculties', function () {
         ->assertOk()
         ->assertInertia(fn ($page) => $page->component('faculties/create'));
 });
+
+it('can store faculties', function () {
+    post(route('faculties.store', ['nom' => 'faculty']))
+        ->assertRedirect(route('faculties.index'));
+
+    test()->assertDatabaseHas('faculties', [
+        'nom' => 'faculty'
+    ]);
+
+    $response = post(route('faculties.store', ['nom' => 'faculty']));
+    $response->assertSessionHasErrors([
+        'nom'
+    ]);
+});

@@ -39,7 +39,13 @@ class FacultyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nom' => ['required', 'unique:faculties']
+        ]);
+
+        Faculty::create($data);
+
+        return to_route('faculties.index');
     }
 
     /**
