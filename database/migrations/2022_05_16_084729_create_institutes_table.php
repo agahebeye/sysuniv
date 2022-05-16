@@ -16,6 +16,7 @@ return new class extends Migration
          Schema::create('institutes', function (Blueprint $table) {
             $table->id();
             $table->string('nom')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
 
