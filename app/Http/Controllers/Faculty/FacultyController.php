@@ -67,7 +67,9 @@ class FacultyController extends Controller
      */
     public function edit(Faculty $faculty)
     {
-        //
+        return Inertia::render('faculties/edit', [
+            'faculty' => $faculty
+        ]);
     }
 
     /**
