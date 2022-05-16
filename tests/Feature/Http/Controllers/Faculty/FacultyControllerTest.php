@@ -46,7 +46,8 @@ it('can store faculties', function () {
 });
 
 it('can edit faculties', function () {
-    get(route('faculties.edit'))
+    $faculty = Faculty::factory()->createQuietly();
+    get(route('faculties.edit', ['faculty' => $faculty->id]))
         ->assertOk()
         ->assertInertia(
             fn ($page) =>
@@ -65,7 +66,6 @@ it('can update faculties', function() {
     $response->assertRedirect(route('faculties.index'));
     assertDatabaseHas('faculties', ['nom' => 'new faculty']);
     assertDatabaseMissing('faculties', ['nom' => $faculty->nom]);
-//    dd($response->json());
 });
 
 it('can soft-delete faculties', function () {
