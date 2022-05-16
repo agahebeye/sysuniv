@@ -8,6 +8,7 @@ use function Pest\Laravel\assertSoftDeleted;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
+use function Pest\Laravel\put;
 
 beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
@@ -50,6 +51,11 @@ it('can edit faculties', function () {
             $page->component('faculties/edit')
                 ->has('faculty')
         );
+});
+
+it('can update faculties', function() {
+    $response = put(route('faculties.update'));
+    dd($response->json());
 });
 
 it('can soft-delete faculties', function () {
