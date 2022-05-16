@@ -16,11 +16,12 @@ it('can see faculties', function () {
         ->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('faculties/index')
-            ->has('faculties', 3)
+                ->has('faculties', 3)
         );
 });
 
-it('can create faculties', function() {
-    $response = post(route('faculties.create'));
-    dd($response->json());
+it('can create faculties', function () {
+    get(route('faculties.create'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('faculties/create'));
 });
