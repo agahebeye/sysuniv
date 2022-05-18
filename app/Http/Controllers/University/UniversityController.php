@@ -27,7 +27,7 @@ class UniversityController extends Controller
 
         return Inertia::render('universities/dashboard', [
             'university' => $university->load(['photo'])->loadCount(['faculties', 'institutes']),
-            'isVerified' => $university?->email_verified_at?->toDateTime(),
+            'isVerified' => $university?->hasVerifiedEmail(),
         ]);
     }
 

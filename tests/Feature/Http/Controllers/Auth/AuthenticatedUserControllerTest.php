@@ -6,10 +6,10 @@ use App\Providers\RouteServiceProvider;
 use function Pest\Laravel\{get, post};
 use Inertia\Testing\AssertableInertia as Assert;
 
-get('/login')->assertOk();
-
 it('can create users login', function () {
-    get('/login')->assertInertia(
+    get('/login')
+    ->assertOk()
+    ->assertInertia(
         fn (Assert $page) =>
         $page->component('auth/login')
             ->has('status', null)
