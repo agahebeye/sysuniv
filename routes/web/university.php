@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Controllers\University\UniversityController;
 use App\Http\Controllers\University\UniversityFacultyController;
-use App\Http\Middleware\EnsureUserIsAdmin;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\University\UniversityInstituteController;
 
 Route::prefix('universities')
     ->middleware(['auth'])
@@ -16,4 +17,5 @@ Route::prefix('universities')
         Route::put('/{university}/update', [UniversityController::class, 'update'])->name('universities.update');
         Route::delete('/{university}/destroy', [UniversityController::class, 'destroy'])->name('universities.destroy');
         Route::get('/{university}/faculties', [UniversityFacultyController::class, '__invoke'])->name('universities.faculties');
+        Route::get('/{university}/institutes', [UniversityInstituteController::class, '__invoke'])->name('universities.institutes');
     });
