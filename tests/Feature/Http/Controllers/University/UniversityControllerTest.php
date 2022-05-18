@@ -34,7 +34,7 @@ it('can show universities dashboard', function () {
         'university'
     );
 
-    $response = get(route('universities.show'));
+    $response = get(route('universities.show', ['university' => $university->id]));
     $response
         ->assertOk()
         ->assertInertia(
@@ -43,7 +43,7 @@ it('can show universities dashboard', function () {
                 ->where('university.nom', $university->nom)
                 ->where('university.faculties_count', 3)
                 ->where('university.institutes_count', 3)
-                ->whereContains('isVerified', $university->email_verified_at->toDateTime())
+                ->whereContains('isVerified', true)
         );
 });
 
@@ -53,13 +53,12 @@ it('cannot show dashboard for unverified universities', function () {
         'university'
     );
 
-    $response = get(route('universities.show'));
+    $response = get(route('universities.show', ['university' => $university->id]));
     $response
         ->assertOk()
         ->assertInertia(
-            fn (AssertableInertia $page) =>
-            $page->component('universities/dashboard')
-                ->where('isVerified', null)
+            fn (AssertableInertia $page) =>$page
+                ->where('isVerified', false)
         );
 });
 
@@ -93,7 +92,7 @@ it('can verify universities', function () {
 
     Event::assertDispatched(Verified::class);
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
-    $response->assertRedirect(route('universities.show') . '?verified=1');
+    $response->assertRedirect(route('universities.show', ['university' => $university->id]) . '?verified=1');
 });
 
 it('can edit universities', function () {

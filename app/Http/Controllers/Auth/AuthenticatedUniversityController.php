@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use Inertia\Inertia;
+use App\Models\University;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\UniversityLoginRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedUniversityController extends Controller
 {
@@ -31,11 +33,22 @@ class AuthenticatedUniversityController extends Controller
      */
     public function store(UniversityLoginRequest $request)
     {
-        $request->authenticate();
+        $university = University::query()
+            ->where('nom', $request->input('nom'))
+            ->first();
+
+        if ($university) {
+            $request->authenticate();
+        } else {
+            throw ValidationException::withMessages([
+                'university' => "L'université avec ce nom n'existe pas."
+            ]);
+        }
+
 
         $request->session()->regenerate();
 
-        return to_route('universities.show');
+        return to_route('universities.show', $university->id);
     }
 
     /**

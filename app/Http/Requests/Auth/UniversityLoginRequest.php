@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\University;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -48,14 +46,9 @@ class UniversityLoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $university = University::query()
-            ->where('nom', $this->input('nom'))
-            ->where('email', $this->input('email'))
-            ->first();
+        
 
-        if ($university && Hash::check($this->input('password'), $university?->password)) {
-            Auth::guard('university')->login($university, $this->boolean('remember'));
-        } else {
+        if (! Auth::guard('university')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

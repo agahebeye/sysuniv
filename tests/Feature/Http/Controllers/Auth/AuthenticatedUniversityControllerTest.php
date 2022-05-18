@@ -12,12 +12,11 @@ it('can create university login', function () {
 
 it('can store university login', function () {
     $university = University::factory()->create();
-
     post(route('universities.login', [
         'nom' => $university->nom,
         'email' => $university->email,
         'password' => 'secretsecret',
-    ]))->assertRedirect(route('universities.show'));
+    ]))->assertRedirect(route('universities.show', ['university' => $university->id]));
 
     test()->assertAuthenticated('university');
 });

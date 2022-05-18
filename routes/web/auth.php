@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedUserController::class, 'destroy'])
         ->name('logout');
 
-    Route::post('universities/logout', [AuthenticatedUniversityController::class, 'destroy'])
+    Route::post('university-logout', [AuthenticatedUniversityController::class, 'destroy'])
         ->name('universities.logout');
 
     Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, '__invoke'])

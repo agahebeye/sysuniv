@@ -20,14 +20,11 @@ class UniversityController extends Controller
         ]);
     }
 
-    public function show(): \Inertia\Response
+    public function show(University $university): \Inertia\Response
     {
-        /**@var \Illuminate\Database\Eloquent\Model $university */
-        $university = request()->user('university');
-
         return Inertia::render('universities/dashboard', [
             'university' => $university->load(['photo'])->loadCount(['faculties', 'institutes']),
-            'isVerified' => $university?->hasVerifiedEmail(),
+            'isVerified' => $university->hasVerifiedEmail(),
         ]);
     }
 
