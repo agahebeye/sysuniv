@@ -15,7 +15,7 @@ class UniversityFacultyController extends Controller
         $faculties = Faculty::query()->whereRelation('universities', 'id', $university->id)->get();
         return Inertia::render('universities/faculties', [
             'faculties' => $faculties,
-            'isVerified' => $university?->hasVerifiedEmail(),
+            'isVerified' => $university->hasVerifiedEmail(),
         ]);
     }
 }

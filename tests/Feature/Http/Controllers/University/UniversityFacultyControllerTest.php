@@ -20,5 +20,15 @@ it('sees faculties of universities', function () {
                 ->has('faculties', 3)
                 ->where('isVerified', true)
         );
+});
 
+it('cannot see faculties of unverified universities', function () {
+    $university = University::factory()->create();
+    test()->actingAs($university, 'university');
+    Faculty::factory(3)->hasAttached($university)->create();
+    get(route('universities.faculties', $university->id))
+        ->assertInertia(
+            fn ($page) => $page->component('universities/faculties')
+                ->where('isVerified', false)
+        );
 });
