@@ -38,11 +38,10 @@ class StudentController extends Controller
             'photo' => ['required', 'image']
         ]);
 
-        $avatar = DB::transaction(function () use ($data, $request) {
+        DB::transaction(function () use ($data, $request) {
             $avatar = $request->file('photo')->storePublicly('/avatars', 'public');
             $student = Student::query()->create(Arr::except($data, ['photo']));
             $student->photo()->create(['src' => $avatar]);
-            return $avatar;
         });
 
         return to_route('students.index');

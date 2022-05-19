@@ -22,6 +22,12 @@ it('can see students', function () {
         );
 });
 
+it('can show a student', function () {
+    $student = Student::factory()->create();
+    $response = get(route('students.show', $student->lastname))
+        ->assertOk();
+});
+
 it('can create students', function () {
     get(route('students.create'))
         ->assertOk()
@@ -34,5 +40,5 @@ it('can store students', function () {
     $data = [...Student::factory()->raw(), 'photo' => $photo];
     $response = post(route('students.store'), $data);
 
-    Storage::disk('public')->assertExists('avatars/'. $photo->hashName());
+    Storage::disk('public')->assertExists('avatars/' . $photo->hashName());
 });
