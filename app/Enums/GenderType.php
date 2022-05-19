@@ -1,8 +1,8 @@
 <?php
 namespace App\Enums;
 
-enum GenderType {
-    case MALE;
-    case FEMALE;
-    case NEUTRAL;
+enum GenderType: int {
+    case MALE = 0;
+    case FEMALE = 1;
+    case NEUTRAL = 2;
 }

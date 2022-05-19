@@ -6,8 +6,8 @@ use Inertia\Inertia;
 use App\Models\Student;
 use App\Enums\GenderType;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
 class StudentController extends Controller
@@ -29,8 +29,8 @@ class StudentController extends Controller
         $data = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
-            'gender' => ['required', new Enum(GenderType::class)],
-            'birth_date' => ['required', 'date'],
+            'gender' => [new Enum(GenderType::class)],
+            'birth_date' => ['required', 'date_format:Y-m-d'],
             'address' => ['required', 'string']
         ]);
 

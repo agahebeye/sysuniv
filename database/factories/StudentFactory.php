@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
+use App\Enums\GenderType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,8 +20,8 @@ class StudentFactory extends Factory
         return [
             'firstname' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
-            'gender' => $this->faker->numberBetween(int2: 1),
-            'birth_date' => $this->faker->dateTimeBetween(endDate: now()->subYears(18)),
+            'gender' => array_rand(GenderType::cases()),
+            'birth_date' => $this->faker->date(),
             'address' => $this->faker->address
         ];
     }

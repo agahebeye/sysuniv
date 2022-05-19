@@ -28,7 +28,6 @@ it('can create students', function () {
 
 it('can store students', function () {
     $data = Student::factory()->raw();
-    dd($data);
     $response = post(route('students.store', $data));
     dd($response->json());
 });
