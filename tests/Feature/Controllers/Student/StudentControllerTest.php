@@ -18,3 +18,9 @@ it('can see students', function () {
                 ->has('students.0.photo')
         );
 });
+
+it('can create students', function () {
+    get(route('students.create'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page->component('students/create'));
+});
