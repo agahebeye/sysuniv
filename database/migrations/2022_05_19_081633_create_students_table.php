@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('serial_number')->invisible();
+            $table->string('registration_number')->invisible();
             $table->string('firstname');
             $table->string('lastname');
             $table->tinyInteger('gender');

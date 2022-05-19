@@ -48,3 +48,15 @@ it('can store students', function () {
 
     Storage::disk('public')->assertExists('avatars/' . $photo->hashName());
 });
+
+it('can edit students', function () {
+    $student = Student::factory()->create();
+    $response = get(route('students.edit', $student->id))
+        ->assertOk()
+        ->assertInertia(
+            fn (AssertableInertia $page) =>
+            $page->component('students/edit')
+                ->has('student')
+                ->where('student.id', $student->id)
+        );
+});

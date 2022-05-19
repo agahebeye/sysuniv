@@ -27,7 +27,7 @@ class Student extends Model
 
     protected static function booted()
     {
-        static::creating(fn($student) => $student->serial_number = Str::random(10));
+        static::creating(fn($student) => $student->registration_number = Str::random(10));
     }
 
     public function photo()

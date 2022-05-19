@@ -47,26 +47,14 @@ class StudentController extends Controller
         return to_route('students.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Student  student$
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Student $student)
+    public function show(Student $student): \Inertia\Response
     {
         return Inertia::render('students/show', [
             'student' => $student
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Student  student$
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Student $student)
+    public function edit(Student $student): \Inertia\Response
     {
         return Inertia::render('students/edit', [
             'student' => $student
