@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\GenderType;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +21,8 @@ class Student extends Model
     ];
 
     protected $casts = [
-        'birth_date' => 'datetime'
+        'birth_date' => 'datetime',
+        'gender' => GenderType::class
     ];
 
     protected static function booted()

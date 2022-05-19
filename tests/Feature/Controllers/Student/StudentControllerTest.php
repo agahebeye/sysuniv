@@ -5,6 +5,7 @@ use App\Models\User;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
@@ -23,4 +24,11 @@ it('can create students', function () {
     get(route('students.create'))
         ->assertOk()
         ->assertInertia(fn ($page) => $page->component('students/create'));
+});
+
+it('can store students', function () {
+    $data = Student::factory()->raw();
+    dd($data);
+    $response = post(route('students.store', $data));
+    dd($response->json());
 });

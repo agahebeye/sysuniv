@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\GenderType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->string('serial_number')->invisible();
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('gender');
+            $table->tinyInteger('gender');
             $table->timestamp('birth_date');
             $table->tinyInteger('suspended')->default(0);
             $table->tinyText('address');
