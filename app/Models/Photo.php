@@ -9,6 +9,8 @@ class Photo extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['src'];
+
     public $timestamps = false;
 
     public function photoable() {

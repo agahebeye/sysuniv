@@ -2,6 +2,8 @@
 
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\get;
@@ -27,7 +29,10 @@ it('can create students', function () {
 });
 
 it('can store students', function () {
-    $data = Student::factory()->raw();
-    $response = post(route('students.store', $data));
-    dd($response->json());
+    Storage::fake('public');
+    $photo = UploadedFile::fake()->image('photo.png');
+    $data = [...Student::factory()->raw(), 'photo' => $photo];
+    $response = post(route('students.store'), $data);
+
+    Storage::disk('public')->assertExists('avatars/'. $photo->hashName());
 });

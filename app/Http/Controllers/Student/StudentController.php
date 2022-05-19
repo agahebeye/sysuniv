@@ -7,6 +7,8 @@ use App\Models\Student;
 use App\Enums\GenderType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 
@@ -24,17 +26,24 @@ class StudentController extends Controller
         return Inertia::render('students/create');
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request)/*: \Illuminate\Http\RedirectResponse*/
     {
         $data = $request->validate([
             'firstname' => ['required', 'string'],
             'lastname' => ['required', 'string'],
             'gender' => [new Enum(GenderType::class)],
             'birth_date' => ['required', 'date_format:Y-m-d'],
-            'address' => ['required', 'string']
+            'address' => ['required', 'string'],
+
+            'photo' => ['required', 'image']
         ]);
 
-        Student::create($data);
+        $avatar = DB::transaction(function () use ($data, $request) {
+            $avatar = $request->file('photo')->storePublicly('/avatars', 'public');
+            $student = Student::query()->create(Arr::except($data, ['photo']));
+            $student->photo()->create(['src' => $avatar]);
+            return $avatar;
+        });
 
         return to_route('students.index');
     }
