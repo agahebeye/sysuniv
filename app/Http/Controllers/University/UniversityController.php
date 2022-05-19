@@ -74,7 +74,7 @@ class UniversityController extends Controller
 
     public function destroy(University $university): \Illuminate\Http\RedirectResponse
     {
-        abort_unless(request()->user()->type == UserType::ADMIN, 403);
+        abort_unless(request()->user()->role_type == UserType::ADMIN, 403);
         $university->delete();
         return redirect(RouteServiceProvider::HOME);
     }
