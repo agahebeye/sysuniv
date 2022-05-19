@@ -24,8 +24,14 @@ it('can see students', function () {
 
 it('can show a student', function () {
     $student = Student::factory()->create();
-    $response = get(route('students.show', $student->lastname))
-        ->assertOk();
+    $response = get(route('students.show', $student->id))
+        ->assertOk()
+        ->assertInertia(
+            fn (AssertableInertia $page) =>
+            $page->component('students/show')
+                ->has('student')
+                ->where('student.id', $student->id)
+        );
 });
 
 it('can create students', function () {
