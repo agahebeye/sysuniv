@@ -15,5 +15,6 @@ it('can see students', function () {
             fn (AssertableInertia $page) =>
             $page->component('students/index')
                 ->has('students', 5)
+                ->has('students.0.photo')
         );
 });
