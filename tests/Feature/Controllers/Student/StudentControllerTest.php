@@ -6,8 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
 
-use function Pest\Laravel\get;
-use function Pest\Laravel\post;
+use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, assertModelMissing, delete, get, post, put};
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
@@ -59,4 +58,33 @@ it('can edit students', function () {
                 ->has('student')
                 ->where('student.id', $student->id)
         );
+});
+
+it('can update students', function () {
+    Storage::fake('public');
+    $student = Student::factory()->create();
+    $student->photo()->create(['src' => 'photo.png']);
+
+    $response = put(
+        route('students.update', $student->id),
+        [
+            'firstname' => 'aboubakar',
+            'photo' => $photo = UploadedFile::fake()->image('aboubakar.png')
+        ]
+    )
+        ->assertRedirect(route('students.index'));
+
+    assertDatabaseHas('students', ['firstname' => 'aboubakar']);
+    assertDatabaseMissing('students', ['firstname' => $student->firstname]);
+    expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
+});
+
+it('can destroy students', function () {
+    test()->actingAs(User::factory()->admin()->create());
+    $student = Student::factory()->create();
+    $response = delete(route('students.destroy', $student->id))
+        ->assertRedirect(route('students.index'));
+
+    assertModelMissing($student);
+    assertDatabaseMissing('students', $student->toArray());
 });

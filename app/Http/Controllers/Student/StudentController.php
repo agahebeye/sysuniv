@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use Inertia\Inertia;
 use App\Models\Student;
 use App\Enums\GenderType;
+use App\Enums\UserType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Arr;
@@ -64,16 +65,29 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $data = $request->validate([
-            'nom' => ['required', 'string']
+            'firstname' => ['sometimes', 'string'],
+            'lastname' => ['sometimes', 'string'],
+            'gender' => ['sometimes', new Enum(GenderType::class)],
+            'birth_date' => ['sometimes', 'date_format:Y-m-d'],
+            'address' => ['sometimes', 'string'],
+
+            'photo' => ['sometimes', 'image']
         ]);
 
-        $student->update($data);
+
+        $student->update(Arr::except($data, ['photo']));
+
+        if (array_key_exists('photo', $data)) {
+            $avatar = $request->file('photo')->storePublicly('/avatars', 'public');
+            $student->photo()->updateOrCreate([], ['src' => $avatar]);
+        }
 
         return to_route('students.index');
     }
 
     public function destroy(Student $student)
     {
+        abort_unless(request()->user()->role_type == UserType::ADMIN, 403);
         $student->delete();
         return to_route('students.index');
     }

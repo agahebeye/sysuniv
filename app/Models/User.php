@@ -24,7 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type'
+        'role_type'
     ];
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'type' => UserType::class
+        'role_type' => UserType::class
     ];
 
     /**
@@ -52,5 +52,9 @@ class User extends Authenticatable
      */
     function setPasswordAttribute(string $value): void {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function isAdmin() {
+        return $this->attributes['role_type'] = UserType::ADMIN;
     }
 }
