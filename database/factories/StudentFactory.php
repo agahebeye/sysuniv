@@ -18,9 +18,8 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'serial_number' => Str::random(10),
             'firstname' => $this->faker->firstName(),
-            'lastnmame' => $this->faker->lastName(),
+            'lastname' => $this->faker->lastName(),
             'gender' => $this->faker->numberBetween(int2: 1),
             'birth_date' => $this->faker->dateTimeBetween(endDate: now()->subYears(18)),
             'address' => $this->faker->address
