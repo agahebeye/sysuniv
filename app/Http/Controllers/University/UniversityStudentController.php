@@ -12,7 +12,7 @@ class UniversityStudentController extends Controller
 {
     public function __invoke(University $university)
     {
-        $students = Student::query()->whereRelation('universities', 'id', $university->id)->get();
+        $students = Student::query()->whereRelation('universities', 'universities.id', $university->id)->get();
         
         return Inertia::render('universities/students', [
             'students' => $students,

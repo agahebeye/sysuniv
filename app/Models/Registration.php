@@ -10,7 +10,7 @@ class Registration extends Model
 {
     use HasFactory;
 
-    const UPDATE_AT = null;
+    const UPDATED_AT = null;
 
     protected $fillable = [
         'school_year',
@@ -24,4 +24,20 @@ class Registration extends Model
     protected $casts = [
         'level' => LevelType::class
     ];
+
+    public function student() {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function university() {
+        return $this->belongsTo(University::class);
+    }
+
+    public function faculty() {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    public function institute() {
+        return $this->belongsTo(Institute::class);
+    }
 }

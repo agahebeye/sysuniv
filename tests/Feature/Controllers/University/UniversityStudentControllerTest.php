@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Faculty;
+use App\Models\Gand;
+use App\Models\Registration;
 use App\Models\Student;
 use App\Models\University;
 use Inertia\Testing\AssertableInertia;
@@ -11,7 +14,11 @@ it('can see students of universities', function () {
         'email_verified_at' => now()
     ]);
     test()->actingAs($university, 'university');
-    Student::factory(3)->hasAttached($university)->create();
+
+    $students = Student::factory(3)->has(
+        Registration::factory()->for($university)
+    )->create();
+
     $response = get(route('universities.students', $university->id))
         ->assertOk()
         ->assertInertia(
@@ -25,7 +32,9 @@ it('can see students of universities', function () {
 it('cannot see students of unverified universities', function () {
     $university = University::factory()->create();
     test()->actingAs($university, 'university');
-    Student::factory(3)->hasAttached($university)->create();
+    $students = Student::factory(3)->has(
+        Registration::factory()->for($university)
+    )->create();
     get(route('universities.students', $university->id))
         ->assertInertia(
             fn ($page) => $page->component('universities/students')

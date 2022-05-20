@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\LevelType;
-use App\Models\Student;
-use App\Models\University;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,8 +20,6 @@ class RegistrationFactory extends Factory
         return [
             'school_year' => '2019-2020',
             'level' => array_rand(LevelType::cases()),
-            'university_id' => University::factory(),
-            'student_id' => Student::factory()
         ];
     }
 }

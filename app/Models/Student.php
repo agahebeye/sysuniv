@@ -27,7 +27,7 @@ class Student extends Model
 
     protected static function booted()
     {
-        static::creating(fn($student) => $student->registration_number = Str::random(10));
+        static::creating(fn ($student) => $student->registration_number = Str::random(10));
     }
 
     public function photo()
@@ -40,15 +40,23 @@ class Student extends Model
         return $this->morphMany(Photo::class, 'photoable');
     }
 
-    public function universities() {
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
+
+    public function universities()
+    {
         return $this->belongsToMany(University::class, 'registrations');
     }
 
-    public function faculties() {
+    public function faculties()
+    {
         return $this->belongsToMany(Faculty::class, 'registrations')->wherePivotNotNull('faculty_id');
     }
 
-    public function institutes() {
+    public function institutes()
+    {
         return $this->belongsToMany(Institute::class, 'registrations')->wherePivotNotNull('institute_id');
     }
 }
