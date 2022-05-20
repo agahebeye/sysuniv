@@ -73,4 +73,8 @@ class University extends Authenticatable implements MustVerifyEmail
     public function institutes() {
         return $this->belongsToMany(Institute::class, 'universities_institutes');
     }
+
+    public function students() {
+        return $this->belongsToMany(Student::class, 'registrations');
+    }
 }
