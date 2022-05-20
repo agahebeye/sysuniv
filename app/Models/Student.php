@@ -39,4 +39,16 @@ class Student extends Model
     {
         return $this->morphMany(Photo::class, 'photoable');
     }
+
+    public function universities() {
+        return $this->belongsToMany(University::class, 'registrations');
+    }
+
+    public function faculties() {
+        return $this->belongsToMany(Faculty::class, 'registrations')->wherePivotNotNull('faculty_id');
+    }
+
+    public function institutes() {
+        return $this->belongsToMany(Institute::class, 'registrations')->wherePivotNotNull('institute_id');
+    }
 }
