@@ -33,7 +33,8 @@ class RegisteredUserRequest extends FormRequest
             'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
             'role' => ['sometimes', new Enum(UserType::class)],
             'website' => ['sometimes', 'url'],
-            'address' => ['sometimes', 'string']
+            'address' => ['sometimes', 'string'],
+            'suspended' => ['sometimes', 'integer', Rule::in([0,1])],
         ];
     }
 }

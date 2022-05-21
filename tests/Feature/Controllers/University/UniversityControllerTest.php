@@ -62,7 +62,7 @@ it('can verify universities', function () {
 });
 
 it('can edit universities', function () {
-    $university = University::factory()->create();
+    $university = User::factory()->university()->create();
     get(route('universities.edit', $university->id))
         ->assertOk()
         ->assertInertia(
@@ -74,35 +74,34 @@ it('can edit universities', function () {
 });
 
 it('can update universities', function () {
-    $university = University::factory()->create();
-    $data = University::factory()->raw();
+    $university = User::factory()->university()->create();
+    $data = User::factory()->admin()->raw();
 
-    $response = put(route('universities.update', [
-        'university' => $university->id,
-        'nom' => $data['nom'],
-        'suspendu' => 1
-    ]));
+    $response = put(route('universities.update', $university->id), [
+        'name' => $data['name'],
+        'suspended' => 1
+    ]);
 
     $response->assertRedirect(RouteServiceProvider::HOME);
-    test()->assertDatabaseHas('universities', [
-        'nom' => $data['nom'],
-        'suspendu' => 1
+    test()->assertDatabaseHas('users', [
+        'name' => $data['name'],
+        'suspended' => 1
     ]);
 });
 
 it('can delete universities', function () {
     test()->actingAs(User::factory()->admin()->create());
-    $university = University::factory()->create();
+    $university = User::factory()->university()->create();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertRedirect(RouteServiceProvider::HOME);
-    test()->assertDatabaseMissing('universities', [
-        'nom' => $university->nom
+    test()->assertDatabaseMissing('users', [
+        'name' => $university->name
     ]);
 });
 
-it('cannot delete universities for redacteurs', function () {
+it('cannot delete universities for employees', function () {
     test()->actingAs($user = User::factory()->create());
-    $university = University::factory()->create();
+    $university = User::factory()->university()->create();
     $response = delete(route('universities.destroy', $university->id));
     $response->assertForbidden();
 });
