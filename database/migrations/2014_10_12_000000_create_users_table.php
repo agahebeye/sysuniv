@@ -1,6 +1,5 @@
 <?php
 
-use App\Enums\UserType;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,6 +21,9 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('role');
+            $table->string('siteweb')->nullable();
+            $table->text('address')->nullable();
+            $table->tinyInteger('suspended')->default(0);
             $table->timestamps();
 
         });
