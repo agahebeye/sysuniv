@@ -28,10 +28,10 @@ class RegisteredUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', new Enum(UserType::class)],
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users',
+            'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
+            'role' => ['sometimes', new Enum(UserType::class)],
             'website' => ['sometimes', 'url'],
             'address' => ['sometimes', 'string']
         ];
