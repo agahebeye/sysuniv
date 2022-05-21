@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Event;
 use function Pest\Laravel\{get, post};
 
 it('can create registered users', function () {
+    test()->actingAs(User::factory()->create(['role' => UserType::ADMIN]));
     get(route('users.create'))
     ->assertOk()
     ->assertInertia(fn ($page) => $page->component('auth/register'));
@@ -14,22 +16,27 @@ it('can create registered users', function () {
 
 it('can store registered users', function () {
     Event::fake();
+    test()->actingAs(User::factory()->create(['role' => UserType::ADMIN]));
 
-    $data = User::factory()->raw();
     $response = post(route('users.store'), [
-        'name' => $data['name'],
-        'email' => $data['email'],
+        'name' => 'john doe',
+        'email' => 'johndoe@example.com',
         'password' => 'secretsecret',
         'password_confirmation' => 'secretsecret',
+        'role' => UserType::EMPLOYEE->value
     ]);
-
-    dd($response->json());
 
     Event::assertDispatched(Registered::class);
 
-    $response->assertRedirect('/login');
-    test()->assertDatabaseHas('users', [
-        'name' => $data['name'],
-        'email' => $data['email']
+   test()->assertDatabaseHas('users', [
+        'name' => 'john doe',
+        'email' => 'johndoe@example.com',
     ]);
+});
+
+it('cannot store users for non-admins', function() {
+    test()->actingAs(User::factory()->create());
+    $data = User::factory()->raw();
+    $response = post(route('users.store'), [...$data, 'password_confirmation' => 'secretsecret']);
+    $response->assertForbidden();
 });

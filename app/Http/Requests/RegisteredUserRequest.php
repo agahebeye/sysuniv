@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Enums\UserType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
-
+use Illuminate\Validation\Rules\Enum;
 
 class RegisteredUserRequest extends FormRequest
 {
@@ -16,7 +17,7 @@ class RegisteredUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return in_array(request()->user()->role, [UserType::ADMIN, UserType::EMPLOYEE]);
+        return request()->user()->role == UserType::ADMIN;
     }
 
     /**
@@ -27,9 +28,12 @@ class RegisteredUserRequest extends FormRequest
     public function rules()
     {
         return [
-             'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', new Enum(UserType::class)],
+            'website' => ['sometimes', 'url'],
+            'address' => ['sometimes', 'string']
         ];
     }
 }

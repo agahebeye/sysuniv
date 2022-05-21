@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\User;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisteredUserRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -25,15 +26,15 @@ class RegisteredUserController extends Controller
         return Inertia::render('auth/register');
     }
 
-    public function store()
+    public function store(RegisteredUserRequest $request)
     {
        
+        $user = User::query()->create($request->validated());
 
-        //event(new Registered($user));
-        
+        event(new Registered($user));
 
-        //Auth::login($user);
+        Auth::login($user);
 
-        //return redirect('/login');
+        return redirect(RouteServiceProvider::HOME);
     }
 }
