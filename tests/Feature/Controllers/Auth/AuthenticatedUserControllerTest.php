@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 
@@ -35,7 +36,7 @@ it('cannot create users login with invalid password', function () {
 
 
 it('can destroy users login', function() {
-    $user = User::factory()->createQuietly(['password' => 'password']);
+    $user = User::factory()->createQuietly();
     test()->actingAs($user, 'web');
     post('/logout');
     test()->assertGuest();
