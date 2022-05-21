@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 use function Pest\Laravel\{get, post};
 
 it('can create registered users', function () {
-    get('/register')
+    get(route('users.create'))
     ->assertOk()
     ->assertInertia(fn ($page) => $page->component('auth/register'));
 });
@@ -16,12 +16,14 @@ it('can store registered users', function () {
     Event::fake();
 
     $data = User::factory()->raw();
-    $response = post('/register', [
+    $response = post(route('users.store'), [
         'name' => $data['name'],
         'email' => $data['email'],
         'password' => 'secretsecret',
         'password_confirmation' => 'secretsecret',
     ]);
+
+    dd($response->json());
 
     Event::assertDispatched(Registered::class);
 
