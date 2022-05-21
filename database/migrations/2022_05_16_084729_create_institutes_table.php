@@ -21,7 +21,7 @@ return new class extends Migration
         });
 
          Schema::create('universities_institutes', function (Blueprint $table) {
-            $table->bigInteger('university_id');
+            $table->bigInteger('users_id');
             $table->bigInteger('institute_id');
         });
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('school_year');
             $table->tinyInteger('level');
-            $table->foreignId('university_id')->constrained()->onUpdate('cascade');
+            $table->foreignId('users_id')->constrained()->onUpdate('cascade');
             $table->foreignId('student_id')->constrained()->onUpdate('cascade');
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('institute_id')->nullable()->constrained()->onUpdate('cascade');

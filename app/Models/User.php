@@ -55,4 +55,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setPasswordAttribute(string $value): void {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function photo()
+    {
+        return $this->morphOne(Photo::class, 'photoable');
+    }
+
+    public function faculties() {
+        return $this->belongsToMany(Faculty::class, 'universities_faculties');
+    }
+
+    public function institutes() {
+        return $this->belongsToMany(Institute::class, 'universities_institutes');
+    }
+
+    public function students() {
+        return $this->belongsToMany(Student::class, 'registrations');
+    }
 }
