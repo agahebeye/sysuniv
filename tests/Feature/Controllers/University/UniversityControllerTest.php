@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -23,45 +24,6 @@ it('can see universities', function () {
         );
 });
 
-it('can show universities dashboard', function () {
-    $university = University::factory()
-        ->hasFaculties(3)
-        ->hasInstitutes(3)
-        ->create(['email_verified_at' => now()]);
-
-    test()->actingAs(
-        $university,
-        'university'
-    );
-
-    $response = get(route('universities.show', ['university' => $university->id]));
-    $response
-        ->assertOk()
-        ->assertInertia(
-            fn (AssertableInertia $page) =>
-            $page->component('universities/dashboard')
-                ->where('university.nom', $university->nom)
-                ->where('university.faculties_count', 3)
-                ->where('university.institutes_count', 3)
-                ->whereContains('isVerified', true)
-        );
-});
-
-it('cannot show dashboard for unverified universities', function () {
-    test()->actingAs(
-        $university = University::factory()->create(),
-        'university'
-    );
-
-    $response = get(route('universities.show', ['university' => $university->id]));
-    $response
-        ->assertOk()
-        ->assertInertia(
-            fn (AssertableInertia $page) =>$page
-                ->where('isVerified', false)
-        );
-});
-
 it('can create universities', function () {
     $response = get(route('universities.create'))
         ->assertOk()
@@ -69,30 +31,34 @@ it('can create universities', function () {
 });
 
 it('can store universities', function () {
-    $data = University::factory()->raw();
+    $data = User::factory()->raw();
     $response = post(route('universities.store', [
-        ...$data, 'password_confirmation' => 'secretsecret'
+        ...$data, 'password_confirmation' => 'secretsecret', 'role' => UserType::UNIVERSITY->value
     ]));
+
     $response->assertRedirect(RouteServiceProvider::HOME);
-    assertDatabaseHas('universities', [
-        'nom' => $data['nom']
+    assertDatabaseHas('users', [
+        'name' => $data['name'],
+        'role' => UserType::UNIVERSITY->value
     ]);
 });
 
 it('can verify universities', function () {
-    $university = University::factory()->create();
+    $university = User::factory()->university()->create();
+
     Event::fake();
+
     $verificationLink = URL::temporarySignedRoute(
         'verification.verify',
         now()->addMinutes(60),
         ['id' => $university->id, 'hash' => sha1($university->email)]
     );
 
-    $response = test()->actingAs($university, 'university')->get($verificationLink);
+    $response = test()->actingAs($university)->get($verificationLink);
 
     Event::assertDispatched(Verified::class);
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
-    $response->assertRedirect(route('universities.show', ['university' => $university->id]) . '?verified=1');
+    $response->assertRedirect(RouteServiceProvider::HOME . '?verified=1');
 });
 
 it('can edit universities', function () {

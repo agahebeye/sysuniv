@@ -17,7 +17,7 @@ class RegisteredUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return request()->user()->role == UserType::ADMIN;
+        return true;
     }
 
     /**
