@@ -7,7 +7,6 @@ use App\Http\Requests\RegisteredUserRequest;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
-use Inertia\Inertia;
 
 class RegisteredUserController
 {
