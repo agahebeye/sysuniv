@@ -1,42 +1,34 @@
 <?php
 
-namespace App\Http\Controllers\Faculty;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Enums\UserType;
 use App\Models\Faculty;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class FacultyController extends Controller
+class FacultyController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        $faculties = Faculty::query()
+            ->when(
+                auth()->user()->role == UserType::UNIVERSITY,
+                fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+            )->get();
+        
         return Inertia::render('faculties/index', [
-            'faculties' => Faculty::get()
+            'faculties' => $faculties
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return Inertia::render('faculties/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -45,60 +37,11 @@ class FacultyController extends Controller
 
         Faculty::create($data);
 
-        return to_route('faculties.index');
+        return redirect(RouteServiceProvider::HOME);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Faculty  $faculty
-     * @return \Illuminate\Http\Response
-     */
     public function show(Faculty $faculty)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Faculty  $faculty
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Faculty $faculty)
-    {
-        return Inertia::render('faculties/edit', [
-            'faculty' => $faculty
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Faculty  $faculty
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Faculty $faculty)
-    {
-        $data = $request->validate([
-            'nom' => ['required', 'string']
-        ]);
-
-        $faculty->update($data);
-
-        return to_route('faculties.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Faculty  $faculty
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Faculty $faculty)
-    {
-        $faculty->delete();
-        return to_route('faculties.index');
     }
 }

@@ -15,13 +15,12 @@ return new class extends Migration
     {
         Schema::create('faculties', function (Blueprint $table) {
             $table->id();
-            $table->string('nom')->unique();
-            $table->softDeletes();
+            $table->string('name')->unique();
             $table->timestamps();
         });
 
          Schema::create('universities_faculties', function (Blueprint $table) {
-            $table->bigInteger('users_id');
+            $table->bigInteger('user_id');
             $table->bigInteger('faculty_id');
         });
     }

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Faculty extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $fillable = ['nom'];
+    protected $fillable = ['name'];
 
     public function universities() {
-        return $this->belongsToMany(University::class, 'universities_faculties');
+        return $this->belongsToMany(User::class, 'universities_faculties');
     }
 }
