@@ -18,11 +18,4 @@ class UniversityController
     {
         return Inertia::render('universities/create');
     }
-
-    public function edit(User $university): \Inertia\Response
-    {
-        return Inertia::render('universities/edit', [
-            'university' => $university
-        ]);
-    }
 }

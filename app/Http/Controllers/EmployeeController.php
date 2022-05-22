@@ -9,20 +9,13 @@ class EmployeeController
 {
     public function index(): \Inertia\Response
     {
-        return Inertia::render('universities/index', [
-            'universities' => User::employee()->with(['photo'])->get()
+        return Inertia::render('employees/index', [
+            'employees' => User::employee()->with(['photo'])->get()
         ]);
     }
 
     public function create()
     {
         return Inertia::render('employees/create');
-    }
-
-    public function edit(User $employee): \Inertia\Response
-    {
-        return Inertia::render('employees/edit', [
-            'employee' => $employee
-        ]);
     }
 }
