@@ -61,6 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('role', UserType::UNIVERSITY);
     }
 
+    public function scopeEmployee(Builder $query) {
+        return $query->where('role', UserType::EMPLOYEE);
+    }
+
     public function photo()
     {
         return $this->morphOne(Photo::class, 'photoable');

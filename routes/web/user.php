@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\RegisteredUserController;
+use App\Http\Controllers\RegisteredUserController;
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('users/create', [RegisteredUserController::class, 'create'])
