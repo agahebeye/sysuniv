@@ -1,19 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\University;
+namespace App\Http\Controllers;
 
-use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisteredUserRequest;
-use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-class UniversityController extends Controller
+class UniversityController
 {
     public function index(): \Inertia\Response
     {

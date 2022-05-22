@@ -1,11 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\EnsureUserIsAdmin;
-use App\Http\Controllers\University\UniversityController;
-use App\Http\Controllers\University\UniversityFacultyController;
-use App\Http\Controllers\University\UniversityStudentController;
-use App\Http\Controllers\University\UniversityInstituteController;
+use App\Http\Controllers\UniversityController;
 
 Route::prefix('universities')
     ->middleware(['auth', 'role:admin,employee'])
