@@ -11,9 +11,14 @@ use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, assertModel
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
 it('can see students', function () {
-    Student::factory(5)->create();
-    $response = get(route('students.index'))
-        ->assertInertia(
+    test()->actingAs($univeristy = User::factory()->university()->create());
+
+    Student::factory(2)->create();
+    Student::factory(3)->hasRegistrations()->hasAttached($univeristy, relationship: 'universities')->create();
+
+    $response = get(route('students.index'));
+    dd($response->json());
+        $response->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('students/index')
                 ->has('students', 5)
@@ -77,14 +82,4 @@ it('can update students', function () {
     assertDatabaseHas('students', ['firstname' => 'aboubakar']);
     assertDatabaseMissing('students', ['firstname' => $student->firstname]);
     expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
-});
-
-it('can destroy students', function () {
-    test()->actingAs(User::factory()->admin()->create());
-    $student = Student::factory()->create();
-    $response = delete(route('students.destroy', $student->id))
-        ->assertRedirect(route('students.index'));
-
-    assertModelMissing($student);
-    assertDatabaseMissing('students', $student->toArray());
 });
