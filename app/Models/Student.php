@@ -47,7 +47,7 @@ class Student extends Model
 
     public function universities()
     {
-        return $this->belongsToMany(University::class, 'registrations');
+        return $this->belongsToMany(User::class, 'registrations');
     }
 
     public function faculties()

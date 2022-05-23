@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Models\Student;
-use App\Enums\GenderType;
 use App\Enums\UserType;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\RegisteredStudentRequest;
 
-class StudentController extends Controller
+class StudentController
 {
     public function index(): \Inertia\Response
     {
+        $students = Student::query()
+            ->when(
+                auth()->user()->role == UserType::UNIVERSITY,
+                fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+            )->get();
+
         return Inertia::render('students/index', [
-            'students' => Student::query()->with(['photo'])->latest()->get()
+            'students' => $students
         ]);
     }
 
@@ -27,25 +31,17 @@ class StudentController extends Controller
         return Inertia::render('students/create');
     }
 
-    public function store(Request $request)/*: \Illuminate\Http\RedirectResponse*/
+    public function store(RegisteredStudentRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $data = $request->validate([
-            'firstname' => ['required', 'string'],
-            'lastname' => ['required', 'string'],
-            'gender' => [new Enum(GenderType::class)],
-            'birth_date' => ['required', 'date_format:Y-m-d'],
-            'address' => ['required', 'string'],
+        $data = $request->validated();
 
-            'photo' => ['required', 'image']
-        ]);
-
-        DB::transaction(function () use ($data, $request) {
-            $avatar = $request->file('photo')->storePublicly('/avatars', 'public');
+        DB::transaction(function () use ($data) {
+            $avatar = request()->file('photo')->storePublicly('/avatars', 'public');
             $student = Student::query()->create(Arr::except($data, ['photo']));
             $student->photo()->create(['src' => $avatar]);
         });
 
-        return to_route('students.index');
+        return redirect(RouteServiceProvider::HOME);
     }
 
     public function show(Student $student): \Inertia\Response
@@ -62,18 +58,9 @@ class StudentController extends Controller
         ]);
     }
 
-    public function update(Request $request, Student $student)
+    public function update(RegisteredStudentRequest $request, Student $student)
     {
-        $data = $request->validate([
-            'firstname' => ['sometimes', 'string'],
-            'lastname' => ['sometimes', 'string'],
-            'gender' => ['sometimes', new Enum(GenderType::class)],
-            'birth_date' => ['sometimes', 'date_format:Y-m-d'],
-            'address' => ['sometimes', 'string'],
-
-            'photo' => ['sometimes', 'image']
-        ]);
-
+        $data = $request->validated();
 
         $student->update(Arr::except($data, ['photo']));
 
@@ -82,13 +69,6 @@ class StudentController extends Controller
             $student->photo()->updateOrCreate([], ['src' => $avatar]);
         }
 
-        return to_route('students.index');
-    }
-
-    public function destroy(Student $student)
-    {
-        abort_unless(request()->user()->role_type == UserType::ADMIN, 403);
-        $student->delete();
-        return to_route('students.index');
+        return redirect(RouteServiceProvider::HOME);
     }
 }
