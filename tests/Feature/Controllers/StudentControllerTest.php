@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Registration;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -14,16 +15,14 @@ it('can see students', function () {
     test()->actingAs($univeristy = User::factory()->university()->create());
 
     Student::factory(2)->create();
-    Student::factory(3)->hasRegistrations()->hasAttached($univeristy, relationship: 'universities')->create();
-
+    Student::factory(3)->has(Registration::factory()->state(['user_id' => $univeristy]))->create();
     $response = get(route('students.index'));
-    dd($response->json());
-        $response->assertInertia(
-            fn (AssertableInertia $page) =>
-            $page->component('students/index')
-                ->has('students', 5)
-                ->has('students.0.photo')
-        );
+    
+    $response->assertInertia(
+        fn (AssertableInertia $page) =>
+        $page->component('students/index')
+            ->has('students', 3)
+    );
 });
 
 it('can show a student', function () {

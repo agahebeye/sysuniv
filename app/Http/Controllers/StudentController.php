@@ -13,14 +13,14 @@ use App\Http\Requests\RegisteredStudentRequest;
 
 class StudentController
 {
-    public function index()
+    public function index(): \Inertia\Response
     {
         $students = Student::query()
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
             )->get();
-        return $students;
+        
         return Inertia::render('students/index', [
             'students' => $students
         ]);
