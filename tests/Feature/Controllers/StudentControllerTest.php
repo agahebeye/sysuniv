@@ -40,8 +40,8 @@ it('can show students', function () {
 });
 
 it('can create students', function () {
-    get(route('students.create'))
-        ->assertOk()
+    $response = get(route('students.create'));
+    $response->assertOk()
         ->assertInertia(fn ($page) => $page->component('students/create'));
 });
 
