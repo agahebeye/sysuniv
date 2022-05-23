@@ -31,10 +31,10 @@ class StudentController
         return Inertia::render('students/create');
     }
 
-    public function store(RegisteredStudentRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(RegisteredStudentRequest $request): \Illuminate\Http\RedirectResponse | array
     {
         $data = $request->validated();
-
+        
         DB::transaction(function () use ($data) {
             $avatar = request()->file('photo')->storePublicly('/avatars', 'public');
             $student = Student::query()->create(Arr::except($data, ['photo']));

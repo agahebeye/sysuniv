@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('registration_number')->invisible();
             $table->string('firstname');
             $table->string('lastname');
-            $table->tinyInteger('gender');
+            $table->string('gender');
             $table->timestamp('birth_date');
             $table->tinyInteger('suspended')->default(0);
             $table->tinyText('address');

@@ -47,7 +47,7 @@ it('can create students', function () {
 
 it('can store students', function () {
     Storage::fake('public');
-    $photo = UploadedFile::fake()->image('photo.png');
+    $photo = UploadedFile::fake()->create('photo.png');
     $data = [...Student::factory()->raw(), 'photo' => $photo];
     $response = post(route('students.store'), $data);
 
