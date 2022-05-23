@@ -6,12 +6,11 @@ use App\Enums\UserType;
 use App\Models\Faculty;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class FacultyController
 {
-    public function index()
+    public function index(): \Inertia\Response
     {
         $faculties = Faculty::query()
             ->when(
@@ -24,18 +23,18 @@ class FacultyController
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('faculties/create');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $data = $request->validate([
-            'nom' => ['required', 'unique:faculties']
+        $data = request()->validate([
+            'name' => ['required', 'unique:faculties']
         ]);
 
-        Faculty::create($data);
+        Faculty::query()->create($data);
 
         return redirect(RouteServiceProvider::HOME);
     }

@@ -19,7 +19,7 @@ it('can see faculties', function () {
         ->create();
 
     $response = get(route('faculties.index'));
-    
+
     $response->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
@@ -35,15 +35,16 @@ it('can create faculties', function () {
 });
 
 it('can store faculties', function () {
-    post(route('faculties.store', ['nom' => 'faculty']))
-        ->assertRedirect(RouteServiceProvider::HOME);
+    $response = post(route('faculties.store', ['name' => 'faculty']));
+
+    $response->assertRedirect(RouteServiceProvider::HOME);
 
     test()->assertDatabaseHas('faculties', [
-        'nom' => 'faculty'
+        'name' => 'faculty'
     ]);
 
-    $response = post(route('faculties.store', ['nom' => 'faculty']));
+    $response = post(route('faculties.store', ['name' => 'faculty']));
     $response->assertSessionHasErrors([
-        'nom'
+        'name'
     ]);
 });
