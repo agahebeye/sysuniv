@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('school_year');
-            $table->tinyInteger('level');
+            $table->string('level');
             $table->foreignId('user_id')->constrained()->onUpdate('cascade');
             $table->foreignId('student_id')->constrained()->onUpdate('cascade');
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');

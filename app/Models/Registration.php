@@ -13,9 +13,8 @@ class Registration extends Model
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'school_year',
         'level',
-        'university_id',
+        'user_id',
         'student_id',
         'faculty_id',
         'institute_id'
