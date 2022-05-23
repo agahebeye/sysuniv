@@ -73,7 +73,7 @@ it('can update students', function () {
     $student->photo()->create(['src' => 'photo.png']);
 
     $response = put(
-        route('students.update', $student->id),
+        route('students.update', $student->getRouteKey()),
         [
             'firstname' => 'aboubakar',
             'photo' => $photo = UploadedFile::fake()->image('aboubakar.png')
