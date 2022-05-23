@@ -30,6 +30,11 @@ class Student extends Model
         static::creating(fn ($student) => $student->registration_number = Str::random(10));
     }
 
+    public function getRouteKey()
+    {
+        return  \Hashids::connection(get_called_class())->encode($this->getKey());
+    }
+
     public function photo()
     {
         return $this->morphOne(Photo::class, 'photoable');

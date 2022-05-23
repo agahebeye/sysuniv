@@ -40,6 +40,12 @@ class RouteServiceProvider extends ServiceProvider
                     ->group($file);
             }
         });
+
+        Route::bind('student', function ($value, $route) {
+            $id = \Hashids::connection($model = \App\Models\Student::class)->decode($value)[0] ?? null;
+            $modelInstance = resolve($model);
+            return  $modelInstance->findOrFail($id);
+        });
     }
 
     /**

@@ -18,8 +18,7 @@ class RegistrationFactory extends Factory
     public function definition()
     {
         return [
-            'school_year' => '2019-2020',
-            'level' => array_rand(LevelType::cases()),
+            'level' => LevelType::BAC_1->value
         ];
     }
 }

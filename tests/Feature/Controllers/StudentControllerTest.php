@@ -29,7 +29,7 @@ it('can see students', function () {
 it('can show students', function () {
     $student = Student::factory()->create();
 
-    $response = get(route('students.show', $student->id));
+    $response = get(route('students.show', $student->getRouteKey()));
 
     $response->assertOk()
         ->assertInertia(
