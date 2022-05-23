@@ -17,7 +17,7 @@ it('can see students', function () {
     Student::factory(2)->create();
     Student::factory(3)->has(Registration::factory()->state(['user_id' => $univeristy]))->create();
     $response = get(route('students.index'));
-    
+
     $response->assertInertia(
         fn (AssertableInertia $page) =>
         $page->component('students/index')
@@ -25,10 +25,12 @@ it('can see students', function () {
     );
 });
 
-it('can show a student', function () {
+it('can show students', function () {
     $student = Student::factory()->create();
-    $response = get(route('students.show', $student->id))
-        ->assertOk()
+
+    $response = get(route('students.show', $student->id));
+
+    $response->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('students/show')

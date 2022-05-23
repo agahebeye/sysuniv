@@ -20,7 +20,7 @@ class StudentController
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
             )->get();
-        
+
         return Inertia::render('students/index', [
             'students' => $students
         ]);
