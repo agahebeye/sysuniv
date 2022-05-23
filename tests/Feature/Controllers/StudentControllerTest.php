@@ -3,6 +3,7 @@
 use App\Models\Registration;
 use App\Models\Student;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
@@ -78,7 +79,7 @@ it('can update students', function () {
             'photo' => $photo = UploadedFile::fake()->image('aboubakar.png')
         ]
     )
-        ->assertRedirect(route('students.index'));
+        ->assertRedirect(RouteServiceProvider::HOME);
 
     assertDatabaseHas('students', ['firstname' => 'aboubakar']);
     assertDatabaseMissing('students', ['firstname' => $student->firstname]);
