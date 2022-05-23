@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Institute extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    const UPDATED_AT = null;
     protected $fillable = ['name'];
 
     public function universities() {

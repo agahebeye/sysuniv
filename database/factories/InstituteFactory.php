@@ -17,7 +17,7 @@ class InstituteFactory extends Factory
     public function definition()
     {
         return [
-            'nom' => $this->faker->unique()->word()
+            'name' => $this->faker->unique()->word()
         ];
     }
 }

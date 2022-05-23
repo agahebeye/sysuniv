@@ -6,11 +6,10 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Institute;
-use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 
-class InstituteController extends Controller
+class InstituteController
 {
 
     public function index()
@@ -35,7 +34,7 @@ class InstituteController extends Controller
     {
         $data = request()->validate([
             'name' => ['required', 'unique:institutes']
-        ], request()->all());
+        ]);
 
         Institute::query()->create($data);
 
