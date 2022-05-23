@@ -14,6 +14,6 @@ class Institute extends Model
     protected $fillable = ['nom'];
 
     public function universities() {
-        return $this->belongsToMany(University::class, 'universities_institutes');
+        return $this->belongsToMany(User::class, 'universities_institutes');
     }
 }

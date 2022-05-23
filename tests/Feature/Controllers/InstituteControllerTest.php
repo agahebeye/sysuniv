@@ -8,14 +8,19 @@ use function Pest\Laravel\{ get, post};
 
 beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
-it('can see institues', function () {
+it('can see institutes', function () {
+    $university = User::factory()->university()->create();
+
+    test()->actingAs($university);
+
     Institute::factory(3)->create();
+    Institute::factory(4)->hasAttached($university, relationship: 'universities')->create();
     $response = get(route('institutes.index'))
         ->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('institutes/index')
-                ->has('institutes', 3)
+                ->has('institutes', 4)
         );
 });
 
