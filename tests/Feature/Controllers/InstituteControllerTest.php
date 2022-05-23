@@ -2,6 +2,7 @@
 
 use App\Models\Institute;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
 use function Pest\Laravel\{ get, post};
@@ -31,8 +32,9 @@ it('can create institutes', function () {
 });
 
 it('can store institutes', function () {
-    post(route('institutes.store', ['name' => 'faculty']))
-        ->assertRedirect(route('institutes.index'));
+    $response = post(route('institutes.store'), ['name' => 'faculty']);
+    
+    $response->assertRedirect(RouteServiceProvider::HOME);
 
     test()->assertDatabaseHas('institutes', [
         'name' => 'faculty'

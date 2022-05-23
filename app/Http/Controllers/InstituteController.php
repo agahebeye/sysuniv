@@ -35,7 +35,7 @@ class InstituteController extends Controller
     {
         $data = request()->validate([
             'name' => ['required', 'unique:institutes']
-        ]);
+        ], request()->all());
 
         Institute::query()->create($data);
 

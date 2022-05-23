@@ -11,7 +11,7 @@ class Institute extends Model
     use HasFactory, SoftDeletes;
 
     const UPDATED_AT = null;
-    protected $fillable = ['nom'];
+    protected $fillable = ['name'];
 
     public function universities() {
         return $this->belongsToMany(User::class, 'universities_institutes');
