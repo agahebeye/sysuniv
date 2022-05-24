@@ -34,7 +34,7 @@ class StudentController
     public function store(RegisteredStudentRequest $request): \Illuminate\Http\RedirectResponse | array
     {
         $data = $request->validated();
-        
+
         DB::transaction(function () use ($data) {
             $avatar = request()->file('photo')->storePublicly('/avatars', 'public');
             $student = Student::query()->create(Arr::except($data, ['photo']));
@@ -70,5 +70,10 @@ class StudentController
         }
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function verifyRegistrationNumber()
+    {
+        return Student::query()->where('registration_number')->firstOrFail(['id', 'registration_number']);
     }
 }
