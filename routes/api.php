@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\VerifyStudentController;
 
 Route::prefix('api')
     ->middleware(['auth', 'role:university'])->group(function () {
-        Route::get('students/registrations/{number}', [StudentController::class, 'verifyRegistrationNumber'])->name('students.registrations.number');
+        Route::get('students/verify/{registration_number}', [VerifyStudentController::class, '__invoke'])->name('students.verify');
     });

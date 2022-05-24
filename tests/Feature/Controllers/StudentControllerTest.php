@@ -93,12 +93,3 @@ it('can verify registration numbers', function () {
     $response = getJson(route('students.registrations.number', $student->registration_number));
     $response->assertOk();
 });
-
-it('cannot verify numbers for unregistered students', function() {
-    test()->actingAs(User::factory()->university()->create());
-    $registration_number = Str::random(25);
-        $response = getJson(route('students.registrations.number', $registration_number));
-        $response->assertNotFound();
-//        dd($response->status());
-
-});
