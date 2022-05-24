@@ -1,13 +1,14 @@
 <?php
 
-use App\Models\Registration;
-use App\Models\Student;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
+use App\Models\Student;
+use Illuminate\Support\Str;
+use App\Models\Registration;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
+use App\Providers\RouteServiceProvider;
 
+use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, get, getJson, post, put};
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
@@ -86,9 +87,18 @@ it('can update students', function () {
     expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
 });
 
-it('can verify registration numbers', function() {
+it('can verify registration numbers', function () {
     test()->actingAs(User::factory()->university()->create());
     $student = Student::factory()->create();
     $response = getJson(route('students.registrations.number', $student->registration_number));
-    dd($response->json());
+    $response->assertOk();
+});
+
+it('cannot verify numbers for unregistered students', function() {
+    test()->actingAs(User::factory()->university()->create());
+    $registration_number = Str::random(25);
+        $response = getJson(route('students.registrations.number', $registration_number));
+        $response->assertNotFound();
+//        dd($response->status());
+
 });
