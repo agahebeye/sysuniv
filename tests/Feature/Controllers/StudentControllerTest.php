@@ -57,7 +57,7 @@ it('can store students', function () {
 
 it('can edit students', function () {
     $student = Student::factory()->create();
-    $response = get(route('students.edit', $student->id))
+    $response = get(route('students.edit', $student->getRouteKey()))
         ->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
