@@ -8,7 +8,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Testing\AssertableInertia;
 
-use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, assertModelMissing, delete, get, post, put};
+use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, get, getJson, post, put};
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
@@ -84,4 +84,11 @@ it('can update students', function () {
     assertDatabaseHas('students', ['firstname' => 'aboubakar']);
     assertDatabaseMissing('students', ['firstname' => $student->firstname]);
     expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
+});
+
+it('can verify registration numbers', function() {
+    test()->actingAs(User::factory()->university()->create());
+    $student = Student::factory()->create();
+    $response = getJson(route('students.registrations.number', $student->registration_number));
+    dd($response->json());
 });

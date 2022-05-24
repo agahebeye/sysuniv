@@ -72,8 +72,8 @@ class StudentController
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function verifyRegistrationNumber()
+    public function verifyRegistrationNumber($number)
     {
-        return Student::query()->where('registration_number')->firstOrFail(['id', 'registration_number']);
+        return Student::query()->where('registration_number', $number)->firstOrFail(['id', 'registration_number']);
     }
 }
