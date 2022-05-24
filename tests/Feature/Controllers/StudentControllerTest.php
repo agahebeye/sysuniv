@@ -86,10 +86,3 @@ it('can update students', function () {
     assertDatabaseMissing('students', ['firstname' => $student->firstname]);
     expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
 });
-
-it('can verify registration numbers', function () {
-    test()->actingAs(User::factory()->university()->create());
-    $student = Student::factory()->create();
-    $response = getJson(route('students.registrations.number', $student->registration_number));
-    $response->assertOk();
-});
