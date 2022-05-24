@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VerifyStudentController;
+use App\Http\Controllers\Api\VerifyStudentController;
 
 Route::prefix('api')
     ->middleware(['auth', 'role:university'])->group(function () {
