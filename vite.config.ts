@@ -18,6 +18,6 @@ export default defineConfig(({ command }) => ({
     },
     plugins: [vue()],
     optimizeDeps: {
-        include: ["vue", "@inertiajs/inertia", "@inertiajs/inertia-vue"],
+        include: ["vue", "@inertiajs/inertia"],
     },
 }));

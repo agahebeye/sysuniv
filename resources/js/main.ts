@@ -14,7 +14,7 @@ createApp({
         h(InertiaApp, {
             initialPage: JSON.parse(app.dataset.page),
             resolveComponent: async (name) => {
-                const importPage = pages[`./Pages/${name}.vue`];
+                const importPage = pages[`./pages/${name}.vue`];
                 if (!importPage) {
                     throw new Error(
                         `Unknown page ${name}. Is it located under Pages with a .vue extension?`
