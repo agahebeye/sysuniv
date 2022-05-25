@@ -3,11 +3,10 @@
         "module": "ESNext",
         "target": "ESNext",
         "jsx": "preserve",
-        "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "NodeNext",
         "types": ["node", "vite/client"],
-        "baseUrl": "resouces/js",
+        "baseUrl": "resources/js",
         "paths": {
             "~": ["."],
             "~/*": ["./*"]

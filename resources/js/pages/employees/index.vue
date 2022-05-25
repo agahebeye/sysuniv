@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {User} from '../../types/users';
+import {User} from '~/types/users';
+
 defineProps<{
     employees: User[]
 }>();
