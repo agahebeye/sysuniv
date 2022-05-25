@@ -13,5 +13,5 @@
             "~/*": ["./*"]
         }
     },
-    "include": ["resources/js/types/*.d.ts"]
+    "include": ["resources/js/**/*.vue", "resources/**/*.d.ts", "resources/**/*.ts"]
 }
