@@ -12,5 +12,6 @@
             "~": ["."],
             "~/*": ["./*"]
         }
-    }
+    },
+    "include": ["resources/js/types/*.d.ts"]
 }

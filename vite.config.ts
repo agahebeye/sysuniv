@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
@@ -17,6 +19,11 @@ export default defineConfig(({ command }) => ({
         },
     },
     plugins: [vue()],
+    test: {
+        globals: true,
+        environment: "jsdom",
+        
+    },
     optimizeDeps: {
         include: ["vue", "@inertiajs/inertia"],
     },
