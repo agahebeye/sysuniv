@@ -10,7 +10,7 @@ defineProps<{
 <template>
     <table>
         <tr>
-            <td v-for="employee in employees">{{ employee.name }}</td>
+            <td v-for="employee in employees" data-test="employee">{{ employee.name }}</td>
         </tr>
     </table>
 </template>
