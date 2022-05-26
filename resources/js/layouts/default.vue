@@ -1,6 +1,11 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 const { user } = usePage().props.value.auth as any;
+
+const isAdmin = computed(() => user.role === 'admin');
+const isEmployee = computed(() => user.role === 'employee');
+
 </script>
 
 <template>
@@ -9,8 +14,9 @@ const { user } = usePage().props.value.auth as any;
             <nav>
                 <div>
                     <Link href="/">home</Link>
-                    <Link v-if="user.role === 'admin'" href="/employees">employees</Link>
-                    <Link href="/universities">universities</Link>
+                    <Link v-if="isAdmin" href="/employees">employees</Link>
+                    <Link v-if="isAdmin || isEmployee" href="/universities">universities</Link>
+                    <Link href="/students">students</Link>
                 </div>
 
                 <div class="menu-auth">

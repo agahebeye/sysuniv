@@ -6,8 +6,8 @@ import { Head } from '@inertiajs/inertia-vue3';
     <Head>
         <title>Dashboard - Sysuniv</title>
     </Head>
-    
+
     <div>
-        <p>Welcome to your dashboar</p>
+        <p>Welcome to the dashboard</p>
     </div>
 </template>
