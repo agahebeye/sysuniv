@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\AuthenticatedUserController;
 Route::middleware('guest')->group(function () {
 
     Route::get('login', [AuthenticatedUserController::class, 'create'])
-        ->name('login')->name('login.create');
+        ->name('login.create');
 
     Route::post('login', [AuthenticatedUserController::class, 'store'])->name('login.store');
 });
