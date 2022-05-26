@@ -6,9 +6,6 @@ const form = useForm({
     password: ''
 });
 
-function login() {
-    console.log(form);
-}
 </script>
 
 <template>
@@ -23,7 +20,7 @@ function login() {
             {{ form.errors}}
         </div>
 
-        <form @submit.prevent="form.post('/login')">
+        <form @submit.prevent="form.post(route('login.store'))">
             <div>
                 <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" autocomplete="off" autofocus required>

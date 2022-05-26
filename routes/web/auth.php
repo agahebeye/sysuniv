@@ -9,9 +9,9 @@ use App\Http\Controllers\Auth\AuthenticatedUniversityController;
 Route::middleware('guest')->group(function () {
 
     Route::get('login', [AuthenticatedUserController::class, 'create'])
-        ->name('login');
+        ->name('login')->name('login.create');
 
-    Route::post('login', [AuthenticatedUserController::class, 'store']);
+    Route::post('login', [AuthenticatedUserController::class, 'store'])->name('login.store');
 });
 
 Route::middleware('auth')->group(function () {

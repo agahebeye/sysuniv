@@ -9,6 +9,7 @@ const app = document.getElementById("app");
 
 const pages = import.meta.glob("./pages/**/*.vue");
 
+
 createApp({
     render: () =>
         h(InertiaApp, {
@@ -26,4 +27,5 @@ createApp({
         }),
 })
     .use(InertiaPlugin)
+    .mixin({methods: {route: window.route}})
     .mount(app);
