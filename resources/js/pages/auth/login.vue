@@ -17,7 +17,7 @@ const form = useForm({
         <h1>login</h1>
 
         <div class="errors" v-if="form.hasErrors">
-            {{ form.errors}}
+            <div v-for="error in form.errors">{{ error }}</div>
         </div>
 
         <form @submit.prevent="form.post('/login')">
