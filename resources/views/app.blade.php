@@ -8,7 +8,6 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    @routes
     @inertiaHead
     <script type="module" src="http://localhost:3000/@vite/client"></script>
     <script type="module" src="http://localhost:3000/resources/js/main.ts"></script>

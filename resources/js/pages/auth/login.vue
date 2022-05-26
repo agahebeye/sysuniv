@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
     email: '',
@@ -20,7 +20,7 @@ const form = useForm({
             {{ form.errors}}
         </div>
 
-        <form @submit.prevent="form.post(route('login.store'))">
+        <form @submit.prevent="form.post('/login')">
             <div>
                 <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" autocomplete="off" autofocus required>

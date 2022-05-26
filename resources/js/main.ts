@@ -3,6 +3,7 @@ import { createApp, h } from "vue";
 import {
     App as InertiaApp,
     plugin as InertiaPlugin,
+usePage,
 } from "@inertiajs/inertia-vue3";
 
 const app = document.getElementById("app");
@@ -24,8 +25,11 @@ createApp({
                 const module = await importPage();
                 return module.default;
             },
+            
         }),
+        provide: {
+            ziggy: usePage().props.value
+        }
 })
     .use(InertiaPlugin)
-    .mixin({methods: {route: window.route}})
     .mount(app);
