@@ -3,6 +3,7 @@
         "module": "ESNext",
         "target": "ESNext",
         "jsx": "preserve",
+        "allowJs": true,
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "NodeNext",
         "types": ["node", "vite/client"],

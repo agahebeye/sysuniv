@@ -3,8 +3,9 @@ import { createApp, h } from "vue";
 import {
     App as InertiaApp,
     plugin as InertiaPlugin,
-usePage,
 } from "@inertiajs/inertia-vue3";
+
+import Default from "~/layouts/default.vue";
 
 const app = document.getElementById("app");
 
@@ -23,13 +24,13 @@ createApp({
                     );
                 }
                 const module = await importPage();
-                return module.default;
+                const page = module.default;
+
+                page.layout = page.layout || Default;
+                return page;
             },
             
         }),
-        provide: {
-            ziggy: usePage().props.value
-        }
 })
     .use(InertiaPlugin)
     .mount(app);
