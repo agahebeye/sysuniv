@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {User} from '~/types/users';
+import { Head } from '@inertiajs/inertia-vue3';
+import { User } from '~/types/users';
 
 defineProps<{
     employees: User[]
@@ -8,9 +9,17 @@ defineProps<{
 </script>
 
 <template>
-    <table>
-        <tr>
-            <td v-for="employee in employees" data-test="employee">{{ employee.name }}</td>
-        </tr>
-    </table>
+
+    <Head>
+        <title>Employees - Sysuniv</title>
+    </Head>
+
+    <div>
+        <h1>Employees</h1>
+        <table>
+            <tr v-for="employee in employees" data-test="employee">
+                <td>{{ employee.name }}</td>
+            </tr>
+        </table>
+    </div>
 </template>

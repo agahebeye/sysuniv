@@ -4,6 +4,7 @@ import GuestLayout from '~/layouts/GuestLayout.vue';
 
 export default {
     layout: GuestLayout,
+
     components: {
         Head
     },
