@@ -6,6 +6,7 @@ import {
 } from "@inertiajs/inertia-vue3";
 
 import Default from "~/layouts/default.vue";
+import '~/../css/main.css';
 
 const app = document.getElementById("app");
 

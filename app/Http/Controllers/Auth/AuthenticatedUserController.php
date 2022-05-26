@@ -50,6 +50,6 @@ class AuthenticatedUserController
 
         request()->session()->regenerateToken();
 
-        return to_route('login');
+        return to_route('login.create');
     }
 }

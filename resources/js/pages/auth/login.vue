@@ -1,10 +1,26 @@
-<script lang="ts" setup>
-import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
+<script lang="ts">
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import GuestLayout from '~/layouts/GuestLayout.vue';
 
-const form = useForm({
-    email: '',
-    password: ''
-});
+export default {
+    layout: GuestLayout,
+    components: {
+        Head
+    },
+
+    setup() {
+        const form = useForm({
+            email: '',
+            password: ''
+        });
+
+        return {
+            form
+        }
+    }
+}
+
+
 
 </script>
 
@@ -28,7 +44,8 @@ const form = useForm({
 
             <div>
                 <label for="password">password</label>
-                <input type="password" minlength="8" id="password" v-model="form.password" autocomplete="off" autofocus required>
+                <input type="password" minlength="8" id="password" v-model="form.password" autocomplete="off" autofocus
+                    required>
             </div>
 
             <button>Login</button>
