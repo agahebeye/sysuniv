@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
-const {isAdmin, isEmployee} = useAuth();
+const { isAdmin, isEmployee } = useAuth();
 
 </script>
 
