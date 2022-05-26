@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { Link, usePage } from '@inertiajs/inertia-vue3';
-const { user } = usePage().props.value.auth as any;
-
-const isAdmin = computed(() => user.role === 'admin');
-const isEmployee = computed(() => user.role === 'employee');
+import { Link } from '@inertiajs/inertia-vue3';
+import { useAuth } from '~/composables/auth';
+const {isAdmin, isEmployee} = useAuth();
 
 </script>
 
