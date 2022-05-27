@@ -15,11 +15,12 @@ defineProps<{
     </Head>
 
     <div>
-        <Link v-if="isAdmin || isEmployee" href="/institutes/create">add new institute</Link>
-    </div>
-
-    <div>
         <h1>Institutes</h1>
+
+        <div>
+            <Link v-if="isAdmin || isEmployee" href="/institutes/create">add new institute</Link>
+        </div>
+
         <table>
             <tr v-for="institute in institutes" data-test="institute">
                 <td>{{ institute.name }}</td>
