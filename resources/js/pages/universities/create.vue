@@ -21,7 +21,11 @@ const form = useForm({
 });
 
 function addNewUniversity() {
-    console.log(form);
+    form.transform(data => ({
+        ...data,
+        faculties: data.faculties.map(({ id }) => id),
+        institutes: data.institutes.map(({ id }) => id),
+    })).post('/universities/store');
 }
 
 defineProps<{
@@ -86,11 +90,11 @@ defineProps<{
 
             <div>
                 <label for="institutes">institutes</label>
-                <select name="institutes" v-model="form.institutes" id="institutes" multiple>
-                    <option v-for="institute in institutes" :value="institute.id">{{ institute.name }}</option>
-                </select>
-            </div>
+                <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
+                    :close-on-select="false" :options="institutes" label="name" track-by="id">
+                </multiselect>
 
+            </div>
             <button>add</button>
         </form>
     </div>
