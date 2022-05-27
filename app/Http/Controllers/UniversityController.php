@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserType;
+use App\Mail\UniversityAdded;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 
 class UniversityController
@@ -49,6 +51,8 @@ class UniversityController
                     'role' => UserType::UNIVERSITY,
                 ]
             );
+
+            Mail::to($university)->send(new UniversityAdded($university));
 
             $university->faculties()->attach($data['faculties']);
             $university->institutes()->attach($data['institutes']);

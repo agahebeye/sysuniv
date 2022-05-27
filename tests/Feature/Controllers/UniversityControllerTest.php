@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserType;
+use App\Mail\UniversityAdded;
 use App\Models\Faculty;
 use App\Models\Institute;
 use App\Models\University;
@@ -8,6 +9,7 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Inertia\Testing\AssertableInertia;
 
@@ -33,10 +35,14 @@ it('can create universities', function () {
 });
 
 it('can store universities', function () {
+    Mail::fake();
+
     $faculties = Faculty::factory(3)->create();
     $institutes = Institute::factory(2)->create();
 
     $data = User::factory()->university()->raw();
+
+    Mail::assertNothingSent();
 
     $response = post(route('universities.store', [
         ...$data,
@@ -46,6 +52,8 @@ it('can store universities', function () {
         'faculties' => $faculties->map(fn ($faculty) => ['id' => $faculty->id])->flatten()->toArray(),
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
     ]));
+
+    Mail::assertSent(UniversityAdded::class);
 
     $response->assertRedirect(route('universities.index'));
 
