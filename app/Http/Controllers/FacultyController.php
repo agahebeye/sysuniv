@@ -36,7 +36,7 @@ class FacultyController
 
         Faculty::query()->create($data);
 
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('faculties.index'); 
     }
 
     public function show(Faculty $faculty)
