@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
+use App\Models\Institute;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules;
@@ -17,7 +19,10 @@ class UniversityController
 
     public function create(): \Inertia\Response
     {
-        return Inertia::render('universities/create');
+        return Inertia::render('universities/create', [
+            'faculties' => Faculty::query()->get(),
+            'institutes' => Institute::query()->get(),
+        ]);
     }
 
     public function store()
@@ -29,8 +34,8 @@ class UniversityController
             'website' => ['required', 'url'],
             'address' => ['required', 'string'],
 
-            'faculty' => ['array:id,name'],
-            'institute' => ['array:id,name'],
+            'faculties' => ['array'],
+            'institutes' => ['array'],
         ]);
 
         return $data;

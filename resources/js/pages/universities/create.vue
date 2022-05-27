@@ -1,5 +1,15 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { ref } from 'vue';
+import Multiselect from 'vue-multiselect';
+
+
+type Domain = {
+    id: number,
+    name: string
+}
+
+const value = ref('');
 
 const form = useForm({
     name: '',
@@ -8,7 +18,14 @@ const form = useForm({
     password_confirmation: '',
     website: '',
     address: '',
+    faculties: [],
+    institutes: []
 });
+
+defineProps<{
+    faculties: Array<Domain>,
+    institutes: Array<Domain>,
+}>();
 </script>
 
 <template>
@@ -16,7 +33,7 @@ const form = useForm({
     <Head>
         <title>Create University - Sysuniv</title>
     </Head>
-    
+
     <div>
         <h1>Add new university</h1>
 
@@ -30,7 +47,7 @@ const form = useForm({
                 <input type="text" id="name" v-model="form.name" autocomplete="off" autofocus required>
             </div>
 
-             <div>
+            <div>
                 <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" autocomplete="off" required>
             </div>
@@ -42,7 +59,8 @@ const form = useForm({
 
             <div>
                 <label for="password_confirmation">re-enter password</label>
-                <input type="password" id="password_confirmation" v-model="form.password_confirmation" autocomplete="off" required>
+                <input type="password" id="password_confirmation" v-model="form.password_confirmation"
+                    autocomplete="off" required>
             </div>
 
             <div>
@@ -55,7 +73,25 @@ const form = useForm({
                 <textarea name="address" id="address" v-model="form.address" cols="30" rows="10"></textarea>
             </div>
 
+
+            <div>
+                <label for="faculties">faculties</label>
+                <multiselect v-model="form.faculties" placeholder="select faculties" :options="faculties" label="name"
+                    track-by="id"></multiselect>
+
+            </div>
+
+            <div>
+                <label for="institutes">institutes</label>
+                <select name="institutes" v-model="form.institutes" id="institutes" multiple>
+                    <option v-for="institute in institutes" :value="institute.id">{{ institute.name }}</option>
+                </select>
+            </div>
+
             <button>add</button>
         </form>
     </div>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.css">
+</style>
