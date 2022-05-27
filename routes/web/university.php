@@ -10,6 +10,6 @@ Route::prefix('universities')
         Route::middleware(['role:admin,employee'])->group(function () {
             Route::get('/', [UniversityController::class, 'index'])->name('universities.index');
             Route::get('/create', [UniversityController::class, 'create'])->name('universities.create');
-            Route::post('/store', [RegisteredUserController::class, 'store'])->name('universities.store');
+            Route::post('/store', [UniversityController::class, 'store'])->name('universities.store');
         });
     });

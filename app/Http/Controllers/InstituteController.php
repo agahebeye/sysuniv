@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Institute;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 
 class InstituteController

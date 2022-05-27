@@ -14,7 +14,6 @@ class RegisteredUserController
     public function store(RegisteredUserRequest $request)
     {
         $user = User::query()->create($request->validated());
-
         event(new Registered($user));
 
         if ($user->role == UserType::UNIVERSITY) {

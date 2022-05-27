@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Validation\Rules;
 
 class UniversityController
 {
@@ -14,8 +15,24 @@ class UniversityController
         ]);
     }
 
-    public function create()
+    public function create(): \Inertia\Response
     {
         return Inertia::render('universities/create');
+    }
+
+    public function store()
+    {
+        $data = request()->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'website' => ['required', 'url'],
+            'address' => ['required', 'string'],
+
+            'faculty' => ['array:id,name'],
+            'institute' => ['array:id,name'],
+        ]);
+
+        return $data;
     }
 }
