@@ -38,7 +38,7 @@ class InstituteController
 
         Institute::query()->create($data);
 
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('institutes.index');
     }
 
     public function show(Institute $faculty)
