@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Faculty;
-use App\Models\Institute;
+use App\Enums\UserType;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Faculty;
+use App\Models\Institute;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rules;
 
 class UniversityController
@@ -38,6 +40,18 @@ class UniversityController
             'institutes' => ['array'],
         ]);
 
-        return $data;
+        return $data['faculties'];
+
+        $university = User::query()->create(
+            [
+                ...Arr::except($data, ['faculties', 'institutes']),
+                'role' => UserType::UNIVERSITY,
+            ]
+        );
+
+        $university->faculties()->create($data['faculties']);
+        $university->institutes()->create($data['institutes']);
+
+        return to_route('universities.index');
     }
 }
