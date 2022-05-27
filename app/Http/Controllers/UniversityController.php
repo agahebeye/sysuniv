@@ -20,8 +20,8 @@ class UniversityController
     public function create(): \Inertia\Response
     {
         return Inertia::render('universities/create', [
-            'faculties' => Faculty::query()->get(),
-            'institutes' => Institute::query()->get(),
+            'faculties' => Faculty::query()->get(['id', 'name']),
+            'institutes' => Institute::query()->get(['id', 'name']),
         ]);
     }
 

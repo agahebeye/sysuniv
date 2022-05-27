@@ -9,8 +9,6 @@ type Domain = {
     name: string
 }
 
-const value = ref('');
-
 const form = useForm({
     name: '',
     email: '',
@@ -21,6 +19,10 @@ const form = useForm({
     faculties: [],
     institutes: []
 });
+
+function addNewUniversity() {
+    console.log(form);
+}
 
 defineProps<{
     faculties: Array<Domain>,
@@ -41,7 +43,7 @@ defineProps<{
             <div v-for="error in form.errors">{{ error }}</div>
         </div>
 
-        <form @submit.prevent="form.post('/universities/store')">
+        <form @submit.prevent="addNewUniversity">
             <div>
                 <label for="name">name</label>
                 <input type="text" id="name" v-model="form.name" autocomplete="off" autofocus required>
@@ -76,8 +78,9 @@ defineProps<{
 
             <div>
                 <label for="faculties">faculties</label>
-                <multiselect v-model="form.faculties" placeholder="select faculties" :options="faculties" label="name"
-                    track-by="id"></multiselect>
+                <multiselect v-model="form.faculties" placeholder="select faculties" :multiple="true"
+                    :close-on-select="false" :options="faculties" label="name" track-by="id">
+                </multiselect>
 
             </div>
 
