@@ -1,6 +1,8 @@
 <?php
 
 use App\Enums\UserType;
+use App\Models\Faculty;
+use App\Models\Institute;
 use App\Models\University;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -31,15 +33,30 @@ it('can create universities', function () {
 });
 
 it('can store universities', function () {
-    $data = User::factory()->raw();
+    $faculties = Faculty::factory(3)->create();
+    $institutes = Institute::factory(2)->create();
+
+    $data = User::factory()->university()->raw();
+
     $response = post(route('universities.store', [
-        ...$data, 'password_confirmation' => 'secretsecret', 'role' => UserType::UNIVERSITY->value
+        ...$data,
+        'password_confirmation' => 'secretsecret',
+        'website' => 'https://johndoe.org',
+        'address' => 'home',
+        'faculties' => $faculties->map(fn ($faculty) => ['id' => $faculty->id])->flatten()->toArray(),
+        'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
     ]));
 
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect(route('universities.index'));
+
     assertDatabaseHas('users', [
         'name' => $data['name'],
         'role' => UserType::UNIVERSITY->value
+    ]);
+
+    assertDatabaseHas('universities_institutes', [
+        'user_id' => User::university()->latest()->first()->id,
+        'institute_id' => $institutes[0]->id,
     ]);
 });
 

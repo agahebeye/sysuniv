@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('role');
-            $table->string('siteweb')->nullable();
+            $table->string('website')->nullable();
             $table->text('address')->nullable();
             $table->tinyInteger('suspended')->default(0);
             $table->timestamps();

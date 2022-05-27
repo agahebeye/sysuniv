@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 
 class UniversityController
@@ -40,17 +41,19 @@ class UniversityController
             'institutes' => ['array'],
         ]);
 
-        return $data['faculties'];
+        //DB::transaction(function () use ($data) {
 
-        $university = User::query()->create(
-            [
-                ...Arr::except($data, ['faculties', 'institutes']),
-                'role' => UserType::UNIVERSITY,
-            ]
-        );
+            $university = User::query()->create(
+                [
+                    ...Arr::except($data, ['faculties', 'institutes']),
+                    'role' => UserType::UNIVERSITY,
+                ]
+            );
 
-        $university->faculties()->create($data['faculties']);
-        $university->institutes()->create($data['institutes']);
+            $university->faculties()->attach($data['faculties']);
+            $university->institutes()->attach($data['institutes']);
+
+      //  });
 
         return to_route('universities.index');
     }
