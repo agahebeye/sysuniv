@@ -39,7 +39,7 @@ class UniversityController
 
         $university =  $createUniversityAction->handle($request->validated());
 
-        $university->notify((new UniversityRegistered())->afterCommit());
+        $university->notify((new UniversityRegistered($request->password))->afterCommit());
 
         return to_route('universities.index');
     }

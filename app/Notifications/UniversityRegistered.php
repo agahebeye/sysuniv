@@ -3,9 +3,12 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class UniversityRegistered extends Notification
 {
@@ -16,8 +19,9 @@ class UniversityRegistered extends Notification
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        public string $password
+    ) {
         //
     }
 
@@ -40,10 +44,23 @@ class UniversityRegistered extends Notification
      */
     public function toMail($notifiable)
     {
+        $url = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $notifiable->getKey(),
+                'hash' => sha1($notifiable->getEmailForVerification()),
+            ]
+        );
+
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('Verify your account')
+            ->line('Below are your account details to get yourself logged in')
+            ->line("email: $notifiable->getEmailForVerification()")
+            ->line("password: $this->password")
+            ->line('Note! You can still modify your details after login')
+            ->action('Verify your account', $url)
+            ->line('Thank you for using our application!');
     }
 
     /**
