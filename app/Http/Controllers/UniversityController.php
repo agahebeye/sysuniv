@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateUniversityAction;
 use App\Enums\UserType;
+use App\Http\Requests\User\StoreUniversityRequest;
 use App\Mail\UniversityAdded;
 use App\Models\User;
 use Inertia\Inertia;
@@ -30,26 +32,10 @@ class UniversityController
         ]);
     }
 
-    public function store()
+    public function store(StoreUniversityRequest $request, CreateUniversityAction $createUniversityAction)
     {
-        $data = request()->validate([
-           
-        ]);
 
-        //DB::transaction(function () use ($data) {
-
-            $university = User::query()->create(
-                [
-                    ...Arr::except($data, ['faculties', 'institutes']),
-                    'role' => UserType::UNIVERSITY,
-                ]
-            );
-
-
-            $university->faculties()->attach($data['faculties']);
-            $university->institutes()->attach($data['institutes']);
-
-      //  });
+        $university =  $createUniversityAction->handle($request->validate());
 
         return to_route('universities.index');
     }

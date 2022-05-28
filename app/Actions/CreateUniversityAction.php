@@ -6,9 +6,9 @@ use App\Models\User;
 use App\Enums\UserType;
 use Illuminate\Support\Arr;
 
-class createUniversityAction
+class CreateUniversityAction
 {
-    public function handle(array $data)
+    public function handle(array $data): \App\Models\User
     {
         $university = User::query()->create(
             [
@@ -20,6 +20,6 @@ class createUniversityAction
         $university->faculties()->attach($data['faculties']);
         $university->institutes()->attach($data['institutes']);
 
-        return $data;
+        return $university;
     }
 }
