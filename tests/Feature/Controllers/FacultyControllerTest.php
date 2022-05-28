@@ -37,7 +37,7 @@ it('can create faculties', function () {
 it('can store faculties', function () {
     $response = post(route('faculties.store', ['name' => 'faculty']));
 
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect(route('faculties.index'));
 
     test()->assertDatabaseHas('faculties', [
         'name' => 'faculty'
