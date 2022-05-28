@@ -10,9 +10,11 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
+use App\Notifications\UniversityRegistered;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
 
 class UniversityController
@@ -35,7 +37,9 @@ class UniversityController
     public function store(StoreUniversityRequest $request, CreateUniversityAction $createUniversityAction)
     {
 
-        $university =  $createUniversityAction->handle($request->validate());
+        $university =  $createUniversityAction->handle($request->validated());
+
+        $university->notify((new UniversityRegistered())->afterCommit());
 
         return to_route('universities.index');
     }

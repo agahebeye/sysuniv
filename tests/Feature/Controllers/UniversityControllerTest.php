@@ -1,17 +1,16 @@
 <?php
 
+use App\Models\User;
 use App\Enums\UserType;
-use App\Mail\UniversityAdded;
 use App\Models\Faculty;
 use App\Models\Institute;
-use App\Models\University;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
+use App\Notifications\UniversityRegistered;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Event;
+
 use Inertia\Testing\AssertableInertia;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Notification;
 
 use function Pest\Laravel\{assertDatabaseHas, delete, get, post, put};
 
@@ -35,14 +34,12 @@ it('can create universities', function () {
 });
 
 it('can store universities', function () {
-    Mail::fake();
+    Notification::fake();
 
     $faculties = Faculty::factory(3)->create();
     $institutes = Institute::factory(2)->create();
 
     $data = User::factory()->university()->raw();
-
-    Mail::assertNothingSent();
 
     $response = post(route('universities.store', [
         ...$data,
@@ -53,7 +50,7 @@ it('can store universities', function () {
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
     ]));
 
-    Mail::assertSent(UniversityAdded::class);
+    Notification::assertSentTo(User::university()->latest()->first(), UniversityRegistered::class);
 
     $response->assertRedirect(route('universities.index'));
 
