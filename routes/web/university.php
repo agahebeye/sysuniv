@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UniversityController;
+use App\Models\User;
+use App\Notifications\UniversityRegistered;
 
 Route::prefix('universities')
     ->middleware(['auth'])
