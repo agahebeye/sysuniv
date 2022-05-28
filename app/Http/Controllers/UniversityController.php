@@ -33,14 +33,7 @@ class UniversityController
     public function store()
     {
         $data = request()->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'website' => ['required', 'url'],
-            'address' => ['required', 'string'],
-
-            'faculties' => ['array'],
-            'institutes' => ['array'],
+           
         ]);
 
         //DB::transaction(function () use ($data) {
@@ -52,7 +45,6 @@ class UniversityController
                 ]
             );
 
-            Mail::to($university)->send(new UniversityAdded($university));
 
             $university->faculties()->attach($data['faculties']);
             $university->institutes()->attach($data['institutes']);
