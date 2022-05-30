@@ -3,7 +3,6 @@ import { Head, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 import Multiselect from 'vue-multiselect';
 
-
 type Domain = {
     id: number,
     name: string
