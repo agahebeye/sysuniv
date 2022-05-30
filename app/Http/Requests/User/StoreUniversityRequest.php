@@ -31,8 +31,8 @@ class StoreUniversityRequest extends FormRequest
             'website' => ['required', 'url'],
             'address' => ['required', 'string'],
 
-            'faculties' => ['array'],
-            'institutes' => ['array'],
+            'faculties' => ['required', 'array,id'],
+            'institutes' => ['required', 'array,id'],
         ];
     }
 }
