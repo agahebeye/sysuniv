@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
-import Multiselect from "vue-multiselect";
 import axios from "axios";
 
 const isLoading = ref(false);
@@ -77,5 +76,3 @@ async function verifyStudentLevel() {
         </form>
     </div>
 </template>
-
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
