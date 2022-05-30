@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -31,13 +30,16 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            foreach (File::allFiles(base_path('routes')) as $file) {
 
-            foreach (File::files(base_path('routes/web')) as $file) {
-                Route::middleware('web')
-                    ->group($file);
+                if (str_contains($file, 'channels') || str_contains($file, 'console'))
+                    continue;
+
+                if (str_contains($file, 'api'))
+                    Route::middleware('api')->prefix('api')->group($file);
+
+                if (str_contains($file, 'web'))
+                    Route::middleware('web')->group($file);
             }
         });
 
