@@ -12,6 +12,6 @@ class VerifyStudentLevelController
             ->where('id', $id)
             ->where('level', $level)
             ->whereYear('created_at', date('Y'))
-            ->first();
+            ->firstOrFail();
     }
 }

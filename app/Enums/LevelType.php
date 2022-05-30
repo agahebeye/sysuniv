@@ -1,9 +1,9 @@
 <?php
 namespace App\Enums;
 
-enum LevelType: string
+enum LevelType: int
 {
-    case BAC_1 = 'BAC 1';
-    case BAC_2 = 'BAC 2';
-    case BAC_3 = 'BAC 3';
+    case BAC_1 = 0;
+    case BAC_2 = 1;
+    case BAC_3 = 2;
 }

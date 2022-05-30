@@ -2,14 +2,13 @@
 
 use App\Models\User;
 use App\Models\Student;
-use Illuminate\Support\Str;
 use App\Models\Registration;
 use Illuminate\Http\UploadedFile;
 use Inertia\Testing\AssertableInertia;
 use App\Providers\RouteServiceProvider;
 
 use Illuminate\Support\Facades\Storage;
-use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, get, getJson, post, put};
+use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, get, post, put};
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
