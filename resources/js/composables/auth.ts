@@ -10,6 +10,7 @@ export function useAuth() {
     const isUniversity = computed(() => user.role === "university");
 
     return {
+        user,
         isAdmin,
         isEmployee,
         isUniversity,

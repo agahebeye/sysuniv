@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 import Multiselect from 'vue-multiselect';
 import axios from "axios";
+import { useAuth } from "~/composables/auth";
 
 const isLoading = ref(false);
 const domain = ref(null);
@@ -20,8 +21,9 @@ const form = useForm({
 async function EnrollStudent() {
     form.transform((data) => ({
         level: data.level,
+        user_id: useAuth().user.id,
         student_id: verifiedStudent.value.id
-    })).post('/');
+    })).post('/registrations/store');
 }
 
 async function verifyStudent() {
@@ -62,13 +64,15 @@ const props = defineProps<{
             <div v-for="error in form.errors">{{ error }}</div>
         </div>
 
-        <form @submit.prevent="">
-            <div>
-                <p v-if="isLoading">verifying student's registration number...</p>
-                <p v-if="!isLoading && wasErrorCaught">Oops! it seems you are not registered.</p>
-                <label for="name">student</label>
-                <input type="text" v-model="student_id" @keyup.enter="verifyStudent" required />
-            </div>
+        <div>
+            <p v-if="isLoading">verifying student's registration number...</p>
+            <p v-if="!isLoading && wasErrorCaught">Oops! it seems you are not registered.</p>
+            <label for="name">student</label>
+            <input type="text" v-model="student_id" @keyup.enter="verifyStudent" required />
+        </div>
+
+        <form @submit.prevent="EnrollStudent">
+
 
             <div>
                 <label for="domain">Choose Faculty/Institute</label>
@@ -81,14 +85,14 @@ const props = defineProps<{
             <div v-if="domain == 0">
                 <label for="faculties">faculties</label>
                 <multiselect v-model="form.faculty_id" placeholder="select a faculty" :close-on-select="false"
-                    :options="['maths', 'physics']" label="name" track-by="id">
+                    :options="faculties" label="name" track-by="id">
                 </multiselect>
             </div>
 
             <div v-if="domain == 1">
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institute_id" placeholder="select an institute" :close-on-select="false"
-                    :options="['']" label="name" track-by="id">
+                    :options="institutes" label="name" track-by="id">
                 </multiselect>
             </div>
 
