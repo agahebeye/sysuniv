@@ -25,7 +25,6 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->tinyInteger('suspended')->default(0);
             $table->timestamps();
-
         });
     }
 

@@ -84,7 +84,6 @@ defineProps<{
                 <multiselect v-model="form.faculties" placeholder="select faculties" :multiple="true"
                     :close-on-select="false" :options="faculties" label="name" track-by="id">
                 </multiselect>
-
             </div>
 
             <div>
@@ -92,8 +91,8 @@ defineProps<{
                 <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
                     :close-on-select="false" :options="institutes" label="name" track-by="id">
                 </multiselect>
-
             </div>
+
             <button>add</button>
         </form>
     </div>
