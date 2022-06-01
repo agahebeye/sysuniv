@@ -1,29 +1,38 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { ref,reactive } from "vue";
+import { Head } from "@inertiajs/inertia-vue3";
+import {Inertia} from '@inertiajs/inertia';
 import Multiselect from 'vue-multiselect';
 import axios from "axios";
 import { useAuth } from "~/composables/auth";
 
+const errors = ref(null);
 const isLoading = ref(false);
 const domain = ref(null);
 
 const verifiedStudent = ref(null);
-const student_id = ref(null);
+const student_id = ref('');
 const wasErrorCaught = ref(false);
-
-const form = useForm({
+const form = reactive({
     level: null,
     faculty_id: null,
     institute_id: null,
-});
+})
 
 async function EnrollStudent() {
-    form.transform((data) => ({
-        level: data.level,
+    const data = {
+        level: form.level,
         user_id: useAuth().user.id,
-        student_id: verifiedStudent.value.id
-    })).post('/registrations/store');
+        student_id: verifiedStudent.value.id,
+        [domain.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
+    }
+
+    Inertia.post('/registrations/store', data, {
+        onError: (err) => {
+            console.log(err);
+            errors.value = err;
+        }
+    });
 }
 
 async function verifyStudent() {
@@ -37,6 +46,8 @@ async function verifyStudent() {
 
             verifiedStudent.value = data;
             isLoading.value = false;
+            wasErrorCaught.value = false;
+
         } catch (error) {
             isLoading.value = false;
             wasErrorCaught.value = true;
@@ -60,20 +71,18 @@ const props = defineProps<{
 
         <h1>Enroll new student</h1>
 
-        <div class="errors" v-if="form.hasErrors">
-            <div v-for="error in form.errors">{{ error }}</div>
+        <div class="errors" v-if="errors">
+            <div v-for="error in errors">{{ error }}</div>
         </div>
 
-        <div>
+        <form @submit.prevent>
             <p v-if="isLoading">verifying student's registration number...</p>
             <p v-if="!isLoading && wasErrorCaught">Oops! it seems you are not registered.</p>
-            <label for="name">student</label>
+            <label for="name" v-if="!verifiedStudent">Please enter student's registration number to verify</label><br>
             <input type="text" v-model="student_id" @keyup.enter="verifyStudent" required />
-        </div>
+        </form>
 
-        <form @submit.prevent="EnrollStudent">
-
-
+        <form @submit.prevent="EnrollStudent" v-if="verifiedStudent">
             <div>
                 <label for="domain">Choose Faculty/Institute</label>
                 <select name="domain" id="domain" v-model="domain">
@@ -84,15 +93,15 @@ const props = defineProps<{
 
             <div v-if="domain == 0">
                 <label for="faculties">faculties</label>
-                <multiselect v-model="form.faculty_id" placeholder="select a faculty" :close-on-select="false"
-                    :options="faculties" label="name" track-by="id">
+                <multiselect v-model="form.faculty_id" placeholder="select a faculty" :options="faculties" label="name"
+                    track-by="id">
                 </multiselect>
             </div>
 
             <div v-if="domain == 1">
                 <label for="institutes">institutes</label>
-                <multiselect v-model="form.institute_id" placeholder="select an institute" :close-on-select="false"
-                    :options="institutes" label="name" track-by="id">
+                <multiselect v-model="form.institute_id" placeholder="select an institute" :options="institutes"
+                    label="name" track-by="id">
                 </multiselect>
             </div>
 
@@ -101,7 +110,7 @@ const props = defineProps<{
                 <select name="level" id="level" v-model="form.level">
                     <option value="0">BAC I</option>
                     <option value="1">BAC II</option>
-                    <option value="2">BAC II</option>
+                    <option value="2">BAC III</option>
                 </select>
             </div>
 

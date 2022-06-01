@@ -13,8 +13,8 @@ class RegistrationController
 {
     public function create(): \Inertia\Response {
         return Inertia::render('registrations/create', [
-            'faculties' => Faculty::query()->whereRelation('universities', 'users.id', auth()->id())->get(),
-            'institutes' => Institute::query()->whereRelation('universities', 'users.id', auth()->id())->get(),
+            'faculties' => Faculty::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
+            'institutes' => Institute::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
         ]);
     }
 
@@ -23,8 +23,8 @@ class RegistrationController
             'level' => ['required', new Enum(LevelType::class)],
             'user_id' => ['required', 'numeric'],
             'student_id' => ['required', 'numeric'],
-            'faculty_id' => ['nullable', 'numeric'],
-            'institute_id' => ['nullable', 'numeric'],
+            'faculty_id' => ['sometimes', 'numeric'],
+            'institute_id' => ['sometimes', 'numeric'],
         ]);
 
         return $data;
