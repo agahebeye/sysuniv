@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref,reactive } from "vue";
+import { ref, reactive } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
-import {Inertia} from '@inertiajs/inertia';
+import { Inertia } from '@inertiajs/inertia';
 import Multiselect from 'vue-multiselect';
 import axios from "axios";
 import { useAuth } from "~/composables/auth";
@@ -12,7 +12,7 @@ const domain = ref(null);
 
 const verifiedStudent = ref(null);
 const student_id = ref('');
-const wasErrorCaught = ref(false);
+
 const form = reactive({
     level: null,
     faculty_id: null,
@@ -36,22 +36,20 @@ async function EnrollStudent() {
 }
 
 async function verifyStudent() {
-    if (student_id.value.length > 0) {
-        try {
-            isLoading.value = true;
-            await axios.get("/sanctum/csrf-cookie");
-            const { data } = await axios.get(
-                `/api/students/verify/${student_id.value}`
-            );
+    try {
+        isLoading.value = true;
+        await axios.get("/sanctum/csrf-cookie");
+        const { data } = await axios.get(
+            `/api/students/verify/${student_id.value}`
+        );
 
-            verifiedStudent.value = data;
-            isLoading.value = false;
-            wasErrorCaught.value = false;
+        verifiedStudent.value = data;
+        isLoading.value = false;
+        errors.value = null;
 
-        } catch (error) {
-            isLoading.value = false;
-            wasErrorCaught.value = true;
-        }
+    } catch (error) {
+        isLoading.value = false;
+        errors.value = { student_id: 'It seems you are not registered yet.' };
     }
 }
 
@@ -75,15 +73,14 @@ const props = defineProps<{
             <div v-for="error in errors">{{ error }}</div>
         </div>
 
-        <form @submit.prevent>
-            <p v-if="isLoading">verifying student's registration number...</p>
-            <p v-if="!isLoading && wasErrorCaught">Oops! it seems you are not registered.</p>
-            <label for="name" v-if="!verifiedStudent">Please enter student's registration number to verify</label><br>
-            <input type="text" v-model="student_id" @keyup.enter="verifyStudent" required />
-        </form>
-
-        <form @submit.prevent="EnrollStudent" v-if="verifiedStudent">
+        <form @submit.prevent="EnrollStudent">
             <div>
+                <p v-if="isLoading">Verifying...</p>
+                <label for="name" v-if="!verifiedStudent">Please enter a student's registration number</label><br>
+                <input type="text" v-model="student_id" @keydown.enter.prevent="verifyStudent" required />
+            </div>
+
+            <div v-if="verifiedStudent">
                 <label for="domain">Choose Faculty/Institute</label>
                 <select name="domain" id="domain" v-model="domain">
                     <option value="0">Faculty</option>
@@ -105,7 +102,7 @@ const props = defineProps<{
                 </multiselect>
             </div>
 
-            <div>
+            <div v-if="verifiedStudent">
                 <label for="level">Choose level</label>
                 <select name="level" id="level" v-model="form.level">
                     <option value="0">BAC I</option>
@@ -114,7 +111,7 @@ const props = defineProps<{
                 </select>
             </div>
 
-            <button>Enroll</button>
+            <button v-if="verifiedStudent">Enroll</button>
         </form>
     </div>
 </template>
