@@ -29,7 +29,7 @@ class Registration extends Model
     }
 
     public function university() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'university_id');
     }
 
     public function faculty() {

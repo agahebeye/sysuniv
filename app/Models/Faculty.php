@@ -12,6 +12,6 @@ class Faculty extends Model
     protected $fillable = ['name'];
 
     public function universities() {
-        return $this->belongsToMany(User::class, 'universities_faculties');
+        return $this->belongsToMany(User::class, 'universities_faculties', relatedPivotKey: 'university_id');
     }
 }

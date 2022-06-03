@@ -71,18 +71,18 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function faculties() {
-        return $this->belongsToMany(Faculty::class, 'universities_faculties');
+        return $this->belongsToMany(Faculty::class, 'universities_faculties', 'university_id');
     }
 
     public function institutes() {
-        return $this->belongsToMany(Institute::class, 'universities_institutes');
+        return $this->belongsToMany(Institute::class, 'universities_institutes', 'university_id');
     }
 
     public function students() {
-        return $this->belongsToMany(Student::class, 'registrations');
+        return $this->belongsToMany(Student::class, 'registrations', 'university_id');
     }
 
     public function registrations() {
-        return $this->hasMany(Registration::class);
+        return $this->hasMany(Registration::class, 'university_id');
     }
 }

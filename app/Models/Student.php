@@ -50,9 +50,13 @@ class Student extends Model
         return $this->hasMany(Registration::class);
     }
 
+    public function latestRegistration() {
+        return $this->hasOne(Registration::class)->latestOfMany();
+    }
+
     public function universities()
     {
-        return $this->belongsToMany(User::class, 'registrations');
+        return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');
     }
 
     public function faculties()
@@ -63,5 +67,9 @@ class Student extends Model
     public function institutes()
     {
         return $this->belongsToMany(Institute::class, 'registrations')->wherePivotNotNull('institute_id');
+    }
+
+    public function results() {
+        return $this->hasManyThrough(Result::class, Registration::class);
     }
 }
