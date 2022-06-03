@@ -1,12 +1,13 @@
 <?php
 
 use App\Models\User;
+use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\Registration;
 use Illuminate\Http\UploadedFile;
 use Inertia\Testing\AssertableInertia;
-use App\Providers\RouteServiceProvider;
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\{assertDatabaseHas, assertDatabaseMissing, get, post, put};
 
@@ -16,7 +17,7 @@ it('can see students', function () {
     test()->actingAs($univeristy = User::factory()->university()->create());
 
     Student::factory(2)->create();
-    Student::factory(3)->has(Registration::factory()->state(['user_id' => $univeristy]))->create();
+    Student::factory(3)->has(Registration::factory()->for(Faculty::factory())->for($univeristy, 'university'))->create();
     $response = get(route('students.index'));
 
     $response->assertInertia(

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Providers\RouteServiceProvider;
 use App\Http\Requests\RegisteredEmployeeRequest;
 
 class EmployeeController
@@ -24,8 +25,6 @@ class EmployeeController
     {
         $user = User::query()->create($request->validated());
         
-        event(new Registered($user));
-
         return redirect(RouteServiceProvider::HOME);
     }
 

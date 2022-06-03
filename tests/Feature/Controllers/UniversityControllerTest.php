@@ -60,7 +60,7 @@ it('can store universities', function () {
     ]);
 
     assertDatabaseHas('universities_institutes', [
-        'user_id' => User::university()->latest()->first()->id,
+        'university_id' => User::university()->latest()->first()->id,
         'institute_id' => $institutes[0]->id,
     ]);
 });

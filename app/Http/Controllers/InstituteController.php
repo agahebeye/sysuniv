@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class InstituteController
 {
-
     public function index()
     {
         $institutes = Institute::query()
@@ -38,10 +37,5 @@ class InstituteController
         Institute::query()->create($data);
 
         return to_route('institutes.index');
-    }
-
-    public function show(Institute $faculty)
-    {
-        //
     }
 }

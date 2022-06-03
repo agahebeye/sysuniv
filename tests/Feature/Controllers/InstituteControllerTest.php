@@ -5,19 +5,19 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
 
-use function Pest\Laravel\{ get, post};
+use function Pest\Laravel\{get, post};
 
 beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
 it('can see institutes', function () {
     $university = User::factory()->university()->create();
-
     test()->actingAs($university);
 
     Institute::factory(3)->create();
     Institute::factory(4)->hasAttached($university, relationship: 'universities')->create();
-    $response = get(route('institutes.index'))
-        ->assertOk()
+    $response = get(route('institutes.index'));
+
+    $response->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('institutes/index')
@@ -33,7 +33,7 @@ it('can create institutes', function () {
 
 it('can store institutes', function () {
     $response = post(route('institutes.store'), ['name' => 'faculty']);
-    
+
     $response->assertRedirect(route('institutes.index'));
 
     test()->assertDatabaseHas('institutes', [
@@ -45,4 +45,3 @@ it('can store institutes', function () {
         'name'
     ]);
 });
-

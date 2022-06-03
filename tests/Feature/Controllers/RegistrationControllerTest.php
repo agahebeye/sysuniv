@@ -16,7 +16,7 @@ it('can create registrations', function () {
     $response->assertInertia(fn ($page) => $page->component('registrations/create'));
 });
 
-it('can create registrations for admins or employees', function () {
+it('cannot create registrations for admins or employees', function () {
     test()->actingAs(User::factory()->create());
     $response = get(route('registrations.create'));
     $response->assertForbidden();
@@ -34,9 +34,8 @@ it('can store registrations', function () {
     $response = post(route('registrations.store'), [
         'level' => LevelType::BAC_1->value,
         'student_id' => $student->id,
-        'user_id' => $university->id,
+        'university_id' => $university->id,
         'faculty_id' => $faculty->id,
-
     ]);
 
     $response->assertRedirect(RouteServiceProvider::HOME);
