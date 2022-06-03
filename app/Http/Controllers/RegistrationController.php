@@ -38,8 +38,6 @@ class RegistrationController
             Result::query()->create();
         }
 
-        return $registration;
-
         return redirect(RouteServiceProvider::HOME);
     }
 }

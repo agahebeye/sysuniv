@@ -3,6 +3,7 @@
 use App\Enums\LevelType;
 use App\Models\Faculty;
 use App\Models\Registration;
+use App\Models\Result;
 use App\Models\Student;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -54,13 +55,19 @@ it('cannot register students twice in the same year', function () {
     $this->actingAs($university = User::factory()->university()->create());
 
     $faculty = Faculty::factory()->create();
-    $student = Student::factory()->has(Registration::factory()->for($faculty)->for($university, 'university'))->create();
-    
+    $student = Student::factory()->create();
+    $registration = Registration::factory()
+    ->for($student)
+        ->for($faculty)->for($university, 'university');
+
+    Result::factory()->for($registration)->create(['notes' => null, 'credits' => null]);
+
     $response = post(route('registrations.store', $student->getRouteKey()), [
         'level' => LevelType::BAC_1->value,
         'university_id' => $university->id,
         'faculty_id' => $faculty->id,
     ]);
 
+    $response->dd();
     dd($response->json());
 });

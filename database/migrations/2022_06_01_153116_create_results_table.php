@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->integer('notes')->nullable();
             $table->integer('credits')->nullable();
+            $table->foreignId('registration_id')->constrained();
             $table->timestamps();
+
+            $table->unique(['foreign_id']);
         });
     }
 

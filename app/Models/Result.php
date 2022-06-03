@@ -9,7 +9,7 @@ class Result extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    const CREATED_AT = null;
 
     public function registration()
     {

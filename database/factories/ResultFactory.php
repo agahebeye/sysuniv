@@ -17,7 +17,8 @@ class ResultFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'notes' => $this->faker->randomFloat(2, 30, 90),
+            'credits' => rand(1, 7)
         ];
     }
 }
