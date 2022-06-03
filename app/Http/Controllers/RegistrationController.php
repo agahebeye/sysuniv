@@ -6,6 +6,8 @@ use App\Enums\LevelType;
 use App\Models\Faculty;
 use App\Models\Institute;
 use App\Models\Registration;
+use App\Models\Result;
+use App\Models\Student;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\Rules\Enum;
 use Inertia\Inertia;
@@ -20,17 +22,23 @@ class RegistrationController
         ]);
     }
 
-    public function store(): \Illuminate\Http\RedirectResponse
+    public function store(Student $student) //: \Illuminate\Http\RedirectResponse
     {
         $data = request()->validate([
             'level' => ['required', new Enum(LevelType::class)],
             'university_id' => ['required', 'numeric'],
-            'student_id' => ['required', 'numeric'],
             'faculty_id' => ['sometimes', 'numeric'],
             'institute_id' => ['sometimes', 'numeric'],
         ]);
 
-        Registration::query()->create($data);
+        $registration = $student->latestRegistration;
+
+        if (is_null($registration)) {
+            Registration::query()->create([...$data, 'student_id' => $student->id]);
+            Result::query()->create();
+        }
+
+        return $registration;
 
         return redirect(RouteServiceProvider::HOME);
     }

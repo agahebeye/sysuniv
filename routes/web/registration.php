@@ -6,5 +6,5 @@ use App\Http\Controllers\RegistrationController;
 Route::prefix('registrations')
 ->middleware(['auth', 'role:university'])->group(function() {
     Route::get('/create', [RegistrationController::class, 'create'])->name('registrations.create');
-    Route::post('/store', [RegistrationController::class, 'store'])->name('registrations.store');
+    Route::post('/{student}/store', [RegistrationController::class, 'store'])->name('registrations.store');
 });

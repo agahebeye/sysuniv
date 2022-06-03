@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->integer('notes');
-            $table->integer('credits');
+            $table->integer('notes')->nullable();
+            $table->integer('credits')->nullable();
+            $table->timestamps();
         });
     }
 

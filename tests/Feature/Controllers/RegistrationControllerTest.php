@@ -2,6 +2,7 @@
 
 use App\Enums\LevelType;
 use App\Models\Faculty;
+use App\Models\Registration;
 use App\Models\Student;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -9,8 +10,8 @@ use App\Providers\RouteServiceProvider;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
-beforeEach(fn () => $this->actingAs(User::factory()->university()->create()));
 it('can create registrations', function () {
+    $this->actingAs(User::factory()->university()->create());
     $response = get(route('registrations.create'));
     $response->assertOk();
     $response->assertInertia(fn ($page) => $page->component('registrations/create'));
@@ -27,16 +28,39 @@ it('cannot create registrations for admins or employees', function () {
 });
 
 it('can store registrations', function () {
+    $this->actingAs($university = User::factory()->university()->create());
     $student = Student::factory()->create();
-    $university = User::factory()->university()->create();
     $faculty = Faculty::factory()->create();
 
-    $response = post(route('registrations.store'), [
+    $response = post(route('registrations.store', $student->getRouteKey()), [
         'level' => LevelType::BAC_1->value,
-        'student_id' => $student->id,
         'university_id' => $university->id,
         'faculty_id' => $faculty->id,
     ]);
 
+    test()->assertDatabaseHas('registrations', [
+        'student_id' => $student->id,
+        'level' => LevelType::BAC_1->value,
+        'university_id' => $university->id,
+        'faculty_id' => $faculty->id,
+    ]);
+
+    test()->assertDatabaseCount('results', 1);
+
     $response->assertRedirect(RouteServiceProvider::HOME);
+});
+
+it('cannot register students twice in the same year', function () {
+    $this->actingAs($university = User::factory()->university()->create());
+
+    $faculty = Faculty::factory()->create();
+    $student = Student::factory()->has(Registration::factory()->for($faculty)->for($university, 'university'))->create();
+    
+    $response = post(route('registrations.store', $student->getRouteKey()), [
+        'level' => LevelType::BAC_1->value,
+        'university_id' => $university->id,
+        'faculty_id' => $faculty->id,
+    ]);
+
+    dd($response->json());
 });
