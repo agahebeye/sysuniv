@@ -44,7 +44,7 @@ class StudentController
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function show(Student $student)/*: \Inertia\Response*/
+    public function show(Student $student): \Inertia\Response
     {
         return Inertia::render('students/show', [
             'student' => $student

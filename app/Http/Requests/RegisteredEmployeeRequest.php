@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Enum;
 
-class RegisteredUserRequest extends FormRequest
+class RegisteredEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
