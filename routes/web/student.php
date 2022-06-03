@@ -22,5 +22,6 @@ Route::prefix('students')
 
         Route::middleware(['role:university'])->group(function() {
             Route::get('{student}/results/create', [StudentResultController::class, 'create'])->name('students.results.create');
+            Route::put('{student}/results/update', [StudentResultController::class, 'update'])->name('students.results.update');
         });
     });

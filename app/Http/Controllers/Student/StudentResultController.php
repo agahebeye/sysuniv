@@ -12,4 +12,11 @@ class StudentResultController
             'student' => $student
         ]);
     }
+
+    public function update(Student $student) {
+        // retrieve student's last registration
+        // update correspondent result
+        // redirect to students list page
+        return to_route('students.index');
+    }
 }
