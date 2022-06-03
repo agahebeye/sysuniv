@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('notes');
             $table->integer('credits');
-            $table->foreignId('registration_id');
-            $table->timestamps();
         });
     }
 

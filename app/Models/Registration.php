@@ -24,19 +24,28 @@ class Registration extends Model
         'level' => LevelType::class
     ];
 
-    public function student() {
+    public function student()
+    {
         return $this->belongsTo(Student::class);
     }
 
-    public function university() {
+    public function university()
+    {
         return $this->belongsTo(User::class, 'university_id');
     }
 
-    public function faculty() {
+    public function faculty()
+    {
         return $this->belongsTo(Faculty::class);
     }
 
-    public function institute() {
+    public function institute()
+    {
         return $this->belongsTo(Institute::class);
+    }
+
+    public function result()
+    {
+        $this->hasOne(Result::class);
     }
 }

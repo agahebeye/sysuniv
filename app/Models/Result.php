@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    public function registration()
+    {
+        return $this->belongsTo(Registration::class);
+    }
 }
