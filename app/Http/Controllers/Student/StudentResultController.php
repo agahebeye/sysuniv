@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Student;
+use Inertia\Inertia;
 
-class StudentResultController extends Controller
+class StudentResultController
 {
-    //
+    public function create(Student $student) {
+        return Inertia::render('students/results/create', [
+            'student' => $student
+        ]);
+    }
 }
