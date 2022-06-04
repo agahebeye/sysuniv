@@ -3,7 +3,6 @@
 use App\Enums\LevelType;
 use App\Models\Faculty;
 use App\Models\Registration;
-use App\Models\Result;
 use App\Models\Student;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -48,6 +47,8 @@ it('can store registrations', function () {
 
     test()->assertDatabaseCount('results', 1);
 
+    $response->assertSessionHas('message', 'Welcome to your first year');
+
     $response->assertRedirect(RouteServiceProvider::HOME);
 });
 
@@ -58,7 +59,7 @@ it('cannot register students twice in the same year', function () {
     $student = Student::factory()->create();
     $registration = Registration::factory()
         ->for($student)
-        ->for($faculty)->for($university, 'university')->create();
+        ->for($faculty)->for($university, 'university')->create(['level' => LevelType::BAC_1]);
 
     $registration->result()->create();
 
@@ -75,8 +76,9 @@ it('cannot register failed students in the next year after failing', function ()
     $this->actingAs($university = User::factory()->university()->create());
 
     $faculty = Faculty::factory()->create();
-    $student = Student::factory()->failed()->create();
+    $student = Student::factory()->create();
     $registration = Registration::factory()
+        ->failed()
         ->for($student)
         ->for($faculty)->for($university, 'university')->create([
             'level' => LevelType::BAC_1
@@ -97,8 +99,9 @@ it('cannot allow passed students to skip unstudied year', function () {
     $this->actingAs($university = User::factory()->university()->create());
 
     $faculty = Faculty::factory()->create();
-    $student = Student::factory()->passed()->create();
+    $student = Student::factory()->create();
     $registration = Registration::factory()
+        ->passed()
         ->for($student)
         ->for($faculty)->for($university, 'university')->create([
             'level' => LevelType::BAC_1
@@ -119,8 +122,9 @@ it('cannot register failed students in the year they already studied', function 
     $this->actingAs($university = User::factory()->university()->create());
 
     $faculty = Faculty::factory()->create();
-    $student = Student::factory()->failed()->create();
+    $student = Student::factory()->create();
     $registration = Registration::factory()
+        ->failed()
         ->for($student)
         ->for($faculty)->for($university, 'university')->create([
             'level' => LevelType::BAC_2
@@ -137,15 +141,16 @@ it('cannot register failed students in the year they already studied', function 
     $response->assertSessionHasErrors(['student_id' => "you cannot register in the year you've already studied"]);
 });
 
-it('cannot register passed students in the year they already studied', function () {
+it('cannot register passed students in the same year twice', function () {
     $this->actingAs($university = User::factory()->university()->create());
 
     $faculty = Faculty::factory()->create();
-    $student = Student::factory()->passed()->create();
+    $student = Student::factory()->create();
     $registration = Registration::factory()
+        ->passed()
         ->for($student)
         ->for($faculty)->for($university, 'university')->create([
-            'level' => LevelType::BAC_3
+            'level' => LevelType::BAC_2
         ]);
 
     $registration->result()->create();
@@ -156,5 +161,51 @@ it('cannot register passed students in the year they already studied', function 
         'faculty_id' => $faculty->id,
     ]);
 
+    $response->assertSessionHasErrors(['student_id' => "you cannot register twice in the year you passed"]);
+});
+
+it('cannot register passed students in the year they already studied', function () {
+     $this->actingAs($university = User::factory()->university()->create());
+
+    $faculty = Faculty::factory()->create();
+    $student = Student::factory()->create();
+    $registration = Registration::factory()
+        ->passed()
+        ->for($student)
+        ->for($faculty)->for($university, 'university')->create([
+            'level' => LevelType::BAC_3
+        ]);
+
+    $registration->result()->create();
+
+    $response = post(route('registrations.store', $student->getRouteKey()), [
+        'level' => LevelType::BAC_1->value,
+        'university_id' => $university->id,
+        'faculty_id' => $faculty->id,
+    ]);
+
     $response->assertSessionHasErrors(['student_id' => "you cannot register in the year you've already studied"]);
+});
+
+it('can register passed students in the next year', function () {
+    $this->actingAs($university = User::factory()->university()->create());
+
+    $faculty = Faculty::factory()->create();
+    $student = Student::factory()->create();
+    $registration = Registration::factory()
+        ->passed()
+        ->for($student)
+        ->for($faculty)->for($university, 'university')->create([
+            'level' => LevelType::BAC_1
+        ]);
+
+    $registration->result()->create();
+
+    $response = post(route('registrations.store', $student->getRouteKey()), [
+        'level' => LevelType::BAC_2->value,
+        'university_id' => $university->id,
+        'faculty_id' => $faculty->id,
+    ]);
+
+    $response->assertRedirect(RouteServiceProvider::HOME);
 });

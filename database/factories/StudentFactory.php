@@ -26,18 +26,4 @@ class StudentFactory extends Factory
             'address' => $this->faker->address
         ];
     }
-
-    public function failed()
-    {
-        return $this->state(
-            fn (array $attributes) =>['result_status' => ResultStatus::FAILED]
-        );
-    }
-
-    public function passed()
-    {
-        return $this->state(
-            fn (array $attributes) =>['result_status' => ResultStatus::PASSED]
-        );
-    }
 }

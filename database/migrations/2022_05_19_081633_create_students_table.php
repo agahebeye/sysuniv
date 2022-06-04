@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('gender');
             $table->timestamp('birth_date');
-            $table->string('result_status')->default(ResultStatus::PENDING->value);
             $table->tinyText('address');
             $table->timestamps();
         });

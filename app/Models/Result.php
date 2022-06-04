@@ -9,6 +9,12 @@ class Result extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'notes',
+        'credits',
+        'registration_id',
+    ];
+
     const CREATED_AT = null;
 
     public function registration()

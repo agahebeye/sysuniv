@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\LevelType;
+use App\Enums\ResultStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,20 @@ class RegistrationFactory extends Factory
      */
     public function definition()
     {
-        return [
-            'level' => LevelType::BAC_1->value
-        ];
+        return [];
+    }
+
+    public function failed()
+    {
+        return $this->state(
+            fn (array $attributes) => ['result_status' => ResultStatus::FAILED]
+        );
+    }
+
+    public function passed()
+    {
+        return $this->state(
+            fn (array $attributes) => ['result_status' => ResultStatus::PASSED]
+        );
     }
 }

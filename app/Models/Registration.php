@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Enums\LevelType;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\ResultStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Registration extends Model
 {
@@ -17,11 +18,13 @@ class Registration extends Model
         'university_id',
         'student_id',
         'faculty_id',
-        'institute_id'
+        'institute_id',
+        'result_status',
     ];
 
     protected $casts = [
-        'level' => LevelType::class
+        'level' => LevelType::class,
+        'result_status' => ResultStatus::class
     ];
 
     public function student()

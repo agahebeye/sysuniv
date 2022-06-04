@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\ResultStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->onUpdate('cascade');
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('institute_id')->nullable()->constrained()->onUpdate('cascade');
+            $table->string('result_status')->default(ResultStatus::PENDING->value);
             $table->timestamps();
 
             $table->foreign('university_id')->references('id')->on('users');

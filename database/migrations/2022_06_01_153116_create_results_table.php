@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('registration_id')->constrained();
             $table->timestamps();
 
-            $table->unique(['foreign_id']);
+           // $table->unique(['foreign_id']);
         });
     }
 
