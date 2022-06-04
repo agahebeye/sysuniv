@@ -34,8 +34,8 @@ class RegistrationController
         $registration = $student->latestRegistration;
 
         if (is_null($registration)) {
-            Registration::query()->create([...$data, 'student_id' => $student->id]);
-            Result::query()->create();
+            $freshRegistration = Registration::query()->create([...$data, 'student_id' => $student->id]);
+            $freshRegistration->result()->create();
         }
 
         return redirect(RouteServiceProvider::HOME);

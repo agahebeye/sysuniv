@@ -2,7 +2,7 @@
 namespace App\Enums;
 
 enum UserType: string {
-    case ADMIN = 'admin';
-    case EMPLOYEE = 'employee';
-    case UNIVERSITY = 'university';
+    case ADMIN = 'ADMIN';
+    case EMPLOYEE = 'EMPLOYEE';
+    case UNIVERSITY = 'UNIVERSITY';
 }

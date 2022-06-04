@@ -46,6 +46,6 @@ class Registration extends Model
 
     public function result()
     {
-        return $this->hasOne(Result::class)->withDefault();
+        return $this->hasOne(Result::class);
     }
 }

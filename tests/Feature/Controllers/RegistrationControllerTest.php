@@ -67,7 +67,4 @@ it('cannot register students twice in the same year', function () {
         'university_id' => $university->id,
         'faculty_id' => $faculty->id,
     ]);
-
-    $response->dd();
-    dd($response->json());
 });
