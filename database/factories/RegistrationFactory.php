@@ -18,7 +18,9 @@ class RegistrationFactory extends Factory
      */
     public function definition()
     {
-        return [];
+        return [
+            'result_status' => ResultStatus::PENDING->value
+        ];
     }
 
     public function failed()

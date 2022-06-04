@@ -7,7 +7,6 @@ use App\Enums\ResultStatus;
 use App\Models\Faculty;
 use App\Models\Institute;
 use App\Models\Registration;
-use App\Models\Result;
 use App\Models\Student;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Validation\Rules\Enum;
