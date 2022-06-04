@@ -68,7 +68,7 @@ it('cannot register students twice in the same year', function () {
         'faculty_id' => $faculty->id,
     ]);
 
-    $response->assertSessionHasErrors(['student_id']);
+    $response->assertSessionHasErrors(['student_id' => "you have to finish this year to register anew"]);
 });
 
 it('cannot register students in the next year after failing', function () {
@@ -90,7 +90,5 @@ it('cannot register students in the next year after failing', function () {
         'faculty_id' => $faculty->id,
     ]);
 
-    $response->dd();
-
-    $response->assertSessionHasErrors(['student_id']);
+    $response->assertSessionHasErrors(['student_id' => "you cannot register in the next year while you failed the previous one"]);
 });

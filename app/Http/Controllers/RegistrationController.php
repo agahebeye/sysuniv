@@ -45,13 +45,13 @@ class RegistrationController
         if ($student->result_status == ResultStatus::PENDING) {
             throw ValidationException::withMessages([
                 'student_id' => "you have to finish "
-                    . $registration->created_at->year == date('Y') ? "this year" : "the year $registration->created_at->year"
+                    . ($registration->created_at->year == date('Y') ? "this year" : "the year " . $registration->created_at->year)
                     . " to register anew"
             ]);
         }
 
-        if ($student->result_status == ResultStatus::FAILED && $registration->level->value > $data['level']) {
-             throw ValidationException::withMessages([
+        if ($student->result_status == ResultStatus::FAILED && $registration->level->value < $data['level']) {
+            throw ValidationException::withMessages([
                 'student_id' => "you cannot register in the next year while you failed the previous one"
             ]);
         }
