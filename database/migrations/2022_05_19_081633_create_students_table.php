@@ -1,9 +1,10 @@
 <?php
 
 use App\Enums\GenderType;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\ResultStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('gender');
             $table->timestamp('birth_date');
-            $table->tinyInteger('suspended')->default(0);
+            $table->string('result_status')->default(ResultStatus::PENDING->value);
             $table->tinyText('address');
             $table->timestamps();
         });
