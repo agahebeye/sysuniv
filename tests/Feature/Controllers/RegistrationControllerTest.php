@@ -58,13 +58,36 @@ it('cannot register students twice in the same year', function () {
     $student = Student::factory()->create();
     $registration = Registration::factory()
     ->for($student)
-        ->for($faculty)->for($university, 'university');
+        ->for($faculty)->for($university, 'university')->create();
 
-    Result::factory()->for($registration)->create(['notes' => null, 'credits' => null]);
+    $registration->result()->create();
 
     $response = post(route('registrations.store', $student->getRouteKey()), [
         'level' => LevelType::BAC_1->value,
         'university_id' => $university->id,
         'faculty_id' => $faculty->id,
     ]);
+
+    $response->assertSessionHasErrors(['student_id']);
+});
+
+it('cannot register students in the next year after failing', function () {
+    $this->actingAs($university = User::factory()->university()->create());
+
+    $faculty = Faculty::factory()->create();
+    $student = Student::factory()->failed()->create();
+    dd($student->toArray());
+    $registration = Registration::factory()
+    ->for($student)
+        ->for($faculty)->for($university, 'university')->create();
+
+    $registration->result()->create();
+
+    $response = post(route('registrations.store', $student->getRouteKey()), [
+        'level' => LevelType::BAC_1->value,
+        'university_id' => $university->id,
+        'faculty_id' => $faculty->id,
+    ]);
+
+    $response->assertSessionHasErrors(['student_id']);
 });

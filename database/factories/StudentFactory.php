@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\GenderType;
+use App\Enums\ResultStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,9 +21,16 @@ class StudentFactory extends Factory
         return [
             'firstname' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
-            'gender' => array_rand(GenderType::cases()),
+            'gender' => GenderType::MALE->value,
             'birth_date' => $this->faker->date(),
             'address' => $this->faker->address
         ];
+    }
+
+    public function failed()
+    {
+        return $this->state(
+            fn (array $attributes) =>['result_status' => ResultStatus::FAILED]
+        );
     }
 }
