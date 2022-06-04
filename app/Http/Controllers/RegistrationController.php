@@ -50,9 +50,25 @@ class RegistrationController
             ]);
         }
 
-        if ($student->result_status == ResultStatus::FAILED && $registration->level->value < $data['level']) {
+        // a student wants to skip a year
+        if (
+            ($student->result_status == ResultStatus::FAILED && $registration->level->value < $data['level'])
+            || ($student->result_status == ResultStatus::PASSED &&
+                $registration->level = LevelType::BAC_1
+                && $data['level'] == LevelType::BAC_3->value)
+        ) {
             throw ValidationException::withMessages([
-                'student_id' => "you cannot register in the next year while you failed the previous one"
+                'student_id' => "you cannot register in the next year while you have not finished the previous one"
+            ]);
+        }
+
+        // a student wants to return to the previous year
+        if (
+            ($student->result_status == ResultStatus::FAILED || $student->result_status == ResultStatus::PASSED)
+            && $registration->level->value > $data['level']
+        ) {
+            throw ValidationException::withMessages([
+                'student_id' => "you cannot register in the year you've already studied"
             ]);
         }
 

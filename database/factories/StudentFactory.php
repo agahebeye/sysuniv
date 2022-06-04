@@ -33,4 +33,11 @@ class StudentFactory extends Factory
             fn (array $attributes) =>['result_status' => ResultStatus::FAILED]
         );
     }
+
+    public function passed()
+    {
+        return $this->state(
+            fn (array $attributes) =>['result_status' => ResultStatus::PASSED]
+        );
+    }
 }
