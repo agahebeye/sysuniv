@@ -50,10 +50,12 @@ class RegistrationController
             ]);
         }
 
-        return $registration->level->value > $data['level'];
+        if ($student->result_status == ResultStatus::FAILED && $registration->level->value > $data['level']) {
+             throw ValidationException::withMessages([
+                'student_id' => "you cannot register in the next year while you failed the previous one"
+            ]);
+        }
 
-        if ($student->result_status == ResultStatus::FAILED && $registration->level->value > $data['level'])
-
-            return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
     }
 }
