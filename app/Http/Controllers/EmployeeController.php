@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Providers\RouteServiceProvider;
-use App\Http\Requests\RegisteredEmployeeRequest;
+use App\Http\Requests\User\StoreEmployeeRequest;
 
 class EmployeeController
 {
@@ -21,7 +21,7 @@ class EmployeeController
         return Inertia::render('employees/create');
     }
 
-      public function store(RegisteredEmployeeRequest $request)
+      public function store(StoreEmployeeRequest $request)
     {
         $user = User::query()->create($request->validated());
         

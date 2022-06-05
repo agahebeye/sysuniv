@@ -6,7 +6,7 @@ use App\Enums\GenderType;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisteredStudentRequest extends FormRequest
+class StoreStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

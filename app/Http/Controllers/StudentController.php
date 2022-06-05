@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use App\Http\Requests\RegisteredStudentRequest;
+use App\Http\Requests\StoreStudentRequest;
 
 class StudentController
 {
@@ -31,7 +31,7 @@ class StudentController
         return Inertia::render('students/create');
     }
 
-    public function store(RegisteredStudentRequest $request): \Illuminate\Http\RedirectResponse | array
+    public function store(StoreStudentRequest $request): \Illuminate\Http\RedirectResponse | array
     {
         $data = $request->validated();
 

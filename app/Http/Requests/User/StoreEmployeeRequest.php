@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use App\Enums\UserType;
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,7 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Enum;
 
-class RegisteredEmployeeRequest extends FormRequest
+class StoreEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
