@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\University\UniversityPhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UniversityController;
 
@@ -11,4 +12,7 @@ Route::prefix('universities')
             Route::get('/create', [UniversityController::class, 'create'])->name('universities.create');
             Route::post('/store', [UniversityController::class, 'store'])->name('universities.store');
         });
+
+        Route::middleware(['role:university'])
+            ->put('{university}/photos/update', [UniversityPhotoController::class, 'update'])->name('universities.photos.update');
     });
