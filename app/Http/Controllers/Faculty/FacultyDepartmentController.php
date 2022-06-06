@@ -2,10 +2,35 @@
 
 namespace App\Http\Controllers\Faculty;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Departement;
+use App\Models\Faculty;
+use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 
-class FacultyDepartmentController extends Controller
+class FacultyDepartmentController
 {
-    //
+    public function index(Faculty $faculty)
+    {
+        $departments = Departement::query()
+            ->whereHas(
+                'faculties',
+                fn (Builder $builder) => $builder->whereRelation('universities', 'users.id', auth()->id())
+            );
+
+        return Inertia::render('faculties/departements/index', [
+            'departments' => $departments
+        ]);
+    }
+
+    public function create(Faculty $faculty)
+    {
+        return Inertia::render('faculties/departements/create');
+    }
+
+    public function store(Faculty $faculty)
+    {
+        $data = request()->validate(['departements' => ['array']]);
+        $faculty->departments()->create($data);
+        return to_route('faculties.departements');
+    }
 }
