@@ -22,8 +22,8 @@ const form = useForm({
 function addNewUniversity() {
     form.transform(data => ({
         ...data,
-        faculties: data.faculties.map( faculty => ({id: faculty.id})),
-        institutes: data.institutes.map(institute  => ({id: institute.id})),
+        faculties: data.faculties.map( faculty => faculty.id),
+        institutes: data.institutes.map(institute  => institute.id),
     })).post('/universities/store');
 }
 

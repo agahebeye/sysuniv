@@ -15,4 +15,9 @@ class Institute extends Model
     {
         return $this->belongsToMany(User::class, 'universities_institutes', relatedPivotKey: 'university_id');
     }
+
+    public function departments()
+    {
+        return $this->morphMany(Departement::class, 'fieldable');
+    }
 }
