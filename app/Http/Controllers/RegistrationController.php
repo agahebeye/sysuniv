@@ -23,7 +23,7 @@ class RegistrationController
         ]);
     }
 
-    public function store(Student $student) //: \Illuminate\Http\RedirectResponse
+    public function store(Student $student): \Illuminate\Http\RedirectResponse
     {
         $data = request()->validate([
             'level' => ['required', new Enum(LevelType::class)],
