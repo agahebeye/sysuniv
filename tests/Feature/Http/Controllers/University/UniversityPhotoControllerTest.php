@@ -10,9 +10,11 @@ it('can update universities photos', function() {
     Storage::fake('public');
 
     $this->actingAs($university = User::factory()->university()->create());
+    $photo = UploadedFile::fake()->image('photo.png', 480, 320);
+
     $response = put(route('universities.photos.update', $university->id), [
-        'photo' => UploadedFile::fake()->image('photo')
+        'photo' => $photo
     ]);
 
-    dd($response->json());
+    Storage::disk('public')->assertExists('/avatars/'.$photo->hashName());
 });
