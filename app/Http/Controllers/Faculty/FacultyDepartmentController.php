@@ -12,10 +12,13 @@ class FacultyDepartmentController
     public function index(Faculty $faculty)
     {
         $departments = Departement::query()
+            ->whereBelongsTo($faculty)
             ->whereHas(
                 'faculties',
-                fn (Builder $builder) => $builder->whereRelation('universities', 'users.id', auth()->id())
-            );
+                fn (Builder $builder) => $builder
+                    ->where('id', $faculty->id)
+                    ->whereRelation('universities', 'users.id', auth()->id())
+            )->get();
 
         return Inertia::render('faculties/departements/index', [
             'departments' => $departments
