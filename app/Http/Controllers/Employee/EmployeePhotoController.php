@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\University;
+namespace App\Http\Controllers\Employee;
 
 use App\Models\User;
-use Inertia\Inertia;
 use App\Providers\RouteServiceProvider;
+use Inertia\Inertia;
 
-class UniversityPhotoController
+class EmployeePhotoController
 {
-    public function edit(User $university)
+    public function edit(User $employee)
     {
-        return Inertia::render('universities/photos/edit', [
-            'university' => $university
+        return Inertia::render('employees/photos/edit', [
+            'employee' => $employee
         ]);
     }
 
-    public function update(User $university)
+    public function update(User $employee)
     {
         request()->validate(['photo' => ['image', 'dimensions:min_with=200,min_height=200', 'max:2000']]);
         $photo = request()->file('photo')->storePublicly('/avatars', 'public');
-        $university->photo()->update(['src' => $photo]);
+        $employee->photo()->update(['src' => $photo]);
         return redirect(RouteServiceProvider::HOME);
     }
 }

@@ -1,10 +1,23 @@
 <?php
 
 use App\Models\User;
+use function Pest\Laravel\get;
+use function Pest\Laravel\put;
+
 use Illuminate\Http\UploadedFile;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 
-use function Pest\Laravel\put;
+it('can edit universities photos', function () {
+    $this->actingAs($university = User::factory()->university()->create());
+
+    $response = get(route('universities.photos.edit', $university->id));
+    $response->assertOk()
+        ->assertInertia(
+            fn ($page) => $page
+                ->component('universities/photos/edit')
+        );
+});
 
 it('can update universities photos', function() {
     Storage::fake('public');
@@ -17,4 +30,5 @@ it('can update universities photos', function() {
     ]);
 
     Storage::disk('public')->assertExists('/avatars/'.$photo->hashName());
+    $response->assertRedirect(RouteServiceProvider::HOME);
 });
