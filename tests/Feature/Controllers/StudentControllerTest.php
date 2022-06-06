@@ -49,12 +49,14 @@ it('can create students', function () {
 });
 
 it('can store students', function () {
-    Storage::fake('public');
     $photo = UploadedFile::fake()->create('photo.png');
-    $data = [...Student::factory()->raw(), 'photo' => $photo];
+    $data = Student::factory()->raw();
     $response = post(route('students.store'), $data);
-
-    Storage::disk('public')->assertExists('avatars/' . $photo->hashName());
+    $response->assertRedirect(RouteServiceProvider::HOME);
+    assertDatabaseHas('students', [
+        'firstname' => $data['firstname'],
+        'lastname' => $data['lastname']
+    ]);
 });
 
 it('can edit students', function () {
@@ -70,20 +72,17 @@ it('can edit students', function () {
 });
 
 it('can update students', function () {
-    Storage::fake('public');
     $student = Student::factory()->create();
-    $student->photo()->create(['src' => 'photo.png']);
 
     $response = put(
         route('students.update', $student->getRouteKey()),
         [
             'firstname' => 'aboubakar',
-            'photo' => $photo = UploadedFile::fake()->image('aboubakar.png')
         ]
-    )
-        ->assertRedirect(RouteServiceProvider::HOME);
+    );
+
+    $response->assertRedirect(RouteServiceProvider::HOME);
 
     assertDatabaseHas('students', ['firstname' => 'aboubakar']);
     assertDatabaseMissing('students', ['firstname' => $student->firstname]);
-    expect($student->photo->src)->toEqual("avatars/{$photo->hashName()}");
 });

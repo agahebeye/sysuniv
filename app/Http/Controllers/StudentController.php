@@ -36,9 +36,7 @@ class StudentController
         $data = $request->validated();
 
         DB::transaction(function () use ($data) {
-            $avatar = request()->file('photo')->storePublicly('/avatars', 'public');
-            $student = Student::query()->create(Arr::except($data, ['photo']));
-            $student->photo()->create(['src' => $avatar]);
+            $student = Student::query()->create($data);
         });
 
         return redirect(RouteServiceProvider::HOME);
@@ -58,16 +56,11 @@ class StudentController
         ]);
     }
 
-    public function update(RegisteredStudentRequest $request, Student $student)
+    public function update(StoreStudentRequest $request, Student $student)
     {
         $data = $request->validated();
 
-        $student->update(Arr::except($data, ['photo']));
-
-        if (array_key_exists('photo', $data)) {
-            $avatar = $request->file('photo')->storePublicly('/avatars', 'public');
-            $student->photo()->updateOrCreate([], ['src' => $avatar]);
-        }
+        $student->update($data);
 
         return redirect(RouteServiceProvider::HOME);
     }

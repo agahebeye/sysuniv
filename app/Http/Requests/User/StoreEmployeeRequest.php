@@ -31,10 +31,8 @@ class StoreEmployeeRequest extends FormRequest
             'name' => 'sometimes|string|max:255',
             'email' => 'sometimes|string|email|max:255|unique:users',
             'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
-            'role' => ['sometimes', new Enum(UserType::class)],
             'website' => ['sometimes', 'url'],
             'address' => ['sometimes', 'string'],
-            'suspended' => ['sometimes', 'integer', Rule::in([0,1])],
         ];
     }
 }

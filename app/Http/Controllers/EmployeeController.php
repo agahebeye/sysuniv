@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserType;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Providers\RouteServiceProvider;
@@ -23,7 +24,7 @@ class EmployeeController
 
       public function store(StoreEmployeeRequest $request)
     {
-        $user = User::query()->create($request->validated());
+        $user = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
         
         return redirect(RouteServiceProvider::HOME);
     }

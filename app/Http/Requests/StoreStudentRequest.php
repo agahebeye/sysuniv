@@ -31,7 +31,6 @@ class StoreStudentRequest extends FormRequest
             'gender' => ['sometimes', new Enum(GenderType::class)],
             'birth_date' => ['sometimes', 'date_format:Y-m-d'],
             'address' => ['sometimes', 'string'],
-            'photo' => ['sometimes', 'file']
         ];
     }
 }
