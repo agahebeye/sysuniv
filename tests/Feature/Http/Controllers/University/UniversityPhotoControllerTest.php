@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 it('can edit universities photos', function () {
     $this->actingAs($university = User::factory()->university()->create());
 
-    $response = get(route('universities.photos.edit', $university->id));
+    $response = get(route('universities.photos.edit', $university->getRouteKey()));
     $response->assertOk()
         ->assertInertia(
             fn ($page) => $page
@@ -25,7 +25,7 @@ it('can update universities photos', function() {
     $this->actingAs($university = User::factory()->university()->create());
     $photo = UploadedFile::fake()->image('photo.png', 480, 320);
 
-    $response = put(route('universities.photos.update', $university->id), [
+    $response = put(route('universities.photos.update', $university->getRouteKey()), [
         'photo' => $photo
     ]);
 

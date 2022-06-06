@@ -41,6 +41,11 @@ return [
             'length' => 6
         ],
 
+         \App\Models\User::class => [
+            'salt' => \App\Models\User::class . '10238d6114894bb5edc39981835bbec9',
+            'length' => 6
+        ],
+
         'main' => [
             'salt' => '',
             'length' => 0,

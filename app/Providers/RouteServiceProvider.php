@@ -28,7 +28,27 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureRateLimiting();
+        $this->mapAllRoutes();
 
+        $this->bindRouteKey('student', \App\Models\Student::class);
+        $this->bindRouteKey('employee', \App\Models\User::class);
+        $this->bindRouteKey('university', \App\Models\User::class);
+    }
+
+    /**
+     * Configure the rate limiters for the application.
+     *
+     * @return void
+     */
+    protected function configureRateLimiting()
+    {
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+    }
+
+    protected function mapAllRoutes()
+    {
         $this->routes(function () {
             foreach (File::allFiles(base_path('routes')) as $file) {
 
@@ -42,23 +62,14 @@ class RouteServiceProvider extends ServiceProvider
                     Route::middleware('web')->group($file);
             }
         });
-
-        Route::bind('student', function ($value, $route) {
-            $id = \Hashids::connection($model = \App\Models\Student::class)->decode($value)[0] ?? null;
-            $modelInstance = resolve($model);
-            return  $modelInstance->findOrFail($id);
-        });
     }
 
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
-    protected function configureRateLimiting()
+    protected function bindRouteKey($name, $model)
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        Route::bind($name, function ($value, $route) use ($model) {
+            $id = \Hashids::connection($model)->decode($value)[0] ?? null;
+            $modelInstance = resolve($model);
+            return  $modelInstance->findOrFail($id);
         });
     }
 }

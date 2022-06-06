@@ -11,7 +11,7 @@ use function Pest\Laravel\put;
 it('can edit employees photos', function () {
     $this->actingAs($employee = User::factory()->create());
 
-    $response = get(route('employees.photos.edit', $employee->id));
+    $response = get(route('employees.photos.edit', $employee->getRouteKey()));
     $response->assertOk()
         ->assertInertia(
             fn ($page) => $page
@@ -25,7 +25,7 @@ it('can update employees photos', function () {
     $this->actingAs($employee = User::factory()->create());
     $photo = UploadedFile::fake()->image('photo.png', 480, 320);
 
-    $response = put(route('employees.photos.update', $employee->id), [
+    $response = put(route('employees.photos.update', $employee->getRouteKey()), [
         'photo' => $photo
     ]);
 
