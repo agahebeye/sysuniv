@@ -6,13 +6,15 @@ use App\Models\Institute;
 
 class InstituteDepartmentController
 {
-  public function index(Institute $institute)
+    public function index(Institute $institute)
     {
         $departments = Departement::query()
             ->whereHas(
-                'institutes',
-                fn (Builder $builder) => $builder->whereRelation('universities', 'users.id', auth()->id())
-            );
+                'faculties',
+                fn (Builder $builder) => $builder
+                    ->where('id', $institute->id)
+                    ->whereRelation('universities', 'users.id', auth()->id())
+            )->get();
 
         return Inertia::render('institutes/departements/index', [
             'departments' => $departments

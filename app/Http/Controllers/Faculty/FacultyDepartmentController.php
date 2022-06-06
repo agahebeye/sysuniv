@@ -12,7 +12,6 @@ class FacultyDepartmentController
     public function index(Faculty $faculty)
     {
         $departments = Departement::query()
-            ->whereBelongsTo($faculty)
             ->whereHas(
                 'faculties',
                 fn (Builder $builder) => $builder
