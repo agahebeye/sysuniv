@@ -68,8 +68,4 @@ class Student extends Model
     {
         return $this->belongsToMany(Institute::class, 'registrations')->wherePivotNotNull('institute_id');
     }
-
-    public function results() {
-        return $this->hasManyThrough(Result::class, Registration::class);
-    }
 }
