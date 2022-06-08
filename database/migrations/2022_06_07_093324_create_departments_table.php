@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('departments', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->morphs('fieldable');
         });
     }
 
@@ -27,8 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('Department', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('departments');
     }
 };

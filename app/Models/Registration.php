@@ -47,6 +47,12 @@ class Registration extends Model
         return $this->belongsTo(Institute::class);
     }
 
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+
     public function result()
     {
         return $this->hasOne(Result::class);

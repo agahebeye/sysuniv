@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Faculty extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     protected $fillable = ['name'];
 
@@ -18,6 +21,6 @@ class Faculty extends Model
 
     public function departments()
     {
-        return $this->morphMany(Departement::class, 'fieldable');
+        return $this->belongsToMany(Department::class, 'registrations');
     }
 }

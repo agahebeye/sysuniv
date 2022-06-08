@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained()->onUpdate('cascade');
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('institute_id')->nullable()->constrained()->onUpdate('cascade');
+            $table->foreignId('department_id')->constrained()->onUpdate('cascade');
             $table->string('result_status')->default(ResultStatus::PENDING->value);
             $table->timestamps();
 

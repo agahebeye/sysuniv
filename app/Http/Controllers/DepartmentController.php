@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Departement;
 use Inertia\Inertia;
+use App\Models\Department;
+use App\Models\Faculty;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class DepartementController
+class DepartmentController
 {
     public function index()
     {
+        return auth()->user()->load('faculties.departments');
+
         return Inertia::render('departments/index', [
-            'departments' => Departement::get()
+            'departments' => Department::get()
         ]);
     }
 
@@ -21,7 +26,7 @@ class DepartementController
     public function store()
     {
         $data = request()->validate(['name' => ['required', 'departments:unique']]);
-        Departement::query()->create($data);
+        Department::query()->create($data);
         return to_route('departments.index');
     }
 }
