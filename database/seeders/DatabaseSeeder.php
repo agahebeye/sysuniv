@@ -23,5 +23,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'introuvablex02',
             'role' => UserType::ADMIN
         ]);
+
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'univ01@sysuniv.org',
+            'password' => 'introuvablex02',
+            'role' => UserType::UNIVERSITY
+        ]);
     }
 }
