@@ -19,6 +19,11 @@ class Faculty extends Model
         return $this->belongsToMany(User::class, 'universities_faculties', relatedPivotKey: 'university_id');
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'registrations');
+    }
+
     public function departments()
     {
         return $this->belongsToMany(Department::class, 'registrations');

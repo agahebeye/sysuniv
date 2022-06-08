@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Enums\UserType;
 use App\Models\Department;
-use App\Models\Faculty;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class DepartmentController
 {
     public function index()
     {
-        return auth()->user()->load('faculties.departments');
+        $departments = Department::query()
+            ->when(
+                auth()->user()->role == UserType::UNIVERSITY,
+                fn (Builder $query) => $query->with(['faculties', 'institutes'])
+                    ->whereRelation('universities', 'users.id', auth()->id())
+            )->get();
 
         return Inertia::render('departments/index', [
-            'departments' => Department::get()
+            'departments' => $departments
         ]);
     }
 

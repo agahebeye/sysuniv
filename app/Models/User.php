@@ -77,6 +77,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->morphOne(Photo::class, 'photoable');
     }
 
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'registrations', 'university_id');
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'university_id');
+    }
+
     public function faculties()
     {
         return $this->belongsToMany(Faculty::class, 'universities_faculties', 'university_id');
@@ -87,13 +97,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Institute::class, 'universities_institutes', 'university_id');
     }
 
-    public function students()
+    public function departments()
     {
-        return $this->belongsToMany(Student::class, 'registrations', 'university_id');
-    }
-
-    public function registrations()
-    {
-        return $this->hasMany(Registration::class, 'university_id');
+        return $this->belongsToMany(Department::class, 'registrations', 'university_id');
     }
 }

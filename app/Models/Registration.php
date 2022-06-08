@@ -51,8 +51,7 @@ class Registration extends Model
     {
         return $this->belongsTo(Department::class);
     }
-
-
+    
     public function result()
     {
         return $this->hasOne(Result::class);
