@@ -19,6 +19,7 @@ class Registration extends Model
         'student_id',
         'faculty_id',
         'institute_id',
+        'department_id',
         'result_status',
     ];
 

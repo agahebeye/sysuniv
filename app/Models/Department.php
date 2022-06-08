@@ -13,6 +13,16 @@ class Department extends Model
 
     protected $fillable = ['name'];
 
+    public function faculties()
+    {
+        return $this->belongsToMany(Faculty::class, 'registrations');
+    }
+
+    public function institutes()
+    {
+        return $this->belongsToMany(Institute::class, 'registrations');
+    }
+
     public function universities()
     {
         return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');

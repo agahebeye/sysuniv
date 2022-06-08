@@ -23,11 +23,12 @@ class RegistrationController
         ]);
     }
 
-    public function store(Student $student): \Illuminate\Http\RedirectResponse
+    public function store(Student $student)//: \Illuminate\Http\RedirectResponse
     {
         $data = request()->validate([
             'level' => ['required', new Enum(LevelType::class)],
             'university_id' => ['required', 'numeric'],
+            'department_id' => ['required', 'numeric'],
             'faculty_id' => ['sometimes', 'numeric'],
             'institute_id' => ['sometimes', 'numeric'],
         ]);
@@ -69,6 +70,7 @@ class RegistrationController
                 'student_id' => "you cannot register in the next year while you have not finished the previous one"
             ]);
         }
+
 
         // a student wants to return to the previous year
         if (

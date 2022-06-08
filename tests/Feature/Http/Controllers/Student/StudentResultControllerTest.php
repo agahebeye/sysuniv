@@ -28,18 +28,14 @@ it('can create students results', function () {
 it('can update students results', function () {
     test()->actingAs($university = User::factory()->university()->create());
 
-    $faculty = Faculty::factory()->create();
-    $student = Student::factory()->create();
-    $registration = Registration::factory()
-        ->for($student)
-        ->for($faculty)->for($university, 'university')->create(['level' => LevelType::BAC_1]);
-
-    $registration->result()->create();
+    $student = createRegistration($university);
 
     $response = put(
         route('students.results.update', $student->getRouteKey()),
         ['notes' => 50.5, 'credits' => 7]
     );
+
+//    dd($student->latestRegistration->toArray());
 
     assertDatabaseHas('registrations', [
         'result_status' => ResultStatus::FAILED->value

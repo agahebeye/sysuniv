@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\LevelType;
+use App\Models\Department;
 use App\Models\User;
 use App\Models\Faculty;
 use App\Models\Student;
@@ -18,7 +19,9 @@ it('can see students', function () {
     test()->actingAs($univeristy = User::factory()->university()->create());
 
     Student::factory(2)->create();
-    Student::factory(3)->has(Registration::factory()->for(Faculty::factory())->for($univeristy, 'university')->state(['level' => LevelType::BAC_2]))->create();
+    Student::factory(3)->has(
+        Registration::factory()->for(Faculty::factory())->for(Department::factory())->for($univeristy, 'university')->state(['level' => LevelType::BAC_2])
+    )->create();
     $response = get(route('students.index'));
 
     $response->assertInertia(
