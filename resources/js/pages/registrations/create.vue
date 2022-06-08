@@ -17,11 +17,13 @@ const form = reactive({
     level: null,
     faculty_id: null,
     institute_id: null,
+    department_id: null,
 })
 
 async function EnrollStudent() {
     const data = {
         level: form.level,
+        department_id: form.department_id,
         user_id: useAuth().user.id,
         student_id: verifiedStudent.value.id,
         [domain.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
@@ -56,6 +58,7 @@ async function verifyStudent() {
 const props = defineProps<{
     faculties: Array<any>,
     institutes: Array<any>,
+    departments: Array<any>,
 }>();
 
 </script>
@@ -98,6 +101,13 @@ const props = defineProps<{
             <div v-if="domain == 1">
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institute_id" placeholder="select an institute" :options="institutes"
+                    label="name" track-by="id">
+                </multiselect>
+            </div>
+
+            <div v-if="domain == 0 || domain == 1">
+                <label for="departments">departments</label>
+                <multiselect v-model="form.department_id" placeholder="select an department" :options="departments"
                     label="name" track-by="id">
                 </multiselect>
             </div>

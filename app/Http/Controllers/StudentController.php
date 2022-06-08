@@ -36,12 +36,8 @@ class StudentController
         $data = $request->validated();
 
         $student = DB::transaction(fn () => Student::query()->create($data));
-        $request->session()->put('message', [
-            'type' => 'success',
-            'data' => 'Generated registration number is: ' . $student->registration_number
-        ]);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME)->with('success', 'Generated registration number is: ' . $student->registration_number);
     }
 
     public function show(Student $student): \Inertia\Response

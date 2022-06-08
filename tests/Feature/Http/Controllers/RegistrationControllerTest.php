@@ -4,7 +4,6 @@ use App\Enums\LevelType;
 use App\Enums\ResultStatus;
 use App\Models\Department;
 use App\Models\Faculty;
-use App\Models\Registration;
 use App\Models\Student;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -52,7 +51,7 @@ it('can store registrations', function () {
 
     test()->assertDatabaseCount('results', 1);
 
-    $response->assertSessionHas('message', 'Welcome to your first year');
+    $response->assertSessionHas('success', 'Student registered with success');
 
     $response->assertRedirect(RouteServiceProvider::HOME);
 });

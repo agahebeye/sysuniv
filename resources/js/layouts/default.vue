@@ -8,8 +8,12 @@ const flash = usePage().props.value.flash as any;
 
 <template>
     <div class="page--wrapper">
-        <div v-if="flash.message" class="alert">
-            {{ flash.message }}
+        <div v-if="flash.error">
+            {{ flash.error }}
+        </div>
+
+        <div v-if="flash.success">
+            {{ flash.success }}
         </div>
         <header>
             <nav>
