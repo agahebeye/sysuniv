@@ -11,15 +11,10 @@ class Department extends Model
 
     public $timestamps = false;
 
-    public function faculties() {
-        return $this->belongsToMany(Faculty::class, 'registrations');
-    }
+    protected $fillable = ['name'];
 
-    public function institutes() {
-        return $this->belongsToMany(Institute::class, 'registrations');
-    }
-
-    public function universities() {
+    public function universities()
+    {
         return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');
     }
 }

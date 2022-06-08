@@ -27,9 +27,10 @@ class DepartmentController
     {
         return Inertia::render('departments/create');
     }
+
     public function store()
     {
-        $data = request()->validate(['name' => ['required', 'departments:unique']]);
+        $data = request()->validate(['name' => ['required', 'unique:departments']]);
         Department::query()->create($data);
         return to_route('departments.index');
     }

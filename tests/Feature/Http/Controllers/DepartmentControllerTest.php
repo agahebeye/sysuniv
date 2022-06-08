@@ -4,7 +4,10 @@ use App\Models\User;
 use App\Enums\LevelType;
 
 use App\Models\Department;
+
+use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 
 beforeEach(fn () => test()->actingAs(User::factory()->create()));
 
@@ -35,4 +38,19 @@ it('can see departments of universities', function () {
             $page->component('departments/index')
                 ->has('departments', 1)
         );
+});
+
+it('can create departments', function () {
+    $response = get(route('departments.create'));
+    $response->assertOk()
+        ->assertInertia(
+            fn ($page) =>
+            $page->component('departments/create')
+        );
+});
+
+it('can store departments', function () {
+    $response = post(route('departments.store'), ['name' => 'Genie Logiciel']);
+    $response->assertRedirect(route('departments.index'));
+    assertDatabaseHas('departments', ['name' => 'Genie Logiciel']);
 });
