@@ -21,7 +21,7 @@ const form = useForm({
 
         <form @submit.prevent="form.post('/faculties/store')">
             <div>
-                <label for="name"></label>
+                <label for="name">name</label>
                 <input type="text" id="name" v-model="form.name" autocomplete="off" autofocus required>
             </div>
 
