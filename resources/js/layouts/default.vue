@@ -2,11 +2,15 @@
 import { Link, usePage } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 const { isAdmin, isEmployee } = useAuth();
+const flash = usePage().props.value.flash as any;
 
 </script>
 
 <template>
     <div class="page--wrapper">
+        <div v-if="flash.message" class="alert">
+            {{ flash.message }}
+        </div>
         <header>
             <nav>
                 <div>

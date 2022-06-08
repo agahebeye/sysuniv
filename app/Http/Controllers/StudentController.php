@@ -35,9 +35,11 @@ class StudentController
     {
         $data = $request->validated();
 
-        DB::transaction(function () use ($data) {
-            $student = Student::query()->create($data);
-        });
+        $student = DB::transaction(fn () => Student::query()->create($data));
+        $request->session()->put('message', [
+            'type' => 'success',
+            'data' => 'Generated registration number is: ' . $student->registration_number
+        ]);
 
         return redirect(RouteServiceProvider::HOME);
     }

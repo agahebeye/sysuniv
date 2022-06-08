@@ -26,11 +26,11 @@ export default {
 </script>
 
 <template>
-
-    <Head>
-        <title>Login - Sysuniv</title>
-    </Head>
     <div>
+        <Head>
+            <title>Login - Sysuniv</title>
+        </Head>
+        
         <h1>login</h1>
 
         <div class="errors" v-if="form.hasErrors">

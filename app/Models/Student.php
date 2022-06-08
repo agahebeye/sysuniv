@@ -27,7 +27,7 @@ class Student extends Model
 
     protected static function booted()
     {
-        static::creating(fn ($student) => $student->registration_number = Str::random(25));
+        static::creating(fn ($student) => $student->registration_number = strtoupper(Str::random(20)));
     }
 
     public function getRouteKey()
