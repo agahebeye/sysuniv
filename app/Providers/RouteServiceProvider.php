@@ -66,6 +66,8 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function bindRouteKey($name, $model)
     {
+        Route::model($name, $model);
+
         Route::bind($name, function ($value, $route) use ($model) {
             $id = \Hashids::connection($model)->decode($value)[0] ?? null;
             $modelInstance = resolve($model);

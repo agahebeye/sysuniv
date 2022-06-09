@@ -25,7 +25,7 @@ defineProps<{
 
         <table>
             <tr v-for="university in universities" data-test="university">
-                <td>{{ university.name }}</td>
+                <td><Link :href="`/universities/${university.id}`">{{ university.name }}</Link></td>
             </tr>
         </table>
     </div>

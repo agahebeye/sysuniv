@@ -8,7 +8,7 @@ import { useAuth } from "~/composables/auth";
 
 const errors = ref(null);
 const isLoading = ref(false);
-const domain = ref(null);
+const field = ref(null);
 
 const verifiedStudent = ref(null);
 const student_id = ref('');
@@ -26,7 +26,7 @@ async function EnrollStudent() {
         department_id: form.department_id,
         user_id: useAuth().user.id,
         student_id: verifiedStudent.value.id,
-        [domain.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
+        [field.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
     }
 
     Inertia.post('/registrations/store', data, {
@@ -84,35 +84,33 @@ const props = defineProps<{
             </div>
 
             <div v-if="verifiedStudent">
-                <label for="domain">Choose Faculty/Institute</label>
-                <select name="domain" id="domain" v-model="domain">
-                    <option value="0">Faculty</option>
-                    <option value="1">Institute</option>
-                </select>
+                <label for="field">Choose field</label><br />
+                <input type="radio" name="field" v-model="field" value="0">Faculty
+                <input type="radio" name="field" v-model="field" value="1">Institute
             </div>
 
-            <div v-if="domain == 0">
+            <div v-if="field == 0">
                 <label for="faculties">faculties</label>
                 <multiselect v-model="form.faculty_id" placeholder="select a faculty" :options="faculties" label="name"
                     track-by="id">
                 </multiselect>
             </div>
 
-            <div v-if="domain == 1">
+            <div v-if="field == 1">
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institute_id" placeholder="select an institute" :options="institutes"
                     label="name" track-by="id">
                 </multiselect>
             </div>
 
-            <div v-if="domain == 0 || domain == 1">
+            <div v-if="field">
                 <label for="departments">departments</label>
-                <multiselect v-model="form.department_id" placeholder="select an department" :options="departments"
+                <multiselect v-model="form.department_id" placeholder="select a department" :options="departments"
                     label="name" track-by="id">
                 </multiselect>
             </div>
 
-            <div v-if="verifiedStudent">
+            <div v-if="form.faculty_id || form.institute_id">
                 <label for="level">Choose level</label>
                 <select name="level" id="level" v-model="form.level">
                     <option value="0">BAC I</option>
@@ -121,7 +119,7 @@ const props = defineProps<{
                 </select>
             </div>
 
-            <button v-if="verifiedStudent">Enroll</button>
+            <button v-if="form.level">Enroll</button>
         </form>
     </div>
 </template>

@@ -17,14 +17,29 @@ use function Pest\Laravel\{assertDatabaseHas, delete, get, post, put};
 beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
 it('can see universities', function () {
+    User::factory(3)->university()->create();
     $reponse = get('/universities');
+    dd($reponse->json());
     $reponse
         ->assertOk()
         ->assertInertia(
             fn (AssertableInertia $page) =>
             $page->component('universities/index')
-                ->count('universities', 0)
+                ->count('universities', 3)
         );
+});
+
+it('can show universities', function () {
+    $university = User::factory()->university()->create();
+    $response = get(route('universities.show', $university->getRouteKey()));
+    $response->assertInertia(
+        fn ($page) => $page->component('universities/show')
+            ->has('university')
+            ->where('university.name', $university->name)
+            ->has('university.faculties_count')
+            ->has('university.students_count')
+            ->has('university.institutes_count')
+    );
 });
 
 it('can create universities', function () {
@@ -77,7 +92,7 @@ it('can verify universities', function () {
     );
 
     $response = test()->actingAs($university)->get($verificationLink);
-    
+
     //Event::assertDispatched(Verified::class);
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
     $response->assertRedirect(RouteServiceProvider::HOME . '?verified=1');

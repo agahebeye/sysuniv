@@ -17,7 +17,7 @@ class RegistrationController
         return Inertia::render('registrations/create', [
             'faculties' => Faculty::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
             'institutes' => Institute::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
-            'Departments' => Department::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
+            'departments' => Department::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
         ]);
     }
 
