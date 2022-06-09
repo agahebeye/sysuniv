@@ -26,13 +26,13 @@ class StoreUniversityRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'website' => ['required', 'url'],
-            'address' => ['required', 'string'],
+            'email' => 'sometimes|string|email|max:255|unique:users',
+            'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
+            'website' => ['sometimes', 'url'],
+            'address' => ['sometimes', 'string'],
 
-            'faculties' => ['required', 'array'],
-            'institutes' => ['required', 'array'],
+            'faculties' => ['sometimes', 'array'],
+            'institutes' => ['sometimes', 'array'],
         ];
     }
 }

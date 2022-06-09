@@ -107,3 +107,31 @@ it('can edit universities', function () {
             ->where('university.name', $university->name)
     );
 });
+
+it('can update universities', function () {
+    Notification::fake();
+
+    $faculties = Faculty::factory(3)->create();
+    $institutes = Institute::factory(2)->create();
+
+    $university = User::factory()->university()->create(['name' => 'Universite du lac tanganyika']);
+
+    $response = put(route('universities.update', $university->getRouteKey()), [
+        'name' => 'Universite du lac tanganyika',
+        'website' => 'https://johndoe.org',
+        'address' => 'home',
+        'faculties' => $faculties->map(fn ($faculty) => ['id' => $faculty->id])->flatten()->toArray(),
+        'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
+    ]);
+
+    $response->assertRedirect(route('universities.index'));
+
+    assertDatabaseHas('users', [
+        'name' => 'Universite du lac tanganyika',
+    ]);
+
+    assertDatabaseHas('universities_institutes', [
+        'university_id' => User::university()->latest()->first()->id,
+        'institute_id' => $institutes[0]->id,
+    ]);
+});

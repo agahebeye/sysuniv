@@ -6,7 +6,6 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
-use Illuminate\Support\Arr;
 use App\Actions\CreateUniversityAction;
 use App\Notifications\UniversityRegistered;
 use App\Http\Requests\User\StoreUniversityRequest;
@@ -50,10 +49,21 @@ class UniversityController
 
     public function edit(User $university)
     {
-        return Inertia::render('universities/edit', ['university' => UniversityResource::make($university)]);
+        return Inertia::render('universities/edit', [
+            'university' => UniversityResource::make($university),
+            'faculties' => Faculty::query()->get(['id', 'name']),
+            'institutes' => Institute::query()->get(['id', 'name']),
+        ]);
     }
 
-    public function update(User $university)
+    public function update(User $university, StoreUniversityRequest $request, CreateUniversityAction $createUniversityAction)
     {
+        $university =  $createUniversityAction->handle($request->validated());
+
+        if ($request->safe()->has(['email', 'password'])) {
+            $university->notify((new UniversityRegistered($request->password))->afterCommit());
+        }
+
+        return to_route('universities.index');
     }
 }

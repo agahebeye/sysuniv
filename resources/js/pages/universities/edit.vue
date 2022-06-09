@@ -36,11 +36,11 @@ defineProps<{
 <template>
 
     <Head>
-        <title>Create University - Sysuniv</title>
+        <title>Update University - Sysuniv</title>
     </Head>
 
     <div>
-        <h1>Add new university</h1>
+        <h1>Update university</h1>
 
         <div class="errors" v-if="form.hasErrors">
             <div v-for="error in form.errors">{{ error }}</div>
