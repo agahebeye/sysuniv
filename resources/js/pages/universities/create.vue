@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
 import Multiselect from 'vue-multiselect';
 
 type Domain = {
@@ -22,8 +21,8 @@ const form = useForm({
 function addNewUniversity() {
     form.transform(data => ({
         ...data,
-        faculties: data.faculties.map( faculty => faculty.id),
-        institutes: data.institutes.map(institute  => institute.id),
+        faculties: data.faculties.map(faculty => faculty.id),
+        institutes: data.institutes.map(institute => institute.id),
     })).post('/universities/store');
 }
 
@@ -75,21 +74,21 @@ defineProps<{
 
             <div>
                 <label for="address" style="float: left">address</label>
-                <textarea name="address" id="address" v-model="form.address" cols="30" rows="10"></textarea>
+                <textarea name="address" id="address" v-model="form.address" cols="30" rows="10" required></textarea>
             </div>
 
 
             <div>
                 <label for="faculties">faculties</label>
                 <multiselect v-model="form.faculties" placeholder="select faculties" :multiple="true"
-                    :close-on-select="false" :options="faculties" label="name" track-by="id">
+                    :close-on-select="false" :options="faculties" label="name" track-by="id" required>
                 </multiselect>
             </div>
 
             <div>
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
-                    :close-on-select="false" :options="institutes" label="name" track-by="id">
+                    :close-on-select="false" :options="institutes" label="name" track-by="id" required>
                 </multiselect>
             </div>
 

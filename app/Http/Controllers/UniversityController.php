@@ -9,11 +9,13 @@ use App\Models\Institute;
 use App\Actions\CreateUniversityAction;
 use App\Notifications\UniversityRegistered;
 use App\Http\Requests\User\StoreUniversityRequest;
+use App\Http\Requests\User\UpdateUniversityRequest;
 use App\Http\Resources\UniversityResource;
+use Illuminate\Support\Arr;
 
 class UniversityController
 {
-    public function index() //: \Inertia\Response
+    public function index(): \Inertia\Response
     {
         $universities = User::university()->with(['photo'])->get();
 
@@ -56,11 +58,15 @@ class UniversityController
         ]);
     }
 
-    public function update(User $university, StoreUniversityRequest $request, CreateUniversityAction $createUniversityAction)
+    public function update(User $university, UpdateUniversityRequest $request, CreateUniversityAction $createUniversityAction)
     {
-        $university =  $createUniversityAction->handle($request->validated());
+        $safeData = $request->safe()->collect()->reject(fn ($value) => is_null($value))->toArray();
 
-        if ($request->safe()->has(['email', 'password'])) {
+        $university =  $createUniversityAction->handle(
+            [...$safeData, 'id' => $university->id]
+        );
+
+        if (Arr::has($safeData, ['email', 'password'])) {
             $university->notify((new UniversityRegistered($request->password))->afterCommit());
         }
 

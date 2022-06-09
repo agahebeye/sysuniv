@@ -5,7 +5,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules;
 
-class StoreUniversityRequest extends FormRequest
+class UpdateUniversityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +25,14 @@ class StoreUniversityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'website' => ['required', 'url'],
-            'address' => ['required', 'string'],
+            'name' => 'string|max:255|nullable',
+            'email' => 'string|email|max:255|nullable',
+            'password' => ['confirmed', Rules\Password::defaults(), 'nullable'],
+            'website' => ['url', 'nullable'],
+            'address' => ['string', 'nullable'],
 
-            'faculties' => ['required', 'array'],
-            'institutes' => ['required', 'array'],
+            'faculties' => ['array', 'nullable'],
+            'institutes' => ['array', 'nullable'],
         ];
     }
 }

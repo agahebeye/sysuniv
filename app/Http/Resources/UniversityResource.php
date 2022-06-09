@@ -17,6 +17,7 @@ class UniversityResource extends JsonResource
         return [
             'id' => $this->getRouteKey(),
             'name' => $this->name,
+            'email' => $this->email,
             'website' => $this->website,
             'address' => $this->address,
             'created_at' => $this->created_at,

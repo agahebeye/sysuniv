@@ -9,9 +9,9 @@ Route::prefix('universities')
     ->group(function () {
         Route::middleware(['role:admin,employee'])->group(function () {
             Route::get('/', [UniversityController::class, 'index'])->name('universities.index');
-            Route::get('{university}', [UniversityController::class, 'show'])->name('universities.show');
             Route::get('/create', [UniversityController::class, 'create'])->name('universities.create');
             Route::post('/store', [UniversityController::class, 'store'])->name('universities.store');
+            Route::get('{university}', [UniversityController::class, 'show'])->name('universities.show');
             Route::get('{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
             Route::put('{university}/update', [UniversityController::class, 'update'])->name('universities.update');
         });

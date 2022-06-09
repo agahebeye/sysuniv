@@ -14,7 +14,7 @@ class CreateUniversityAction
     {
         $university = DB::transaction(function () use ($data) {
             $university = User::query()->updateOrCreate(
-                ['name' => $data['name']],
+                ['id' => $data['id']],
                 [...Arr::except($data, ['faculties', 'institutes']), ['role' => UserType::UNIVERSITY]]
             );
 
