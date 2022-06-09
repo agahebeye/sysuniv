@@ -65,6 +65,9 @@ class StoreRegistrationRequest extends FormRequest
                 ]);
             }
         }
+
+        $freshRegistration = Registration::query()->create([...$this->safe()->all(), 'student_id' => $this->student->id]);
+        $freshRegistration->result()->create();
     }
 
     /**

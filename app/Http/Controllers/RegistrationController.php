@@ -25,11 +25,9 @@ class RegistrationController
         ]);
     }
 
-    public function store(Student $student, StoreRegistrationRequest $storeRegistrationRequest)//: \Illuminate\Http\RedirectResponse
+    public function store(Student $student, StoreRegistrationRequest $storeRegistrationRequest) //: \Illuminate\Http\RedirectResponse
     {
         $storeRegistrationRequest->verify($student->latestRegistration);
-        $freshRegistration = Registration::query()->create([...$storeRegistrationRequest->safe()->all(), 'student_id' => $student->id]);
-        $freshRegistration->result()->create();
         return redirect(RouteServiceProvider::HOME)->with('success', 'Student registered with success');
     }
 }
