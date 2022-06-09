@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Enums\LevelType;
 use App\Enums\ResultStatus;
 use App\Models\Registration;
+use Illuminate\Validation\ValidationException;
 
 class CreateRegistrationAction
 {

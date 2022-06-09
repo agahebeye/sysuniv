@@ -40,6 +40,8 @@ it('can store registrations', function () {
         'faculty_id' => $faculty->id,
         'department_id' => $department->id
     ]);
+    
+   // dd($response->json());
 
     test()->assertDatabaseHas('registrations', [
         'student_id' => $student->id,
@@ -48,6 +50,7 @@ it('can store registrations', function () {
         'faculty_id' => $faculty->id,
         'department_id' => $department->id
     ]);
+
 
     test()->assertDatabaseCount('results', 1);
 
