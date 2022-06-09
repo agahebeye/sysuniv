@@ -17,6 +17,11 @@ class UpdateUniversityRequest extends FormRequest
         return true;
     }
 
+    public function getSafeData()
+    {
+        return $this->safe()->collect()->reject(fn ($value) => is_null($value))->toArray();
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,6 +38,7 @@ class UpdateUniversityRequest extends FormRequest
 
             'faculties' => ['array', 'nullable'],
             'institutes' => ['array', 'nullable'],
+            'departments' => ['required', 'array'],
         ];
     }
 }

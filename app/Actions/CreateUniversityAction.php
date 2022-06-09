@@ -20,6 +20,7 @@ class CreateUniversityAction
 
             $university->faculties()->sync($data['faculties']);
             $university->institutes()->sync($data['institutes']);
+            $university->departments()->sync($data['departments']);
 
             return $university;
         });

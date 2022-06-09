@@ -33,6 +33,7 @@ class StoreUniversityRequest extends FormRequest
 
             'faculties' => ['required', 'array'],
             'institutes' => ['required', 'array'],
+            'departments' => ['required', 'array'],
         ];
     }
 }

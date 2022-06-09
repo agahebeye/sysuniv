@@ -3,15 +3,16 @@ import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Multiselect from 'vue-multiselect';
 import { User } from '~/types/users';
 
-type Domain = {
+type Field = {
     id: number,
     name: string
 }
 
 const props = defineProps<{
     university: User,
-    faculties: Array<Domain>,
-    institutes: Array<Domain>,
+    faculties: Array<Field>,
+    institutes: Array<Field>,
+    departments: Array<Field>,
 }>();
 
 const form = useForm({
@@ -22,7 +23,8 @@ const form = useForm({
     website: props.university.website,
     address: props.university.address,
     faculties: [],
-    institutes: []
+    institutes: [],
+    departments: [],
 });
 
 function updateUniversity() {
@@ -30,6 +32,7 @@ function updateUniversity() {
         .transform((data) => ({
             ...data, faculties: data.faculties.map(faculty => faculty.id),
             institutes: data.institutes.map(institute => institute.id),
+            departments: data.departments.map(department => department.id),
         }))
         .put(`/universities/${props.university.id}/update`);
 }
@@ -95,6 +98,13 @@ function updateUniversity() {
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
                     :close-on-select="false" :options="institutes" label="name" track-by="id">
+                </multiselect>
+            </div>
+
+            <div>
+                <label for="departments">departments</label>
+                <multiselect v-model="form.departments" placeholder="select departments" :multiple="true"
+                    :close-on-select="false" :options="departments" label="name" track-by="id" required>
                 </multiselect>
             </div>
 

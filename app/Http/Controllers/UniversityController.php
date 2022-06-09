@@ -11,6 +11,7 @@ use App\Notifications\UniversityRegistered;
 use App\Http\Requests\User\StoreUniversityRequest;
 use App\Http\Requests\User\UpdateUniversityRequest;
 use App\Http\Resources\UniversityResource;
+use App\Models\Department;
 use Illuminate\Support\Arr;
 
 class UniversityController
@@ -37,6 +38,7 @@ class UniversityController
         return Inertia::render('universities/create', [
             'faculties' => Faculty::query()->get(['id', 'name']),
             'institutes' => Institute::query()->get(['id', 'name']),
+            'departments' => Department::query()->get(['id', 'name']),
         ]);
     }
 
@@ -55,18 +57,17 @@ class UniversityController
             'university' => UniversityResource::make($university),
             'faculties' => Faculty::query()->get(['id', 'name']),
             'institutes' => Institute::query()->get(['id', 'name']),
+            'departments' => Department::query()->get(['id', 'name']),
         ]);
     }
 
     public function update(User $university, UpdateUniversityRequest $request, CreateUniversityAction $createUniversityAction)
     {
-        $safeData = $request->safe()->collect()->reject(fn ($value) => is_null($value))->toArray();
-
         $university =  $createUniversityAction->handle(
-            [...$safeData, 'id' => $university->id]
+            [...$request->getSafeData(), 'id' => $university->id]
         );
 
-        if (Arr::has($safeData, ['email', 'password'])) {
+        if (Arr::has($request->getSafeData(), ['email', 'password'])) {
             $university->notify((new UniversityRegistered($request->password))->afterCommit());
         }
 

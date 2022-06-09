@@ -2,7 +2,7 @@
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Multiselect from 'vue-multiselect';
 
-type Domain = {
+type Field = {
     id: number,
     name: string
 }
@@ -15,7 +15,8 @@ const form = useForm({
     website: '',
     address: '',
     faculties: [],
-    institutes: []
+    institutes: [],
+    departments: [],
 });
 
 function addNewUniversity() {
@@ -23,12 +24,14 @@ function addNewUniversity() {
         ...data,
         faculties: data.faculties.map(faculty => faculty.id),
         institutes: data.institutes.map(institute => institute.id),
+        departments: data.departments.map(department => department.id),
     })).post('/universities/store');
 }
 
 defineProps<{
-    faculties: Array<Domain>,
-    institutes: Array<Domain>,
+    faculties: Array<Field>,
+    institutes: Array<Field>,
+    departments: Array<Field>,
 }>();
 </script>
 
@@ -89,6 +92,13 @@ defineProps<{
                 <label for="institutes">institutes</label>
                 <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
                     :close-on-select="false" :options="institutes" label="name" track-by="id" required>
+                </multiselect>
+            </div>
+
+            <div>
+                <label for="departments">departments</label>
+                <multiselect v-model="form.departments" placeholder="select departments" :multiple="true"
+                    :close-on-select="false" :options="departments" label="name" track-by="id" required>
                 </multiselect>
             </div>
 
