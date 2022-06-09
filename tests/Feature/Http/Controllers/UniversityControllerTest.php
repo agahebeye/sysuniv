@@ -97,3 +97,13 @@ it('can verify universities', function () {
     test()->assertTrue($university->fresh()->hasVerifiedEmail());
     $response->assertRedirect(RouteServiceProvider::HOME . '?verified=1');
 });
+
+it('can edit universities', function () {
+    $university = User::factory()->university()->create();
+    $response = get(route('universities.edit', $university->getRouteKey()));
+    $response->assertInertia(
+        fn ($page) => $page->component('universities/edit')
+            ->has('university')
+            ->where('university.name', $university->name)
+    );
+});

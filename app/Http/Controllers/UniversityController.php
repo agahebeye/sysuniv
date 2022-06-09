@@ -50,6 +50,7 @@ class UniversityController
 
     public function edit(User $university)
     {
+        return Inertia::render('universities/edit', ['university' => UniversityResource::make($university)]);
     }
 
     public function update(User $university)

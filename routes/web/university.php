@@ -12,6 +12,8 @@ Route::prefix('universities')
             Route::get('{university}', [UniversityController::class, 'show'])->name('universities.show');
             Route::get('/create', [UniversityController::class, 'create'])->name('universities.create');
             Route::post('/store', [UniversityController::class, 'store'])->name('universities.store');
+            Route::get('{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
+            Route::get('{university}/update', [UniversityController::class, 'update'])->name('universities.update');
         });
 
         Route::middleware(['role:university'])
