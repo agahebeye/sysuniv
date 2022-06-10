@@ -25,6 +25,6 @@ class Department extends Model
 
     public function universities()
     {
-        return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');
+        return $this->belongsToMany(User::class, 'universities_departments', relatedPivotKey: 'university_id');
     }
 }

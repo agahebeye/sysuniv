@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
         });
+
+        Schema::create('universities_departments', function (Blueprint $table) {
+            $table->bigInteger('university_id');
+            $table->bigInteger('department_id');
+        });
     }
 
     /**

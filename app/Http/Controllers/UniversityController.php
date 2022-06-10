@@ -57,9 +57,9 @@ class UniversityController
     {
         return Inertia::render('universities/edit', [
             'university' => UniversityResource::make($university),
-            'faculties' => Faculty::query()->get(['id', 'name']),
-            'institutes' => Institute::query()->get(['id', 'name']),
-            'departments' => Department::query()->get(['id', 'name']),
+            'faculties' => Faculty::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
+            'institutes' => Institute::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
+            'departments' => Department::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
         ]);
     }
 

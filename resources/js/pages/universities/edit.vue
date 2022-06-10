@@ -2,11 +2,7 @@
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Multiselect from 'vue-multiselect';
 import { User } from '~/types/users';
-
-type Field = {
-    id: number,
-    name: string
-}
+import { Field } from '~/types/fields';
 
 const props = defineProps<{
     university: User,
@@ -18,13 +14,11 @@ const props = defineProps<{
 const form = useForm({
     name: props.university.name,
     email: props.university.email,
-    password: null,
-    password_confirmation: null,
     website: props.university.website,
     address: props.university.address,
-    faculties: [],
-    institutes: [],
-    departments: [],
+    faculties: props.faculties,
+    institutes: props.institutes,
+    departments: props.departments,
 });
 
 function updateUniversity() {
@@ -63,17 +57,6 @@ function updateUniversity() {
             <div>
                 <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" autocomplete="off">
-            </div>
-
-            <div>
-                <label for="password">password</label>
-                <input type="password" id="password" v-model="form.password" autocomplete="off">
-            </div>
-
-            <div>
-                <label for="password_confirmation">re-enter password</label>
-                <input type="password" id="password_confirmation" v-model="form.password_confirmation"
-                    autocomplete="off">
             </div>
 
             <div>
