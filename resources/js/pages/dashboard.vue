@@ -15,7 +15,7 @@ import { Head } from '@inertiajs/inertia-vue3';
 
             <h1>{{ $page.props.auth['user'].name }}</h1>
 
-            <p>{{ $page.props.auth.user.photo }}</p>
+            <p>{{ $page.props.auth['user'].photo }}</p>
         </div>
 
 
