@@ -16,9 +16,9 @@ const form = useForm({
     email: props.university.email,
     website: props.university.website,
     address: props.university.address,
-    faculties: props.faculties,
-    institutes: props.institutes,
-    departments: props.departments,
+    faculties: props.university['faculties'],
+    institutes: props.university['institutes'],
+    departments: props.university['departments'],
 });
 
 function updateUniversity() {

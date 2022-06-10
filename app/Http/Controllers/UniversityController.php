@@ -7,11 +7,8 @@ use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
 use App\Models\Department;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 use App\Actions\CreateUniversityAction;
 use App\Actions\UpdateUniversityAction;
-use App\Notifications\UniversityUpdated;
 use App\Http\Resources\UniversityResource;
 use App\Http\Requests\User\StoreUniversityRequest;
 use App\Http\Requests\User\UpdateUniversityRequest;
@@ -50,22 +47,22 @@ class UniversityController
 
         $university->notify((new UniversityRegistered($request->password))->afterCommit());
 
-        return to_route('universities.index');
+        return to_route('universities.index')->with('success', "University $university->name succefully registered.");
     }
 
     public function edit(User $university)
     {
         return Inertia::render('universities/edit', [
-            'university' => UniversityResource::make($university),
-            'faculties' => Faculty::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
-            'institutes' => Institute::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
-            'departments' => Department::query()->whereRelation('universities', 'users.id', 'id')->get(['id', 'name']),
+            'university' => UniversityResource::make($university->load('faculties', 'institutes', 'departments')),
+            'faculties' => Faculty::query()->get(),
+            'institutes' => Institute::query()->get(),
+            'departments' => Department::query()->get()
         ]);
     }
 
     public function update(User $university, UpdateUniversityRequest $request, UpdateUniversityAction $updateUniversityAction)
     {
         $updateUniversityAction->handle($university, $request);
-        return to_route('universities.index');
+        return to_route('universities.index')->with('success', "University $university->name succefully updated.");;
     }
 }
