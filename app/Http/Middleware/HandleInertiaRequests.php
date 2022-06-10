@@ -39,7 +39,8 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user() ? [
-                    'id' => $request->user()->getRouteKey(),
+                    'id' => $request->user()->id,
+                    'route_key' => $request->user()->getRouteKey(),
                     'name' => $request->user()->name,
                     'role' => $request->user()->role,
                 ] : null

@@ -8,6 +8,6 @@ class VerifyStudentController
 {
     public function __invoke($id)
     {
-        return  Student::query()->where('registration_number', $id)->firstOrFail(['id', 'firstname', 'lastname']);
+        return  Student::query()->where('registration_number', $id)->firstOrFail(['id'])->getRouteKey();
     }
 }

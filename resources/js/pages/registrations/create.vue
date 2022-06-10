@@ -1,40 +1,37 @@
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { ref } from "vue";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from '@inertiajs/inertia';
 import Multiselect from 'vue-multiselect';
 import axios from "axios";
 import { useAuth } from "~/composables/auth";
+import { Field } from "~/types/fields";
 
-const errors = ref(null);
 const isLoading = ref(false);
 const field = ref(null);
 
-const verifiedStudent = ref(null);
-const student_id = ref('');
+const registration_key = ref('');
 
-const form = reactive({
+const form = useForm({
+    student: '',
     level: null,
     faculty_id: null,
     institute_id: null,
     department_id: null,
+    university_id: useAuth().user.id,
 })
 
 async function EnrollStudent() {
-    const data = {
-        level: form.level,
-        department_id: form.department_id,
-        user_id: useAuth().user.id,
-        student_id: verifiedStudent.value.id,
-        [field.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
-    }
-
-    Inertia.post('/registrations/store', data, {
-        onError: (err) => {
-            console.log(err);
-            errors.value = err;
+    form.transform(function (data) {
+        const transformedData = {
+            level: data.level,
+            university_id: data.university_id,
+            department_id: data.department_id.id,
+            [field.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
         }
-    });
+
+        return transformedData;
+    }).post(`/registrations/${form.student}/store`);
 }
 
 async function verifyStudent() {
@@ -42,23 +39,21 @@ async function verifyStudent() {
         isLoading.value = true;
         await axios.get("/sanctum/csrf-cookie");
         const { data } = await axios.get(
-            `/api/students/verify/${student_id.value}`
+            `/api/students/verify/${registration_key.value}`
         );
 
-        verifiedStudent.value = data;
+        form.student = data;
         isLoading.value = false;
-        errors.value = null;
 
     } catch (error) {
         isLoading.value = false;
-        errors.value = { student_id: 'It seems you are not registered yet.' };
     }
 }
 
 const props = defineProps<{
-    faculties: Array<any>,
-    institutes: Array<any>,
-    departments: Array<any>,
+    faculties: Array<Field>,
+    institutes: Array<Field>,
+    departments: Array<Field>,
 }>();
 
 </script>
@@ -72,18 +67,19 @@ const props = defineProps<{
 
         <h1>Enroll new student</h1>
 
-        <div class="errors" v-if="errors">
-            <div v-for="error in errors">{{ error }}</div>
+        <div class="errors" v-if="form.errors">
+            <div v-for="error in form.errors">{{ error }}</div>
         </div>
 
         <form @submit.prevent="EnrollStudent">
             <div>
                 <p v-if="isLoading">Verifying...</p>
-                <label for="name" v-if="!verifiedStudent">Please enter a student's registration number</label><br>
-                <input type="text" v-model="student_id" @keydown.enter.prevent="verifyStudent" required />
+                <label for="name" v-if="!form.student">Please enter a student's registration number</label><br>
+                <input type="text" v-model="registration_key" @keydown.enter.prevent="verifyStudent"
+                    :disabled="form.student.length > 0" required />
             </div>
 
-            <div v-if="verifiedStudent">
+            <div v-if="form.student">
                 <label for="field">Choose field</label><br />
                 <input type="radio" name="field" v-model="field" value="0">Faculty
                 <input type="radio" name="field" v-model="field" value="1">Institute

@@ -6,9 +6,9 @@ use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\Institute;
+use App\Models\Department;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\StoreRegistrationRequest;
-use App\Models\Department;
 
 class RegistrationController
 {
