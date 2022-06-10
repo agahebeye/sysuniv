@@ -115,7 +115,6 @@ it('can update universities', function () {
     $institutes = Institute::factory(2)->create();
 
     $university = User::factory()->university()->has(Faculty::factory())->create(['name' => 'Universite du lac tanganyika']);
-
     $response = put(route('universities.update', $university->getRouteKey()), [
         'name' => 'Universite Sagesse Africaine',
         'website' => 'https://johndoe.org',
@@ -124,7 +123,7 @@ it('can update universities', function () {
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
         'departments' => [],
     ]);
-    dd($response->json());
+    
     $response->assertRedirect(route('universities.index'));
 
     assertDatabaseHas('users', [
