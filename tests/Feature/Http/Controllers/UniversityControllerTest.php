@@ -70,7 +70,6 @@ it('can store universities', function () {
 
     Notification::assertSentTo(User::university()->latest()->first(), UniversityRegistered::class);
 
-    $response->assertRedirect(route('universities.index'));
 
     assertDatabaseHas('users', [
         'name' => $data['name'],
@@ -81,7 +80,12 @@ it('can store universities', function () {
         'university_id' => User::university()->latest()->first()->id,
         'institute_id' => $institutes[0]->id,
     ]);
+
+    $university = User::university()->latest()->first();
+    $response->assertSessionHas('success', "University $university->name succefully registered.");
+    $response->assertRedirect(route('universities.photos.edit', $university->getRouteKey()));
 });
+
 
 it('can verify universities', function () {
     $university = User::factory()->university()->create(['email_verified_at' => null]);

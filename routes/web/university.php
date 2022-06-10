@@ -14,11 +14,8 @@ Route::prefix('universities')
             Route::get('{university}', [UniversityController::class, 'show'])->name('universities.show');
             Route::get('{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
             Route::put('{university}/update', [UniversityController::class, 'update'])->name('universities.update');
-        });
 
-        Route::middleware(['role:university'])
-            ->group(function () {
-                Route::get('{university}/photos/edit', [UniversityPhotoController::class, 'edit'])->name('universities.photos.edit');
-                Route::put('{university}/photos/update', [UniversityPhotoController::class, 'update'])->name('universities.photos.update');
-            });
+            Route::get('{university}/photos/edit', [UniversityPhotoController::class, 'edit'])->name('universities.photos.edit');
+            Route::put('{university}/photos/update', [UniversityPhotoController::class, 'update'])->name('universities.photos.update');
+        });
     });
