@@ -10,6 +10,7 @@ use App\Models\Department;
 use App\Actions\CreateUniversityAction;
 use App\Actions\UpdateUniversityAction;
 use App\Http\Resources\UniversityResource;
+use App\Notifications\UniversityRegistered;
 use App\Http\Requests\User\StoreUniversityRequest;
 use App\Http\Requests\User\UpdateUniversityRequest;
 

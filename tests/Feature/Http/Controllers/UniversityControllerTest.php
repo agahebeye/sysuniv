@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Enums\UserType;
+use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\Institute;
 use App\Notifications\UniversityRegistered;
@@ -19,7 +20,6 @@ beforeEach(fn () => $this->actingAs(User::factory()->create()));
 it('can see universities', function () {
     User::factory(3)->university()->create();
     $reponse = get('/universities');
-    dd($reponse->json());
     $reponse
         ->assertOk()
         ->assertInertia(
@@ -53,6 +53,7 @@ it('can store universities', function () {
 
     $faculties = Faculty::factory(3)->create();
     $institutes = Institute::factory(2)->create();
+    $departments = Department::factory(2)->create();
 
     $data = User::factory()->university()->raw();
 
@@ -63,7 +64,9 @@ it('can store universities', function () {
         'address' => 'home',
         'faculties' => $faculties->map(fn ($faculty) => ['id' => $faculty->id])->flatten()->toArray(),
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
+        'departments' => $departments->map(fn ($department) => ['id' => $department->id])->flatten()->toArray(),
     ]));
+
 
     Notification::assertSentTo(User::university()->latest()->first(), UniversityRegistered::class);
 
@@ -123,7 +126,7 @@ it('can update universities', function () {
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
         'departments' => [],
     ]);
-    
+
     $response->assertRedirect(route('universities.index'));
 
     assertDatabaseHas('users', [

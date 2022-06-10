@@ -4,6 +4,7 @@ use App\Enums\LevelType;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\Faculty;
+use App\Models\Photo;
 use App\Models\Student;
 use App\Models\Registration;
 use Illuminate\Http\UploadedFile;
@@ -19,7 +20,7 @@ it('can see students', function () {
     test()->actingAs($univeristy = User::factory()->university()->create());
 
     Student::factory(2)->create();
-    Student::factory(3)->has(
+    Student::factory(3)->has(Photo::factory())->has(
         Registration::factory()->for(Faculty::factory())->for(Department::factory())->for($univeristy, 'university')->state(['level' => LevelType::BAC_2])
     )->create();
     $response = get(route('students.index'));

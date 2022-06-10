@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('gender');
             $table->timestamp('birth_date');
             $table->tinyText('address');
-            $table->timestamps();
         });
     }
 

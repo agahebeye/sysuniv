@@ -20,7 +20,6 @@ class UniversityResource extends JsonResource
             'email' => $this->email,
             'website' => $this->website,
             'address' => $this->address,
-            'created_at' => $this->created_at,
 
             'faculties' => UniversityResource::collection($this->whenLoaded('faculties')),
             'institutes' => UniversityResource::collection($this->whenLoaded('institutes')),

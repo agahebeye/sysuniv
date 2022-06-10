@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreStudentRequest;
+use App\Http\Resources\StudentResource;
 
 class StudentController
 {
@@ -19,10 +20,15 @@ class StudentController
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-            )->get();
+            )->with([
+                'photo',
+                'registrations.university',
+                'registrations.faculty',
+                'registrations.institute', 'registrations.department', 'registrations.result'
+            ])->get();
 
         return Inertia::render('students/index', [
-            'students' => $students
+            'students' => StudentResource::collection($students)
         ]);
     }
 

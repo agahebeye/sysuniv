@@ -11,6 +11,8 @@ class Student extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'serial_number',
         'firstname',
@@ -50,7 +52,8 @@ class Student extends Model
         return $this->hasMany(Registration::class);
     }
 
-    public function latestRegistration() {
+    public function latestRegistration()
+    {
         return $this->hasOne(Registration::class)->latestOfMany();
     }
 

@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Models\User;
 use App\Enums\UserType;
 use App\Http\Requests\User\StoreUniversityRequest;
+use App\Models\Faculty;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -14,12 +15,14 @@ class CreateUniversityAction
     {
         $university = DB::transaction(function () use ($data) {
             $university = User::query()->create(
-                [...Arr::except($data, ['faculties', 'institutes']), ['role' => UserType::UNIVERSITY]]
+                [
+                    ...Arr::except($data, ['faculties', 'institutes']), 'role' => UserType::UNIVERSITY
+                ]
             );
-
-            $university->faculties()->create($data['faculties']);
-            $university->institutes()->create($data['institutes']);
-            $university->departments()->create($data['departments']);
+            
+            $university->faculties()->attach($data['faculties']);
+            $university->institutes()->attach($data['institutes']);
+            $university->departments()->attach($data['departments']);
 
             return $university;
         });

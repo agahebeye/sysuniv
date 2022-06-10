@@ -27,8 +27,7 @@ it('can see departments of universities', function () {
 
     Department::factory(3)->create();
 
-    createRegistration($university);
-    createRegistration(User::factory()->university());
+    Department::factory(2)->hasAttached($university, relationship:'universities')->create();
 
     $response = get(route('departments.index'));
 
@@ -36,7 +35,7 @@ it('can see departments of universities', function () {
         ->assertInertia(
             fn ($page) =>
             $page->component('departments/index')
-                ->has('departments', 1)
+                ->has('departments', 2)
         );
 });
 
