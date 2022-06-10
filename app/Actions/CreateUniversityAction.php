@@ -13,14 +13,13 @@ class CreateUniversityAction
     public function handle(array $data): \App\Models\User
     {
         $university = DB::transaction(function () use ($data) {
-            $university = User::query()->updateOrCreate(
-                ['id' => $data['id']],
+            $university = User::query()->create(
                 [...Arr::except($data, ['faculties', 'institutes']), ['role' => UserType::UNIVERSITY]]
             );
 
-            $university->faculties()->sync($data['faculties']);
-            $university->institutes()->sync($data['institutes']);
-            $university->departments()->sync($data['departments']);
+            $university->faculties()->create($data['faculties']);
+            $university->institutes()->create($data['institutes']);
+            $university->departments()->create($data['departments']);
 
             return $university;
         });

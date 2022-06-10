@@ -6,13 +6,15 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Institute;
-use App\Actions\CreateUniversityAction;
-use App\Notifications\UniversityRegistered;
-use App\Http\Requests\User\StoreUniversityRequest;
-use App\Http\Requests\User\UpdateUniversityRequest;
-use App\Http\Resources\UniversityResource;
 use App\Models\Department;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use App\Actions\CreateUniversityAction;
+use App\Actions\UpdateUniversityAction;
+use App\Notifications\UniversityUpdated;
+use App\Http\Resources\UniversityResource;
+use App\Http\Requests\User\StoreUniversityRequest;
+use App\Http\Requests\User\UpdateUniversityRequest;
 
 class UniversityController
 {
@@ -61,16 +63,9 @@ class UniversityController
         ]);
     }
 
-    public function update(User $university, UpdateUniversityRequest $request, CreateUniversityAction $createUniversityAction)
+    public function update(User $university, UpdateUniversityRequest $request, UpdateUniversityAction $updateUniversityAction)
     {
-        $university =  $createUniversityAction->handle(
-            [...$request->getSafeData(), 'id' => $university->id]
-        );
-
-        if (Arr::has($request->getSafeData(), ['email', 'password'])) {
-            $university->notify((new UniversityRegistered($request->password))->afterCommit());
-        }
-
+        $updateUniversityAction->handle($university, $request);
         return to_route('universities.index');
     }
 }

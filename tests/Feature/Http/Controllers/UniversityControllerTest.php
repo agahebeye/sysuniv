@@ -114,20 +114,21 @@ it('can update universities', function () {
     $faculties = Faculty::factory(3)->create();
     $institutes = Institute::factory(2)->create();
 
-    $university = User::factory()->university()->create(['name' => 'Universite du lac tanganyika']);
+    $university = User::factory()->university()->has(Faculty::factory())->create(['name' => 'Universite du lac tanganyika']);
 
     $response = put(route('universities.update', $university->getRouteKey()), [
-        'name' => 'Universite du lac tanganyika',
+        'name' => 'Universite Sagesse Africaine',
         'website' => 'https://johndoe.org',
         'address' => 'home',
         'faculties' => $faculties->map(fn ($faculty) => ['id' => $faculty->id])->flatten()->toArray(),
         'institutes' => $institutes->map(fn ($institute) => ['id' => $institute->id])->flatten()->toArray(),
+        'departments' => [],
     ]);
-
+    dd($response->json());
     $response->assertRedirect(route('universities.index'));
 
     assertDatabaseHas('users', [
-        'name' => 'Universite du lac tanganyika',
+        'name' => 'Universite Sagesse Africaine',
     ]);
 
     assertDatabaseHas('universities_institutes', [

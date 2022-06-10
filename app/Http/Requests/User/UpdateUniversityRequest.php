@@ -38,7 +38,7 @@ class UpdateUniversityRequest extends FormRequest
 
             'faculties' => ['array', 'nullable'],
             'institutes' => ['array', 'nullable'],
-            'departments' => ['required', 'array'],
+            'departments' => ['array', 'nullable'],
         ];
     }
 }
