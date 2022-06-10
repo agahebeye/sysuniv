@@ -14,6 +14,8 @@ import { Head } from '@inertiajs/inertia-vue3';
             <p>Welcome to the dashboard</p>
 
             <h1>{{ $page.props.auth['user'].name }}</h1>
+
+            <p>{{ $page.props.auth.user.photo }}</p>
         </div>
 
 

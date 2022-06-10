@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\PhotoResource;
+use App\Models\Photo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Inertia\Middleware;
 use Illuminate\Http\Request;
 
@@ -43,6 +46,7 @@ class HandleInertiaRequests extends Middleware
                     'route_key' => $request->user()->getRouteKey(),
                     'name' => $request->user()->name,
                     'role' => $request->user()->role,
+                    'photo' => PhotoResource::make($request->user()->photo),
                 ] : null
             ],
             'flash' => [

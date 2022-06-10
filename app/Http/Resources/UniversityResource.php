@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\PhotoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UniversityResource extends JsonResource
@@ -21,6 +22,7 @@ class UniversityResource extends JsonResource
             'website' => $this->website,
             'address' => $this->address,
 
+            'photo' => PhotoResource::make($this->whenLoaded('photo')),
             'faculties' => UniversityResource::collection($this->whenLoaded('faculties')),
             'institutes' => UniversityResource::collection($this->whenLoaded('institutes')),
             'departments' => UniversityResource::collection($this->whenLoaded('departments')),
