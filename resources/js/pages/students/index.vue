@@ -10,14 +10,14 @@ const props = defineProps<{
 </script>
 
 <template>
-
-    <Head>
-        <title>Students - Sysuniv</title>
-    </Head>
-
     <div>
+
+        <Head>
+            <title>Students - Sysuniv</title>
+        </Head>
+
         <h1>Students</h1>
-        
+
         <div>
             <Link v-if="isAdmin || isEmployee" href="/students/create">register new student</Link>
             <Link v-if="isUniversity" href="/registrations/create">enroll new student</Link>
@@ -25,8 +25,10 @@ const props = defineProps<{
 
         <table>
             <tr v-for="student in students" data-test="student">
+                <Link :href="`/students/${student.id}`">
                 <td>{{ student.firstname }}</td>
                 <td>{{ student.lastname }}</td>
+                </Link>
             </tr>
         </table>
     </div>

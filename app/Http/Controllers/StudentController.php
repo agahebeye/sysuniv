@@ -20,12 +20,7 @@ class StudentController
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-            )->with([
-                'photo',
-                'registrations.university',
-                'registrations.faculty',
-                'registrations.institute', 'registrations.department', 'registrations.result'
-            ])->get();
+            )->get();
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students)
@@ -52,7 +47,12 @@ class StudentController
     public function show(Student $student): \Inertia\Response
     {
         return Inertia::render('students/show', [
-            'student' => $student
+            'student' => $student->load([
+                'photo',
+                'registrations.university',
+                'registrations.faculty',
+                'registrations.institute', 'registrations.department', 'registrations.result'
+            ])
         ]);
     }
 
