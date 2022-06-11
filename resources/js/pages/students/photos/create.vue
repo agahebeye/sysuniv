@@ -27,7 +27,7 @@ function addStudentPhoto(e: any) {
 
         <h1>
             <Link href="/students">Students</Link>/
-            <Link :href="`/students/${student.id}`">{{ student.name }}</Link>/Add student photo
+            <Link :href="`/students/${student.id}`">{{ student.firstname }}</Link>/Add student photo
         </h1>
 
         <div class="errors" v-if="form.hasErrors">

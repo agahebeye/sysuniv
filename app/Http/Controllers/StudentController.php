@@ -40,7 +40,7 @@ class StudentController
 
         $request->session()->flash(
             'success',
-            "{$student->name}'s Generated registration number is:  $student->registration_number"
+            "{$student->firstname}'s Generated registration number is:  $student->registration_number"
         );
 
         return to_route('students.photos.create', $student->getRouteKey());
