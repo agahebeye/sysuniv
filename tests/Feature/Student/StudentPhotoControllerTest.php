@@ -9,12 +9,13 @@ use Illuminate\Http\UploadedFile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 
-$this->actingAs(User::factory()->create());
+beforeEach(fn () => $this->actingAs(User::factory()->create()));
 
 it('can create students photos', function () {
     $student = Student::factory()->create();
 
     $response = get(route('students.photos.create', $student->getRouteKey()));
+    dd($response->json());
     $response->assertOk()
         ->assertInertia(
             fn ($page) => $page

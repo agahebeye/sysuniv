@@ -11,7 +11,7 @@ class StudentPhotoController
 {
     public function create(Student $student)
     {
-        return Inertia::render('universities/photos/edit', [
+        return Inertia::render('students/photos/create', [
             'student' => StudentResource::make($student),
         ]);
     }
