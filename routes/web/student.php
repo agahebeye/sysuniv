@@ -15,7 +15,7 @@ Route::prefix('students')
             Route::get('{student}/edit', [StudentController::class, 'edit'])->name('students.edit');
             Route::put('{student}/update', [StudentController::class, 'update'])->name('students.update');
             Route::get('{student}/photos/create', [StudentPhotoController::class, 'create'])->name('students.photos.create');
-            Route::put('{student}/photos/store', [StudentPhotoController::class, 'store'])->name('students.photos.store');
+            Route::post('{student}/photos/store', [StudentPhotoController::class, 'store'])->name('students.photos.store');
         });
 
         Route::middleware(['role:admin,employee,university'])->group(function () {
