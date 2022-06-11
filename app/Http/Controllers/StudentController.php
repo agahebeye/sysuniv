@@ -38,10 +38,12 @@ class StudentController
 
         $student = DB::transaction(fn () => Student::query()->create($data));
 
-        return redirect(RouteServiceProvider::HOME)->with(
+        $request->session()->flash(
             'success',
             "{$student->name}'s Generated registration number is:  $student->registration_number"
         );
+
+        return to_route('students.photos.create', $student->getRouteKey());
     }
 
     public function show(Student $student): \Inertia\Response

@@ -56,11 +56,17 @@ it('can store students', function () {
     $photo = UploadedFile::fake()->create('photo.png');
     $data = Student::factory()->raw();
     $response = post(route('students.store'), $data);
-    $response->assertRedirect(RouteServiceProvider::HOME);
     assertDatabaseHas('students', [
         'firstname' => $data['firstname'],
         'lastname' => $data['lastname']
     ]);
+
+    $student = Student::latest()->first();
+    $response->assertSessionHas(
+        'success',
+        "{$student->name}'s Generated registration number is:  $student->registration_number"
+    );
+    $response->assertRedirect(route('students.photos.create', $student->getRouteKey()));
 });
 
 it('can edit students', function () {

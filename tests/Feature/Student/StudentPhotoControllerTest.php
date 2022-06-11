@@ -15,11 +15,12 @@ it('can create students photos', function () {
     $student = Student::factory()->create();
 
     $response = get(route('students.photos.create', $student->getRouteKey()));
-    dd($response->json());
     $response->assertOk()
         ->assertInertia(
             fn ($page) => $page
                 ->component('students/photos/create')
+                ->has('student')
+                ->where('student.firstname', $student->firstname)
         );
 });
 

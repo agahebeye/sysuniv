@@ -8,8 +8,11 @@ use Illuminate\Http\UploadedFile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Storage;
 
+beforeEach(fn () => $this->actingAs($university = User::factory()->create()));
+
+
 it('can edit universities photos', function () {
-    $this->actingAs($university = User::factory()->university()->create());
+    $university = User::factory()->university()->create();
 
     $response = get(route('universities.photos.edit', $university->getRouteKey()));
     $response->assertOk()
@@ -19,16 +22,16 @@ it('can edit universities photos', function () {
         );
 });
 
-it('can update universities photos', function() {
+it('can update universities photos', function () {
     Storage::fake('public');
 
-    $this->actingAs($university = User::factory()->university()->create());
+    $university = User::factory()->university()->create();
     $photo = UploadedFile::fake()->image('photo.png', 480, 320);
 
     $response = put(route('universities.photos.update', $university->getRouteKey()), [
         'photo' => $photo
     ]);
 
-    Storage::disk('public')->assertExists('/avatars/'.$photo->hashName());
+    Storage::disk('public')->assertExists('/avatars/' . $photo->hashName());
     $response->assertRedirect(RouteServiceProvider::HOME);
 });

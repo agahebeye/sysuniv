@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                     'route_key' => $request->user()->getRouteKey(),
                     'name' => $request->user()->name,
                     'role' => $request->user()->role,
-                    'photo' => PhotoResource::make($request->user()->photo),
+                    'photo' => $request->user()->photo ? PhotoResource::make($request->user()?->photo) : null,
                 ] : null
             ],
             'flash' => [
