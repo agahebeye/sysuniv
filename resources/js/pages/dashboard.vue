@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 </script>
 
 <template>
@@ -12,6 +12,8 @@ import { Head } from '@inertiajs/inertia-vue3';
         <div>
 
             <p>Welcome to the dashboard</p>
+
+            <Link href="/request-password-reset">Reset your password</Link>
 
             <h1>{{ $page.props.auth['user'].name }}</h1>
 

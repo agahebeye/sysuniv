@@ -49,12 +49,12 @@ class StudentController
     public function show(Student $student): \Inertia\Response
     {
         return Inertia::render('students/show', [
-            'student' => $student->load([
+            'student' => StudentResource::make($student->load([
                 'photo',
                 'registrations.university',
                 'registrations.faculty',
                 'registrations.institute', 'registrations.department', 'registrations.result'
-            ])
+            ]))
         ]);
     }
 
