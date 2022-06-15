@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import GuestLayout from '~/layouts/GuestLayout.vue';
 
@@ -26,11 +26,12 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div class="prose mx-auto max-w-md">
+
         <Head>
             <title>Login - Sysuniv</title>
         </Head>
-        
+
         <h1>login</h1>
 
         <div class="errors" v-if="form.hasErrors">
@@ -38,18 +39,20 @@ export default {
         </div>
 
         <form @submit.prevent="form.post('/login')">
-            <div>
+            <div class="mb-4">
                 <label for="email">email</label>
-                <input type="email" id="email" v-model="form.email" autocomplete="off" autofocus required>
+                <input type="email" id="email" v-model="form.email" class="input input-bordered w-full" autocomplete="off" autofocus required>
             </div>
 
-            <div>
+            <div class="mb-4">
                 <label for="password">password</label>
-                <input type="password" minlength="8" id="password" v-model="form.password" autocomplete="off" autofocus
+                <input type="password" minlength="8" id="password" v-model="form.password" class="input input-bordered w-full" autocomplete="off" autofocus
                     required>
             </div>
 
-            <button>Login</button>
+            <div class="text-center">
+                <button class="btn btn-primary btn-wide">Login</button>
+            </div>
         </form>
     </div>
 </template>
