@@ -3,6 +3,7 @@
 use App\Models\Student;
 use App\Models\User;
 use function Pest\Laravel\get;
+use function Pest\Laravel\post;
 use function Pest\Laravel\put;
 
 use Illuminate\Http\UploadedFile;
@@ -30,7 +31,7 @@ it('can store students photos', function () {
     $student = Student::factory()->create();
     $photo = UploadedFile::fake()->image('photo.png', 480, 320);
 
-    $response = put(route('students.photos.store', $student->getRouteKey()), [
+    $response = post(route('students.photos.store', $student->getRouteKey()), [
         'photo' => $photo
     ]);
 

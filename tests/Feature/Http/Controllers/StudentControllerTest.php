@@ -42,7 +42,7 @@ it('can show students', function () {
             fn (AssertableInertia $page) =>
             $page->component('students/show')
                 ->has('student')
-                ->where('student.id', $student->id)
+                ->where('student.firstname', $student->firstname)
         );
 });
 
@@ -64,7 +64,7 @@ it('can store students', function () {
     $student = Student::latest()->first();
     $response->assertSessionHas(
         'success',
-        "{$student->name}'s Generated registration number is:  $student->registration_number"
+        "{$student->firstname}'s Generated registration number is:  $student->registration_number"
     );
     $response->assertRedirect(route('students.photos.create', $student->getRouteKey()));
 });
