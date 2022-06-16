@@ -31,9 +31,7 @@ const { isAdmin, isEmployee } = useAuth();
             </nav>
         </header>
         <main>
-            <div>
-                <slot></slot>
-            </div>
+            <slot></slot>
         </main>
     </div>
 </template>

@@ -2,12 +2,13 @@
 module.exports = {
   content: [
     './resources/**/*.js',
+    './resources/**/*.ts',
     './resources/**/*.vue',
     './app/**/*.php',
   ],
   theme: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require("@tailwindcss/typography")]
 
 }
