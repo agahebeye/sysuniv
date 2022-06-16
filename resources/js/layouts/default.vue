@@ -11,11 +11,12 @@ import LinkList from '~/components/shared/LinkList.vue';
         </div>
     </div>
 
-    <div class="page--wrapper grid">
-        <header class="">
+    <div class="pb-6 grid grid-cols-3 md:max-w-4xl md:mx-auto">
+        <header class="col-span-full mb-10">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum exercitationem labore dicta quibusdam.</p>
         </header>
 
-        <nav>
+        <nav class="col-span-1">
             <LinkList class="flex flex-col" />
 
             <div class="menu-auth">
@@ -23,7 +24,7 @@ import LinkList from '~/components/shared/LinkList.vue';
             </div>
         </nav>
 
-        <main class="prose">
+        <main class="prose col-span-2">
             <slot></slot>
         </main>
     </div>

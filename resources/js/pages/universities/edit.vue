@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Multiselect from 'vue-multiselect';
+
+import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
+import XButton from '~/components/shared/XButton.vue';
+
 import { User } from '~/types/users';
 import { Field } from '~/types/fields';
 
@@ -34,9 +38,7 @@ function updateUniversity() {
 </script>
 
 <template>
-
-
-    <div>
+    <div class="max-w-sm mx-auto">
 
         <Head>
             <title>Update University - Sysuniv</title>
@@ -44,54 +46,52 @@ function updateUniversity() {
 
         <h1>Update university</h1>
 
-        <div class="errors" v-if="form.errors">
-            <div v-for="error in form.errors">{{ error }}</div>
-        </div>
+        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="updateUniversity">
-            <div>
-                <label for="name">name</label>
-                <input type="text" id="name" v-model="form.name" autocomplete="off" autofocus>
+            <div class="mb-4">
+                <label for="name">Name</label>
+                <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" autofocus>
             </div>
 
-            <div>
-                <label for="email">email</label>
-                <input type="email" id="email" v-model="form.email" autocomplete="off">
+            <div class="mb-4">
+                <label for="email">Email</label>
+                <input type="email" id="email" v-model="form.email" class="input" autocomplete="off">
             </div>
 
-            <div>
-                <label for="email">website</label>
-                <input type="url" id="website" v-model="form.website" autocomplete="off">
+            <div class="mb-4">
+                <label for="email">Website</label>
+                <input type="url" id="website" v-model="form.website" class="input" autocomplete="off">
             </div>
 
-            <div>
-                <label for="address" style="float: left">address</label>
-                <textarea name="address" id="address" v-model="form.address" cols="30" rows="10"></textarea>
+            <div class="mb-4">
+                <label for="address" style="float: left">Address</label>
+                <textarea name="address" id="address" rows="3" class="textarea" v-model="form.address"></textarea>
             </div>
 
 
-            <div>
-                <label for="faculties">faculties</label>
+            <div class="mb-4">
+                <label for="faculties">Faculties</label>
                 <multiselect v-model="form.faculties" placeholder="select faculties" :multiple="true"
                     :close-on-select="false" :options="faculties" label="name" track-by="id">
                 </multiselect>
             </div>
 
-            <div>
-                <label for="institutes">institutes</label>
+            <div class="mb-4">
+                <label for="institutes">Institutes</label>
                 <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
                     :close-on-select="false" :options="institutes" label="name" track-by="id">
                 </multiselect>
             </div>
 
-            <div>
-                <label for="departments">departments</label>
+            <div class="mb-4">
+                <label for="departments">Departments</label>
                 <multiselect v-model="form.departments" placeholder="select departments" :multiple="true"
                     :close-on-select="false" :options="departments" label="name" track-by="id" required>
                 </multiselect>
             </div>
 
-            <button>update</button>
+            <x-button :processing="form.processing">update university</x-button>
         </form>
     </div>
 </template>

@@ -17,10 +17,6 @@ const props = defineProps<{
             <title>Students/{{ student.firstname }} - Sysuniv</title>
         </Head>
 
-        <p v-if="isAdmin || isEmployee">
-            <Link :href="`/students/${student.id}/edit`">Edit this student</Link>
-        </p>
-
         <h1>
             <Link href="/students">Students</Link> / {{ student.firstname }} {{ student.lastname }}
         </h1>

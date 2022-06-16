@@ -38,7 +38,7 @@ defineProps<{
 </script>
 
 <template>
-    <div class="max-w-sm mx-auto">
+    <div class="max-w-sm">
 
         <Head>
             <title>Create University - Sysuniv</title>

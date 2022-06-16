@@ -17,7 +17,7 @@ function createStudent() {
 </script>
 
 <template>
-    <div class="max-w-sm mx-auto">
+    <div class="max-w-sm">
 
         <Head>
             <title>Create Student - Sysuniv</title>
@@ -25,9 +25,7 @@ function createStudent() {
 
         <h1>Create new student</h1>
 
-        <div class="errors" v-if="form.hasErrors">
-            <div v-for="error in form.errors">{{ error }}</div>
-        </div>
+        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="createStudent">
             <div class="mb-4">
@@ -43,8 +41,8 @@ function createStudent() {
             <div class="mb-4">
                 <label for="gender">Gender</label>
                 <div class="flex items-center space-x-2">
-                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>MALE</span>
-                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>FEMALE</span>
+                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>Male</span>
+                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>Female</span>
                 </div>
             </div>
 

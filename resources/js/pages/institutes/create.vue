@@ -10,7 +10,7 @@ const form = useForm({
 
 <template>
 
-    <div class="max-w-sm mx-auto">
+    <div class="max-w-sm">
 
         <Head>
             <title>Create institute - Sysuniv</title>
