@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
+import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
+import XButton from '~/components/shared/XButton.vue';
 
 const form = useForm({
     name: '',
@@ -8,24 +10,23 @@ const form = useForm({
 
 <template>
 
-    <Head>
-        <title>Create Institute - Sysuniv</title>
-    </Head>
-    
-    <div>
+    <div class="max-w-sm mx-auto">
+
+        <Head>
+            <title>Create institute - Sysuniv</title>
+        </Head>
+
         <h1>Create new institute</h1>
 
-        <div class="errors" v-if="form.hasErrors">
-            <div v-for="error in form.errors">{{ error }}</div>
-        </div>
+        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="form.post('/institutes/store')">
-            <div>
-                <label for="name"></label>
-                <input type="text" id="name" v-model="form.name" autocomplete="off" autofocus required>
+            <div class="mb-4">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="input" v-model="form.name" autocomplete="off" autofocus required>
             </div>
 
-            <button>create</button>
+            <x-button :processing="form.processing">create institute</x-button>
         </form>
     </div>
 </template>

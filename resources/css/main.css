@@ -8,8 +8,15 @@
     }
 
     .input {
-        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:border-teal-600
-         focus:ring-0 focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+        @apply bg-gray-50 border border-gray-300 rounded-sm text-gray-900 text-sm focus:border-teal-600
+         focus:ring-0 focus:outline-none block w-full p-2.5 
+         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    }
+
+    .textarea {
+        @apply block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-sm border border-gray-300
+        focus:border-teal-600 outline-none dark:bg-gray-700 dark:border-gray-600 resize-none
+        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
     }
 
     .button {
@@ -21,5 +28,10 @@
 
     .button-large {
         @apply font-medium text-base px-12 py-3 text-center;
+    }
+
+    .radio {
+        @apply appearance-none rounded-lg w-4 h-4 bg-gray-200 border-teal-600 border 
+        checked:bg-teal-600;
     }
 }

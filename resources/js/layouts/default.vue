@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { Link, usePage } from '@inertiajs/inertia-vue3';
-import { useAuth } from '~/composables/auth';
-const { isAdmin, isEmployee } = useAuth();
+import { Link } from '@inertiajs/inertia-vue3';
+import LinkList from '~/components/shared/LinkList.vue';
 
 </script>
 
@@ -11,44 +10,21 @@ const { isAdmin, isEmployee } = useAuth();
             {{ $page.props.flash['success'] }}
         </div>
     </div>
-    <div class="page--wrapper">
 
-        <header>
-            <nav>
-                <div>
-                    <Link href="/">home</Link>
-                    <Link v-if="isAdmin" href="/employees">employees</Link>
-                    <Link v-if="isAdmin || isEmployee" href="/universities">universities</Link>
-                    <Link href="/faculties">faculties</Link>
-                    <Link href="/institutes">institutes</Link>
-                    <Link href="/departments">departments</Link>
-                    <Link href="/students">students</Link>
-                </div>
-
-                <div class="menu-auth">
-                    <Link href="/logout" method="post" as="button">logout</Link>
-                </div>
-            </nav>
+    <div class="page--wrapper grid">
+        <header class="">
         </header>
-        <main>
+
+        <nav>
+            <LinkList class="flex flex-col" />
+
+            <div class="menu-auth">
+                <Link href="/logout" method="post" as="button">logout</Link>
+            </div>
+        </nav>
+
+        <main class="prose">
             <slot></slot>
         </main>
     </div>
 </template>
-
-<style scoped>
-.page--wrapper {
-    display: flex;
-    gap: 30px;
-}
-
-.menu-auth {
-    margin-top: 20px;
-    border-top: 1px #a0a0a0 solid;
-    padding-top: 20px;
-}
-
-nav a {
-    display: block;
-}
-</style>

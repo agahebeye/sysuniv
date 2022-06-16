@@ -2,12 +2,14 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import GuestLayout from '~/layouts/GuestLayout.vue';
 import { useAuth } from '~/composables/auth';
+import LinkList from '~/components/shared/LinkList.vue';
 
 export default {
     layout: GuestLayout,
 
     components: {
-        Head, Link
+        Head, Link,
+        LinkList
     },
 
     setup() {
@@ -35,6 +37,8 @@ export default {
             <Link href="/request-password-reset" v-if="isUniversity">Reset your password</Link>
 
             <h1>{{ authedUser.name }}</h1>
+
+            <LinkList />
         </div>
 
 

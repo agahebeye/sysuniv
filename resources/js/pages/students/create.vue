@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { useForm, Head } from "@inertiajs/inertia-vue3";
+import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
+import XButton from '~/components/shared/XButton.vue';
 
 const form = useForm({
     'firstname': null,
@@ -15,7 +17,7 @@ function createStudent() {
 </script>
 
 <template>
-    <div>
+    <div class="max-w-sm mx-auto">
 
         <Head>
             <title>Create Student - Sysuniv</title>
@@ -28,33 +30,35 @@ function createStudent() {
         </div>
 
         <form @submit.prevent="createStudent">
-            <div>
-                <label for="firstname">firstname</label>
-                <input type="text" id="firstname" v-model="form.firstname" autocomplete="off" autofocus required>
+            <div class="mb-4">
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" v-model="form.firstname" class="input" autocomplete="off" autofocus required>
             </div>
 
-            <div>
-                <label for="lastname">lastname</label>
-                <input type="text" id="lastname" v-model="form.lastname" autocomplete="off" autofocus required>
+            <div class="mb-4">
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" v-model="form.lastname" class="input" autocomplete="off" autofocus required>
             </div>
 
-            <div>
-                <label for="gender">gender</label>
-                <input type="radio" name="gender" value="MALE" v-model="form.gender">MALE
-                <input type="radio" name="gender" value="FEMALE" v-model="form.gender">FEMALE
+            <div class="mb-4">
+                <label for="gender">Gender</label>
+                <div class="flex items-center space-x-2">
+                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>MALE</span>
+                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>FEMALE</span>
+                </div>
             </div>
 
-            <div>
-                <label for="birth_date">birth date</label>
-                <input type="date" id="birth_date" v-model="form.birth_date" required>
+            <div class="mb-4">
+                <label for="birth_date">Birth date</label>
+                <input type="date" id="birth_date" class="input" v-model="form.birth_date" required>
             </div>
 
-            <div>
-                <label for="address">address</label>
-                <textarea id="address" v-model="form.address" required></textarea>
+            <div class="mb-4">
+                <label for="address">Address</label>
+                <textarea id="address" rows="4" class="textarea" v-model="form.address" required></textarea>
             </div>
 
-            <button>create</button>
+            <x-button :processing="form.processing">Create student</x-button>
         </form>
     </div>
 </template>
