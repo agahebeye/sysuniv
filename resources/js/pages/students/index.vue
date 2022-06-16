@@ -18,10 +18,10 @@ const props = defineProps<{
 
         <h1>Students</h1>
 
-        <div>
-            <Link v-if="isAdmin || isEmployee" href="/students/create" class="link">Register new student</Link>
-            <Link v-if="isUniversity" href="/registrations/create" class="link">Enroll new student</Link>
-        </div>
+        <Link v-if="isAdmin || isEmployee" href="/students/create" class="link">Register new student</Link>
+        <Link v-if="isUniversity" href="/registrations/create" class="link">Enroll new student</Link>
+
+        <h2><strong>{{ students.length }}</strong> students</h2>
 
         <table>
             <tr v-for="student in students" data-test="student">

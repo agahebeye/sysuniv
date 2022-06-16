@@ -18,7 +18,9 @@ defineProps<{
 
         <Link v-if="isAdmin || isEmployee" href="/faculties/create" class="link">Create new faculty</Link>
 
-        <div class="columns-3 gap-8">
+        <h2><strong>{{ faculties.length }}</strong> faculties</h2>
+
+        <div class="columns-2 gap-10">
             <div v-for="faculty in faculties" data-test="faculty">
                 {{ faculty.name }}
             </div>

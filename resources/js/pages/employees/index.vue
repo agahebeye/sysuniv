@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { User } from '~/types/users';
-import {useAuth} from '~/composables/auth';
+import { useAuth } from '~/composables/auth';
 
-const {isAdmin, isEmployee} = useAuth();
+const { isAdmin, isEmployee } = useAuth();
 
 defineProps<{
     employees: User[]
@@ -12,22 +12,22 @@ defineProps<{
 </script>
 
 <template>
-
-    <Head>
-        <title>Employees - Sysuniv</title>
-    </Head>
-
     <div>
+
+        <Head>
+            <title>Employees - Sysuniv</title>
+        </Head>
+
         <h1>Employees</h1>
 
-         <div>
-            <Link v-if="isAdmin || isEmployee" href="/employees/create">add new employee</Link>
-        </div>
+        <Link v-if="isAdmin || isEmployee" href="/employees/create" class="link">Create new employee</Link>
 
-        <table>
-            <tr v-for="employee in employees" data-test="employee">
-                <td>{{ employee.name }}</td>
-            </tr>
-        </table>
+        <h2><strong>{{ employees.length }}</strong> employees</h2>
+
+        <div class="columns-2 gap-10">
+            <div v-for="employee in employees" data-test="employee">
+                <Link :href="`/employees/${employee.id}`" class="no-underline hover:underline">{{ employee.name }}</Link>
+            </div>
+        </div>
     </div>
 </template>
