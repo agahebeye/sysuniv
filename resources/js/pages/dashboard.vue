@@ -1,5 +1,24 @@
-<script lang="ts" setup>
+<script>
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import GuestLayout from '~/layouts/GuestLayout.vue';
+import { useAuth } from '~/composables/auth';
+
+export default {
+    layout: GuestLayout,
+
+    components: {
+        Head, Link
+    },
+
+    setup() {
+        const { authedUser, isUniversity } = useAuth();
+
+        return {
+            authedUser,
+            isUniversity
+        }
+    }
+}
 </script>
 
 <template>
@@ -13,11 +32,9 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 
             <p>Welcome to the dashboard</p>
 
-            <Link href="/request-password-reset">Reset your password</Link>
+            <Link href="/request-password-reset" v-if="isUniversity">Reset your password</Link>
 
-            <h1>{{ $page.props.auth['user'].name }}</h1>
-
-            <p>{{ $page.props.auth['user'].photo }}</p>
+            <h1>{{ authedUser.name }}</h1>
         </div>
 
 
