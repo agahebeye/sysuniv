@@ -9,22 +9,20 @@ defineProps<{
 </script>
 
 <template>
-
-    <Head>
-        <title>Institutes - Sysuniv</title>
-    </Head>
-
     <div>
+
+        <Head>
+            <title>Institutes - Sysuniv</title>
+        </Head>
+
         <h1>Institutes</h1>
 
-        <div>
-            <Link v-if="isAdmin || isEmployee" href="/institutes/create">add new institute</Link>
-        </div>
+        <Link v-if="isAdmin || isEmployee" href="/institutes/create" class="link">Create new institute</Link>
 
-        <table>
-            <tr v-for="institute in institutes" data-test="institute">
-                <td>{{ institute.name }}</td>
-            </tr>
-        </table>
+        <div class="columns-3xs">
+            <div v-for="institute in institutes" data-test="institute">
+                {{ institute.name }}
+            </div>
+        </div>
     </div>
 </template>

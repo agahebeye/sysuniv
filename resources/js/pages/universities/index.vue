@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { User } from '~/types/users';
 import { Head, Link } from '@inertiajs/inertia-vue3';
-import {useAuth} from '~/composables/auth';
+import { useAuth } from '~/composables/auth';
 
-const {isAdmin, isEmployee} = useAuth();
+const { isAdmin, isEmployee } = useAuth();
 
 defineProps<{
     universities: Array<User>
@@ -11,22 +11,20 @@ defineProps<{
 </script>
 
 <template>
-
-    <Head>
-        <title>Universities - Sysuniv</title>
-    </Head>
-
     <div>
+
+        <Head>
+            <title>Universities - Sysuniv</title>
+        </Head>
+
         <h1>Universities</h1>
 
-        <div>
-            <Link v-if="isAdmin || isEmployee" href="/universities/create">add new university</Link>
-        </div>
+        <Link v-if="isAdmin || isEmployee" href="/universities/create" class="link">Create new university</Link>
 
-        <table>
-            <tr v-for="university in universities" data-test="university">
-                <td><Link :href="`/universities/${university.id}`">{{ university.name }}</Link></td>
-            </tr>
-        </table>
+        <div class="columns-3">
+            <div v-for="university in universities" data-test="university">
+                <Link :href="`/universities/${university.id}`">{{ university.name }}</Link>
+            </div>
+        </div>
     </div>
 </template>

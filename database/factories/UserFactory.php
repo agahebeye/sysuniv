@@ -59,4 +59,13 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function employee()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'role' => UserType::EMPLOYEE,
+            ];
+        });
+    }
 }

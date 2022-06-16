@@ -7,6 +7,10 @@
         @apply flex p-4 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-200 dark:text-red-800;
     }
 
+    .link {
+        @apply block text-teal-700 font-bold mb-6 text-lg;
+    }
+
     .input {
         @apply bg-gray-50 border border-gray-300 rounded-sm text-gray-900 text-sm focus:border-teal-600
          focus:ring-0 focus:outline-none block w-full p-2.5 
