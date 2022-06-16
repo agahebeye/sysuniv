@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Institute;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class InstituteController
 {
@@ -28,13 +29,18 @@ class InstituteController
         return Inertia::render('institutes/create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'name' => ['required', 'unique:institutes']
         ]);
 
-        Institute::query()->create($data);
+        $institute = Institute::query()->create($data);
+
+        $institute = $request->session()->flash(
+            'success',
+            "{$institute->name} institute created succefully"
+        );
 
         return to_route('institutes.index');
     }

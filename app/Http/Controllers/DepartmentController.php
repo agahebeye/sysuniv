@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Department;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class DepartmentController
 {
@@ -27,10 +28,17 @@ class DepartmentController
         return Inertia::render('departments/create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate(['name' => ['required', 'unique:departments']]);
-        Department::query()->create($data);
+        $data = $request->validate(['name' => ['required', 'unique:departments']]);
+        
+        $department = Department::query()->create($data);
+
+        $request->session()->flash(
+            'success',
+            "{$department->name} department created succefully"
+        );
+
         return to_route('departments.index');
     }
 }

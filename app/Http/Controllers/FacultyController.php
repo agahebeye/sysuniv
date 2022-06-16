@@ -6,6 +6,7 @@ use App\Enums\UserType;
 use App\Models\Faculty;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class FacultyController
@@ -16,8 +17,8 @@ class FacultyController
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-            )->get();
-        
+            )->latest('id')->get();
+
         return Inertia::render('faculties/index', [
             'faculties' => $faculties
         ]);
@@ -28,15 +29,20 @@ class FacultyController
         return Inertia::render('faculties/create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $data = request()->validate([
+        $data = $request->validate([
             'name' => ['required', 'unique:faculties']
         ]);
 
-        Faculty::query()->create($data);
+        $facutly = Faculty::query()->create($data);
 
-        return to_route('faculties.index'); 
+        $request->session()->flash(
+            'success',
+            "{$facutly->name} faculty created succefully"
+        );
+
+        return to_route('faculties.index');
     }
 
     public function show(Faculty $faculty)
