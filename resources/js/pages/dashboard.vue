@@ -38,7 +38,7 @@ export default {
 
             <h1>{{ authedUser.name }}</h1>
 
-            <LinkList class="flex flex-wrap gap-6" />
+            <LinkList size="lg" class="flex flex-wrap gap-6" />
         </div>
     </div>
 </template>

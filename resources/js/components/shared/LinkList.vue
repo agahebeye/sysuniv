@@ -10,7 +10,7 @@ import StudentIcon from '~/../assets/icons/Student.svg';
 
 const { isAdmin, isEmployee } = useAuth();
 
-defineProps<{
+const props = defineProps<{
     size: string
 }>();
 
