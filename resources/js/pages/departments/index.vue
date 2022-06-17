@@ -20,8 +20,8 @@ defineProps<{
 
         <h2><strong>{{ departments.length }}</strong> department(s)</h2>
 
-        <div class="">
-            <div v-for="department in departments" data-test="department">
+        <div class="columns-2 gap-10">
+            <div v-for="department in departments" class="mb-2" data-test="department">
                 {{ department.name }}
             </div>
         </div>

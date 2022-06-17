@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
-import { User } from '~/types/users';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
+import XButton from '~/components/shared/XButton.vue';
 
 const props = defineProps<{
     student: any
@@ -19,27 +20,25 @@ function addStudentPhoto(e: any) {
 </script>
 
 <template>
-    <div>
+    <div class="max-w-sm">
 
         <Head>
             <title>Add student photo - Sysuniv</title>
         </Head>
 
-        <h1>
-            <Link href="/students">Students</Link>/
-            <Link :href="`/students/${student.id}`">{{ student.firstname }}</Link>/Add student photo
-        </h1>
+        <h1>Add student photo</h1>
 
-        <div class="errors" v-if="form.hasErrors">
-            <div v-for="error in form.errors">{{ error }}</div>
-        </div>
+        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="addStudentPhoto">
-            <input type="file" @input="form.photo = $event.target['files']['0']" required>
-            <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                {{ form.progress.percentage }}%
-            </progress><br />
-            <button type="submit">Add</button>
+            <div class="mb-6">
+                <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
+                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                    {{ form.progress.percentage }}%
+                </progress>
+            </div>
+
+            <x-button :processing="form.processing" class="!m-0 button-sm">Add photo</x-button>
         </form>
     </div>
 </template>
