@@ -38,7 +38,13 @@ export default {
 
             <h1>{{ authedUser.name }}</h1>
 
-            <LinkList class="inline-flex flex-wrap max-w-sm" />
+            <LinkList class="flex flex-wrap gap-6" />
         </div>
     </div>
 </template>
+
+<style scoped>
+a {
+    @apply no-underline;
+}
+</style>

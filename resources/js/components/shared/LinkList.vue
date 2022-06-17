@@ -10,6 +10,15 @@ import StudentIcon from '~/../assets/icons/Student.svg';
 
 const { isAdmin, isEmployee } = useAuth();
 
+defineProps<{
+    size: string
+}>();
+
+const sizeStyles = {
+    'sm' : 'w-8 h-8',
+    'lg': 'w-16 h-16'
+}
+
 
 </script>
 
