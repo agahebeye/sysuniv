@@ -16,6 +16,7 @@ class StudentController
 {
     public function index(): \Inertia\Response
     {
+        
         $students = Student::query()
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,

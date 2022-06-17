@@ -6,9 +6,10 @@ import SuccessAlert from '~/components/flash/SuccessAlert.vue';
 </script>
 
 <template>
-    <div class="flash">
-       <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
-    </div>
+<div class="bg-gray-200">
+
+    <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
+</div>
 
     <div class="pb-6 grid grid-cols-3 md:max-w-4xl md:mx-auto px-6">
         <header class="col-span-full mb-10">

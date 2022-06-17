@@ -26,7 +26,17 @@ function takeme(url: string) {
         <Link v-if="isAdmin || isEmployee" href="/students/create" class="link">Register new student</Link>
         <Link v-if="isUniversity" href="/registrations/create" class="link">Enroll new student</Link>
 
-        <h2><strong>{{ students.data.length }}</strong> students</h2>
+        <h2 class="!mb-0">{{ students.meta.from }} to {{ students.meta.to}} of {{ students.meta.total}} student(s)</h2>
+
+        <div class="pagination">
+            <Component
+                :is="link.url ? Link : 'span'"
+                v-for="link in students.meta.links"
+                :href="link.url"
+                v-html="link.label"
+                class="px-1 text-xs no-underline"
+                :class="{ 'text-black': link.url, 'font-bold': link.active }" />
+        </div>
 
         <table>
             <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">

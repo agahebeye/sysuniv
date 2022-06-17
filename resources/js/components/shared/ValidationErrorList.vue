@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-    errors: Array
+    errors: Array | Object
 })
 </script>
 
