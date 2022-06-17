@@ -6,26 +6,59 @@ import SuccessAlert from '~/components/flash/SuccessAlert.vue';
 </script>
 
 <template>
-<div class="bg-gray-200">
-
     <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
-</div>
 
-    <div class="pb-6 grid grid-cols-3 md:max-w-4xl md:mx-auto px-6">
-        <header class="col-span-full mb-10">
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum exercitationem labore dicta quibusdam.</p>
-        </header>
-
-        <nav class="col-span-1">
-            <LinkList class="flex flex-col" />
-
-            <div class="menu-auth">
-                <Link href="/logout" method="post" as="button">logout</Link>
+    <div class="container">
+        <nav class="top-nav">
+            <div>
+                <LinkList class="flex flex-col space-y-4" />
+                <div class="h-px w-40 bg-teal-300 mt-6 mb-3"></div>
+                <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">logout</Link>
             </div>
         </nav>
 
-        <main class="prose col-span-2">
+        <header class="mb-10">
+            <div class="pl-10 text-xs mt-4">
+                <div>Republique du Burundi</div>
+                <div>Ministere de l'education nationale et de la recherche scientifique</div>
+                <div class="font-bold text-2xl">{{ $page.props.auth['user'].name }}</div>
+            </div>
+        </header>
+
+        <main class="prose pl-10">
+            <Link href="/" class="inline-flex items-center mb-4 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+            <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+            </svg>
+            Home
+            </Link>
             <slot></slot>
         </main>
     </div>
 </template>
+
+<style scoped>
+.container {
+    display: grid;
+    grid-template-columns: 220px auto auto;
+    grid-template-areas:
+        "nav header header"
+        "nav main main"
+        "nav main main"
+    ;
+}
+
+.top-nav {
+    @apply pl-4 pt-4 mr-10;
+    @apply bg-gradient-to-b from-teal-200 to-white h-[100vh] fixed w-56;
+    grid-area: nav;
+}
+
+main {
+    grid-area: main;
+}
+
+header {
+    grid-area: header;
+}
+</style>

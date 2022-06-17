@@ -38,9 +38,7 @@ export default {
 
             <h1>{{ authedUser.name }}</h1>
 
-            <LinkList />
+            <LinkList class="inline-flex flex-wrap max-w-sm" />
         </div>
-
-
     </div>
 </template>
