@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-[100vh] w-full">
-        <header class="bg-gradient-to-b w-96 from-teal-200 to-white flex items-center">
-             <div class="px-10 text-sm space-y-3">
+        <header class="bg-gradient-to-b w-96 from-teal-900 to-white flex items-center">
+             <div class="px-10 text-sm space-y-3 text-white">
                 <div>Republique du Burundi</div>
                 <div>Ministère de l'éducation nationale et de la recherche scientifique</div>
             </div>

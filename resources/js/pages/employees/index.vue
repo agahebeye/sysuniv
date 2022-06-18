@@ -24,7 +24,7 @@ defineProps<{
 
         <h2><strong>{{ employees.length }}</strong> employees</h2>
 
-        <div class="columns-2 gap-10">
+        <div class="columns-2 gap-10 max-w-md">
             <div v-for="employee in employees" class="mb-2" data-test="employee">
                 {{ employee.name }}
             </div>

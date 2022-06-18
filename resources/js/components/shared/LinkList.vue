@@ -53,9 +53,6 @@ const sizeStyles = {
 
 <style scoped>
 a {
-    @apply flex items-center space-x-2 capitalize no-underline;
-}
-
-svg {
+    @apply uppercase flex items-center text-sm space-x-2  no-underline;
 }
 </style>

@@ -23,8 +23,7 @@ defineProps<{
 
         <h2><strong>{{ universities.length }}</strong> universities</h2>
 
-
-        <div class="columns-2 gap-10">
+        <div class="columns-2 gap-10 max-w-md">
             <div v-for="university in universities" class="mb-2" data-test="university">
                 <Link :href="`/universities/${university.id}`" class="no-underline hover:underline">{{ university.name }}</Link>
             </div>

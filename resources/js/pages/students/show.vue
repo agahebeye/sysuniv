@@ -39,7 +39,7 @@ const props = defineProps<{
                         <Link class="font-bold text-teal-700" :href="`${student.id}/results/create`">Add result for this year</Link>
                     </div>
 
-                    <RegistrationList :registrations="student.registrations" />
+                    <RegistrationList v-if="student.registrations.length" :registrations="student.registrations" />
                 </div>
             </div>
         </div>

@@ -36,9 +36,9 @@ export default {
 
             <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Reset your password</Link>
 
-            <h1>{{ authedUser.name }}</h1>
+            <h1 class="capitalize">{{ authedUser.name }}</h1>
 
-            <LinkList size="lg" class="flex flex-wrap gap-10" />
+            <LinkList size="lg" class="flex flex-wrap gap-10 max-w-xl" />
         </div>
     </div>
 </template>

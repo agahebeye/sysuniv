@@ -70,7 +70,7 @@ class NewPasswordController
                 request()->session()->regenerateToken();
             }
             
-            return redirect()->route('login')->with('status', __($status));
+            return redirect()->route('login.create')->with('status', __($status));
         }
 
         throw ValidationException::withMessages([
