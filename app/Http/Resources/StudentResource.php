@@ -20,7 +20,7 @@ class StudentResource extends JsonResource
             'photo' => PhotoResource::make($this->whenLoaded('photo')),
 
             'id' => $this->getRouteKey(),
-            'birthDate' => $this->birth_date->format('d-m-Y'),
+            'birthDate' => $this->birth_date->format('d/m/Y'),
             $this->merge(Arr::except(parent::toArray($request), ['registration_number', 'birth_date'])),
         ];
     }

@@ -34,17 +34,17 @@ export default {
 
             <p>Welcome to the dashboard</p>
 
-            <Link href="/request-password-reset" v-if="isUniversity">Reset your password</Link>
+            <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Reset your password</Link>
 
             <h1>{{ authedUser.name }}</h1>
 
-            <LinkList size="lg" class="flex flex-wrap gap-6" />
+            <LinkList size="lg" class="flex flex-wrap gap-10" />
         </div>
     </div>
 </template>
 
 <style scoped>
 a {
-    @apply no-underline;
+    @apply !no-underline;
 }
 </style>

@@ -24,9 +24,11 @@ class EmployeeController
 
       public function store(StoreEmployeeRequest $request)
     {
-        $user = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
+        $employee = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
+
+        $request->session()->flash('success', "{$employee->name} has been created succefully");
         
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('employees.index');
     }
 
 }

@@ -38,7 +38,7 @@ function takeme(url: string) {
                 :class="{ 'text-black': link.url, 'font-bold': link.active }" />
         </div>
 
-        <table>
+        <table class="max-w-md">
             <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="pl-2 py-2">

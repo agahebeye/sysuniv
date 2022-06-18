@@ -26,7 +26,7 @@ defineProps<{
 
         <div class="columns-2 gap-10">
             <div v-for="employee in employees" class="mb-2" data-test="employee">
-                <Link :href="`/employees/${employee.id}`" class="no-underline hover:underline">{{ employee.name }}</Link>
+                {{ employee.name }}
             </div>
         </div>
     </div>

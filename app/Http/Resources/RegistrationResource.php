@@ -22,6 +22,7 @@ class RegistrationResource extends JsonResource
             'institute' => $this->whenLoaded('institute'),
             'department' => $this->whenLoaded('department'),
             'result' => $this->whenLoaded('result'),
+            'created_at' => $this->created_at->format('d/m/Y'),
         ];
     }
 }

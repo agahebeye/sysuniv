@@ -1,7 +1,8 @@
 <script>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
-
 import GuestLayout from '~/layouts/GuestLayout.vue';
+import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
+import XButton from '~/components/shared/XButton.vue';
 
 export default {
     props: {
@@ -12,7 +13,9 @@ export default {
     layout: GuestLayout,
 
     components: {
-        Head
+        Head,
+        XButton,
+        ValidationErrorList
     },
 
     setup(props) {
@@ -44,27 +47,27 @@ export default {
 
         <h1>Reset password</h1>
 
+        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
+
         <form @submit.prevent="submit">
-            <div>
-                <label for="email" value="Email">email</label>
-                <input id="email" type="email" v-model="form.email" required autofocus autocomplete="username" />
+            <div class="mb-4">
+                <label for="email" value="Email">Email</label>
+                <input id="email" type="email" v-model="form.email" class="input w-96" required autofocus autocomplete="username" />
             </div>
 
-            <div class="mt-4">
-                <label for="password" value="Password">password</label>
-                <input id="password" type="password" v-model="form.password" required autocomplete="new-password" />
+            <div class="mb-4">
+                <label for="password" value="Password">Password</label>
+                <input id="password" type="password" v-model="form.password" class="input w-96" required autocomplete="new-password" />
             </div>
 
-            <div class="mt-4">
-                <label for="password_confirmation" value="Confirm Password">confirm password</label>
-                <input id="password_confirmation" type="password" v-model="form.password_confirmation" required autocomplete="new-password" />
+            <div class="mb-4">
+                <label for="password_confirmation" value="Confirm Password">Confirm password</label>
+                <input id="password_confirmation" type="password" v-model="form.password_confirmation" class="input w-96" required autocomplete="new-password" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Reset Password
-                </button>
-            </div>
+            <x-button :processing="form.processing">
+                Reset Password
+            </x-button>
         </form>
     </div>
 </template>

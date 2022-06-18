@@ -1,6 +1,7 @@
 <script>
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 import GuestLayout from '~/layouts/GuestLayout.vue';
+import XButton from '~/components/shared/XButton.vue';
 
 export default {
     props: {
@@ -10,7 +11,8 @@ export default {
     layout: GuestLayout,
 
     components: {
-        Head
+        Head,
+        XButton
     },
 
     setup() {
@@ -26,7 +28,7 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div class="max-w-sm">
 
         <Head>
             <title>Reset password link - Sysuniv</title>
@@ -48,14 +50,14 @@ export default {
         </div>
 
         <form @submit.prevent="form.post('/request-password-reset')">
-            <div>
-                <label for="email">email</label>
-                <input id="email" type="email" v-model="form.email" required autofocus autocomplete="username" />
+            <div class="mb-4">
+                <label for="email">Email</label>
+                <input id="email" type="email" v-model="form.email" class="input" required autofocus autocomplete="username" />
             </div>
 
-            <button :disabled="form.processing">
-                Email Password Reset Link
-            </button>
+            <x-button :processing="form.processing">
+                Email password reset link
+            </x-button>
         </form>
     </div>
 </template>

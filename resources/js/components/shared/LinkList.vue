@@ -25,27 +25,27 @@ const sizeStyles = {
 <template>
     <div>
         <Link v-if="isAdmin" href="/employees">
-        <EmployeeIcon />
+        <EmployeeIcon :class="sizeStyles[size]"/>
         <span>employees</span>
         </Link>
         <Link v-if="isAdmin || isEmployee" href="/universities">
-        <UniversityIcon />
+        <UniversityIcon :class="sizeStyles[size]"/>
         <span>universities</span>
         </Link>
         <Link href="/faculties">
-        <FacultyIcon />
+        <FacultyIcon :class="sizeStyles[size]"/>
         <span>faculties</span>
         </Link>
         <Link href="/institutes">
-        <InstituteIcon />
+        <InstituteIcon :class="sizeStyles[size]"/>
         <span>institutes</span>
         </Link>
         <Link href="/departments">
-        <DepartmentIcon class="fill-white" />
+        <DepartmentIcon class="fill-white" :class="sizeStyles[size]"/>
         <span>Departments</span>
         </Link>
         <Link href="/students">
-        <StudentIcon />
+        <StudentIcon :class="sizeStyles[size]"/>
         <span>students</span>
         </Link>
     </div>
@@ -53,10 +53,9 @@ const sizeStyles = {
 
 <style scoped>
 a {
-    @apply flex items-center space-x-2 capitalize;
+    @apply flex items-center space-x-2 capitalize no-underline;
 }
 
 svg {
-    @apply w-8 h-8;
 }
 </style>
