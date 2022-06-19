@@ -32,7 +32,7 @@ it('can store employees', function () {
         ...$data, 'password_confirmation' => 'secretsecret', 'role' => UserType::EMPLOYEE->value
     ]));
 
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect(route('employees.index'));
     assertDatabaseHas('users', [
         'name' => $data['name'],
         'role' => UserType::EMPLOYEE->value

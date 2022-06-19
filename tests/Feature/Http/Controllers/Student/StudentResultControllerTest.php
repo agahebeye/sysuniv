@@ -21,7 +21,7 @@ it('can create students results', function () {
         fn ($page) =>
         $page->component('students/results/create')
             ->has('student')
-            ->where('student.id', $student->id)
+            ->where('student.firstname', $student->firstname)
     );
 });
 
