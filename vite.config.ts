@@ -10,6 +10,7 @@ export default defineConfig(({ command }) => ({
     base: command === "serve" ? "" : "/build/",
     build: {
         manifest: true,
+        outDir: path.resolve(__dirname, 'public/build'),
         emptyOutDir: true,
         rollupOptions: {
             input: "resources/js/main.ts",
@@ -24,7 +25,7 @@ export default defineConfig(({ command }) => ({
     test: {
         globals: true,
         environment: "jsdom",
-        
+
     },
     optimizeDeps: {
         include: ["vue", "@inertiajs/inertia"],

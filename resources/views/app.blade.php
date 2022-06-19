@@ -9,8 +9,7 @@
 
     <!-- Scripts -->
     @inertiaHead
-    <script type="module" src="http://localhost:3000/@vite/client"></script>
-    <script type="module" src="http://localhost:3000/resources/js/main.ts"></script>
+    @vite
 </head>
 
 <body class="font-sans antialiased">

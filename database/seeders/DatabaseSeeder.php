@@ -17,18 +17,5 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin01@sysuniv.org',
-            'password' => 'introuvablex02',
-            'role' => UserType::ADMIN
-        ]);
-
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'univ01@sysuniv.org',
-            'password' => 'introuvablex02',
-            'role' => UserType::UNIVERSITY
-        ]);
     }
 }
