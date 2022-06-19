@@ -48,7 +48,7 @@ class UniversityController
 
         $university->notify((new UniversityRegistered($request->password))->afterCommit());
 
-        $request->session()->flash('success', "University $university->name succefully registered.");
+        $request->session()->flash('success', "University <em>$university->name</em> succefully registered.");
 
         return to_route('universities.photos.edit', $university->getRouteKey());
     }

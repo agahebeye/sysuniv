@@ -39,7 +39,7 @@ class FacultyController
 
         $request->session()->flash(
             'success',
-            "{$facutly->name} faculty created succefully"
+            "<em>{$facutly->name}</em> faculty created succefully"
         );
 
         return to_route('faculties.index');
