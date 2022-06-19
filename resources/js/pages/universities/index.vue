@@ -21,7 +21,8 @@ defineProps<{
 
         <Link v-if="isAdmin || isEmployee" href="/universities/create" class="link">Create new university</Link>
 
-        <h2><strong>{{ universities.length }}</strong> universities</h2>
+        <h2 v-if="universities.length"><strong>{{ universities.length }}</strong> universities</h2>
+        <h2 v-else>No universities already registered</h2>
 
         <div class="columns-2 gap-10 max-w-md">
             <div v-for="university in universities" class="mb-2" data-test="university">

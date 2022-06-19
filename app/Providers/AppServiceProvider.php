@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
