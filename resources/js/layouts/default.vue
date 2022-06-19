@@ -9,9 +9,9 @@ import SuccessAlert from '~/components/flash/SuccessAlert.vue';
     <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
 
     <div class="flex">
-        <nav class="top-nav bg-gradient-to-b w-56 pl-4 pt-4 from-teal-900 to-white">
+        <nav class="top-nav w-56 pl-4 pt-4 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 min-h-screen">
             <div>
-                <LinkList size="sm" class="flex flex-col space-y-4 text-white" />
+                <LinkList size="sm" class="flex flex-col space-y-4" />
                 <div class="h-px w-40 bg-teal-500 mt-6 mb-3"></div>
                 <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">logout</Link>
             </div>
