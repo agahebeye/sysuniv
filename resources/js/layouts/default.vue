@@ -12,7 +12,7 @@ import SuccessAlert from '~/components/flash/SuccessAlert.vue';
         <nav class="top-nav w-56 pl-4 pt-4 bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 min-h-screen">
             <div>
                 <LinkList size="sm" class="flex flex-col space-y-4" />
-                <div class="h-px w-40 bg-teal-500 mt-6 mb-3"></div>
+                <div class="h-px bg-teal-600 mt-6 mb-3"></div>
                 <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">logout</Link>
             </div>
         </nav>
