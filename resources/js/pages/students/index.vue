@@ -30,7 +30,7 @@ function takeme(url: string) {
         <h2 v-if="students.length" class="!mb-0">{{ students.meta.from }} to {{ students.meta.to }} of {{ students.meta.total }} student(s)</h2>
         <h2 v-else>No students already registered</h2>
 
-        <div class="pagination" v-if="students.meta.links.length">
+        <div class="pagination" v-if="students.data.length > 1">
             <Component
                 :is="link.url ? Link : 'span'"
                 v-for="link in students.meta.links"
