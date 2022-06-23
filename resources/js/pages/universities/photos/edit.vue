@@ -33,7 +33,7 @@ function updateUniversityPhoto(e: any) {
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
-        <form @submit.prevent="updateUniversityPhoto" method="post" enctype="multipart/form-data">
+        <form @submit.prevent="updateUniversityPhoto" method="post" enctype="multipart/form-data" class="mt-10">
             <div class="mb-6">
                 <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
                 <progress v-if="form.progress" :value="form.progress.percentage" max="100">

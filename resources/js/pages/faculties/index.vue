@@ -14,14 +14,14 @@ defineProps<{
         <Head>
             <title>Faculties - Sysuniv</title>
         </Head>
-        <h1>Faculties</h1>
+        <h1>Facultés</h1>
 
-        <Link v-if="isAdmin || isEmployee" href="/faculties/create" class="link">Create new faculty</Link>
+        <Link v-if="isAdmin || isEmployee" href="/faculties/create" class="link">Créer une nouvelle faculté</Link>
 
-        <h2 v-if="faculties.length"><strong>{{ faculties.length }}</strong> faculties</h2>
-        <h2 v-else>No faculties already registered</h2>
+        <h2 class="mt-10 mb-8" v-if="faculties.length"><strong>{{ faculties.length }}</strong> faculté(s)</h2>
+        <h2 class="mt-10 mb-8" v-else>Aucune faculté a été enregistrée</h2> 
 
-        <div class="columns-2 gap-10 max-w-md">
+        <div class="columns-3 gap-12 max-w-2xl">
             <div v-for="faculty in faculties" class="mb-2" data-test="faculty">
                 {{ faculty.name }}
             </div>

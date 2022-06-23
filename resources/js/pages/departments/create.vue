@@ -16,17 +16,17 @@ const form = useForm({
             <title>Create department - Sysuniv</title>
         </Head>
 
-        <h1>Create new department</h1>
+        <h1>Créer un nouveau département</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="form.post('/departments/store')">
             <div class="mb-4">
-                <label for="name">Name</label>
+                <label for="name">nom</label>
                 <input type="text" id="name" class="input" v-model="form.name" autocomplete="off" autofocus required>
             </div>
 
-            <x-button :processing="form.processing">create department</x-button>
+            <x-button :processing="form.processing">créer département</x-button>
         </form>
     </div>
 </template>
