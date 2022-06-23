@@ -48,6 +48,7 @@ const sizeStyles = {
         <StudentIcon :class="sizeStyles[size]"/>
         <span>students</span>
         </Link>
+        <slot />
     </div>
 </template>
 

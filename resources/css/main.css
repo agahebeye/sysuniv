@@ -2,13 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        @apply text-gray-800;
+    }
+    h1 {
+        @apply text-4xl font-medium mb-4;
+    }
+}
+
 @layer components {
     .alert {
         @apply flex p-4 mb-4 text-sm text-red-700 bg-red-100 dark:bg-red-200 dark:text-red-800;
     }
 
     .link {
-        @apply block text-teal-800 font-bold text-lg;
+        @apply inline-block text-gray-900 no-underline border-b border-black font-bold text-sm;
     }
 
     .input {
