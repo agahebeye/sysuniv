@@ -30,23 +30,23 @@ const sizeStyles = {
         </Link>
         <Link v-if="isAdmin || isEmployee" href="/universities">
         <UniversityIcon :class="sizeStyles[size]"/>
-        <span>universities</span>
+        <span>universites</span>
         </Link>
         <Link href="/faculties">
         <FacultyIcon :class="sizeStyles[size]"/>
-        <span>faculties</span>
+        <span>facultes</span>
         </Link>
         <Link href="/institutes">
         <InstituteIcon :class="sizeStyles[size]"/>
-        <span>institutes</span>
+        <span>instituts</span>
         </Link>
         <Link href="/departments">
         <DepartmentIcon class="fill-white" :class="sizeStyles[size]"/>
-        <span>Departments</span>
+        <span>Departements</span>
         </Link>
         <Link href="/students">
         <StudentIcon :class="sizeStyles[size]"/>
-        <span>students</span>
+        <span>etudiants</span>
         </Link>
         <slot />
     </div>

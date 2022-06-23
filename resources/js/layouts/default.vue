@@ -20,7 +20,7 @@ import SuccessAlert from '~/components/flash/SuccessAlert.vue';
             <nav class="">
                 <div>
                     <LinkList size="sm" class="flex flex-col space-y-4">
-                        <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">logout</Link>
+                        <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">deconnexion</Link>
                     </LinkList>
                 </div>
             </nav>
