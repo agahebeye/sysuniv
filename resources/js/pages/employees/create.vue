@@ -22,13 +22,13 @@ function createEmployee() {
         <Head>
             <title>Create University - Sysuniv</title>
         </Head>
-        <h1>Add new university</h1>
+        <h1>Créer une nouvelle employée</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="createEmployee">
             <div class="mb-4">
-                <label for="name">Name</label>
+                <label for="name">nom</label>
                 <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" required>
             </div>
 
@@ -38,19 +38,19 @@ function createEmployee() {
             </div>
 
             <div class="mb-4">
-                <label for="password">password</label>
+                <label for="password">mot de passe</label>
                 <input type="password" id="password" v-model="form.password" class="input" autocomplete="off" required>
             </div>
 
             <div class="mb-4">
-                <label for="password_confirmation">re-enter password</label>
+                <label for="password_confirmation">confirmer le mot de passe</label>
                 <input type="password" id="password_confirmation"
                     v-model="form.password_confirmation"
                     class="input"
                     autocomplete="off" required>
             </div>
 
-            <x-button>create employee</x-button>
+            <x-button>créer employée</x-button>
         </form>
     </div>
 </template>

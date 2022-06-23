@@ -29,7 +29,7 @@ class UniversityController
     {
         return Inertia::render('universities/show', [
             'university' => UniversityResource::make($university->load(['photo'])
-                ->loadCount(['faculties', 'institutes', 'students']))
+                ->loadCount(['faculties', 'institutes', 'departments', 'students']))
         ]);
     }
 

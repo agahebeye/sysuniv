@@ -29,7 +29,7 @@ function updateUniversityPhoto(e: any) {
             <title>Edit university photo - Sysuniv</title>
         </Head>
 
-        <h1>Add university photo</h1>
+        <h1>Ajouter une photo de l'université</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
@@ -41,7 +41,7 @@ function updateUniversityPhoto(e: any) {
                 </progress>
             </div>
 
-            <x-button :processing="form.processing" class="!m-0 button-sm">Add photo</x-button>
+            <x-button :processing="form.processing" class="!m-0 button-sm">Ajouter photo</x-button>
 
         </form>
     </div>

@@ -44,54 +44,53 @@ function updateUniversity() {
             <title>Update University - Sysuniv</title>
         </Head>
 
-        <h1>Update university</h1>
+        <h1>Modifier université</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="updateUniversity">
             <div class="mb-4">
-                <label for="name">Name</label>
+                <label for="name">nom</label>
                 <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" autofocus>
             </div>
 
             <div class="mb-4">
-                <label for="email">Email</label>
+                <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" class="input" autocomplete="off">
             </div>
 
             <div class="mb-4">
-                <label for="email">Website</label>
+                <label for="email">siteweb</label>
                 <input type="url" id="website" v-model="form.website" class="input" autocomplete="off">
             </div>
 
             <div class="mb-4">
-                <label for="address" style="float: left">Address</label>
+                <label for="address" style="float: left">adresse</label>
                 <textarea name="address" id="address" rows="3" class="textarea" v-model="form.address"></textarea>
             </div>
 
-
             <div class="mb-4">
-                <label for="faculties">Faculties</label>
-                <multiselect v-model="form.faculties" placeholder="select faculties" :multiple="true"
+                <label for="faculties">facultés</label>
+                <multiselect v-model="form.faculties" placeholder="choisir facultés" :multiple="true"
                     :close-on-select="false" :options="faculties" label="name" track-by="id">
                 </multiselect>
             </div>
 
             <div class="mb-4">
-                <label for="institutes">Institutes</label>
-                <multiselect v-model="form.institutes" placeholder="select institutes" :multiple="true"
+                <label for="institutes">instituts</label>
+                <multiselect v-model="form.institutes" placeholder="choisir instituts" :multiple="true"
                     :close-on-select="false" :options="institutes" label="name" track-by="id">
                 </multiselect>
             </div>
 
             <div class="mb-4">
-                <label for="departments">Departments</label>
-                <multiselect v-model="form.departments" placeholder="select departments" :multiple="true"
+                <label for="departments">departements</label>
+                <multiselect v-model="form.departments" placeholder="choisir departements" :multiple="true"
                     :close-on-select="false" :options="departments" label="name" track-by="id" required>
                 </multiselect>
             </div>
 
-            <x-button :processing="form.processing">update university</x-button>
+            <x-button :processing="form.processing">modifier université</x-button>
         </form>
     </div>
 </template>

@@ -30,6 +30,7 @@ class UniversityResource extends JsonResource
             'faculties_count' => $this->when(isset($this->faculties_count), $this->faculties_count),
             'institutes_count' => $this->when(isset($this->institutes_count), $this->institutes_count),
             'students_count' => $this->when(isset($this->students_count), $this->students_count),
+            'departments_count' => $this->when(isset($this->departments_count), $this->departments_count),
         ];
     }
 }
