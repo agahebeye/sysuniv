@@ -45,28 +45,28 @@ export default {
             <title>Reset password - Sysuniv</title>
         </Head>
 
-        <h1>Reset password</h1>
+        <h1>Réinitialiser mot de passe</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="submit">
             <div class="mb-4">
-                <label for="email" value="Email">Email</label>
+                <label for="email" value="Email">email</label>
                 <input id="email" type="email" v-model="form.email" class="input w-96" required autofocus autocomplete="username" />
             </div>
 
             <div class="mb-4">
-                <label for="password" value="Password">Password</label>
+                <label for="password" value="Password">mot de passe</label>
                 <input id="password" type="password" v-model="form.password" class="input w-96" required autocomplete="new-password" />
             </div>
 
             <div class="mb-4">
-                <label for="password_confirmation" value="Confirm Password">Confirm password</label>
+                <label for="password_confirmation" value="Confirm Password">confirm mot de passe</label>
                 <input id="password_confirmation" type="password" v-model="form.password_confirmation" class="input w-96" required autocomplete="new-password" />
             </div>
 
             <x-button :processing="form.processing">
-                Reset Password
+                réinitialiser
             </x-button>
         </form>
     </div>

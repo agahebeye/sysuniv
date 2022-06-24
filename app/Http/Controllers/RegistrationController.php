@@ -24,6 +24,6 @@ class RegistrationController
     public function store(Student $student, StoreRegistrationRequest $storeRegistrationRequest): \Illuminate\Http\RedirectResponse
     {
         $storeRegistrationRequest->verify($student->latestRegistration);
-        return redirect(RouteServiceProvider::HOME)->with('success', 'Student registered with success');
+        return to_route('students.index')->with('success', 'Student registered with success');
     }
 }

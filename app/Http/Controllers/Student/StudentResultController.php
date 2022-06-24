@@ -35,6 +35,6 @@ class StudentResultController
             $registration->update(['result_status' => ResultStatus::PASSED]);
         }
         // redirect to students list page
-        return to_route('students.index');
+        return to_route('students.show', $student->getRouteKey());
     }
 }
