@@ -48,7 +48,7 @@ class UniversityController
 
         $university->notify((new UniversityRegistered($request->password))->afterCommit());
 
-        $request->session()->flash('success', "University <em>$university->name</em> succefully registered.");
+        $request->session()->flash('success', "Université <em>$university->name</em> a été créée avec succès..");
 
         return to_route('universities.photos.edit', $university->getRouteKey());
     }
@@ -66,6 +66,6 @@ class UniversityController
     public function update(User $university, UpdateUniversityRequest $request, UpdateUniversityAction $updateUniversityAction)
     {
         $updateUniversityAction->handle($university, $request);
-        return to_route('universities.index')->with('success', "University $university->name succefully updated.");;
+        return to_route('universities.index')->with('success', "Université <em>$university->name</em> a été modifiée avec succès.");;
     }
 }

@@ -14,10 +14,10 @@ class VerifyStudentController
         if (!$student) {
             return response()->json([
                 'data' => null,
-                'message' => "Student with this registration key does not exist"
+                'message' => "Oops! L'étudiant avec ce numéro matricule n'existe pas."
             ]);
         }
 
-        return ['data' =>  StudentResource::make($student), 'message' => "Student with this registration key exist"];
+        return ['data' =>  StudentResource::make($student), 'message' => "L'étudiant avec ce numéro matricule existe."];
     }
 }

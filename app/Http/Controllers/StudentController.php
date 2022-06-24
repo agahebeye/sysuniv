@@ -41,7 +41,7 @@ class StudentController
 
         $request->session()->flash(
             'success',
-            "{$student->firstname}'s Generated registration number is:  $student->registration_number"
+            "Le numéro matricule de {$student->firstname} uniquement généré est:  $student->registration_number"
         );
 
         return to_route('students.photos.create', $student->getRouteKey());

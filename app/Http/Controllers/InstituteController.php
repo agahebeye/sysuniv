@@ -39,7 +39,7 @@ class InstituteController
 
         $institute = $request->session()->flash(
             'success',
-            "<em>{$institute->name}</em> institute created succefully"
+            "L'institut <em>{$institute->name}</em> a été créé avec succès."
         );
 
         return to_route('institutes.index');

@@ -26,7 +26,7 @@ class EmployeeController
     {
         $employee = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
 
-        $request->session()->flash('success', "<em>{$employee->name}</em> has been created succefully");
+        $request->session()->flash('success', "L'employée <em>{$employee->name}</em> a été créé avec succès.");
         
         return redirect()->route('employees.index');
     }

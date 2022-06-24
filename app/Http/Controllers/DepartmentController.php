@@ -36,7 +36,7 @@ class DepartmentController
 
         $request->session()->flash(
             'success',
-            "<em>{$department->name}</em> department created succefully"
+            "Le département <em>{$department->name}</em> a été créé avec succès."
         );
 
         return to_route('departments.index');
