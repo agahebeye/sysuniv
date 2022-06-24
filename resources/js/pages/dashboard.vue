@@ -34,7 +34,7 @@ export default {
 
             <p>Welcome to the dashboard</p>
 
-            <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Reset your password</Link>
+            <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Réinitialiser votre mot de passe</Link>
 
             <h1 class="capitalize">{{ authedUser.name }}</h1>
 

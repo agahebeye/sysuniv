@@ -14,7 +14,7 @@ defineProps<{
         <Head>
             <title>Departments - Sysuniv</title>
         </Head>
-        <h1>Departments</h1>
+        <h1>Departmentes</h1>
 
         <Link v-if="isAdmin || isEmployee" href="/departments/create" class="link">Create new department</Link>
 

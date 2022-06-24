@@ -72,7 +72,7 @@ const props = defineProps<{
         <h1>Inscrire nouvel étudiant</h1>
 
         <div class="!isLoading">
-            <div class="font-bold text-sm mb-4" :class="{ 'text-red-500': !form.student?.data, 'text-green-700': form.student.data }">{{ form.student?.message }}</div>
+            <div class="font-bold text-sm mb-4" :class="{ 'text-red-500': !form.student?.data, 'text-green-700': form.student?.data }">{{ form.student?.message }}</div>
         </div>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
