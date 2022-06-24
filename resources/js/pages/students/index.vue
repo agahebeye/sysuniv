@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { Inertia } from '@inertiajs/inertia';
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 import StudentList from './components/StudentList.vue';
@@ -8,10 +7,6 @@ const { isAdmin, isEmployee, isUniversity } = useAuth();
 const props = defineProps<{
     students: any
 }>();
-
-function takeme(url: string) {
-    Inertia.visit(url);
-}
 
 </script>
 
@@ -28,7 +23,7 @@ function takeme(url: string) {
         <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
 
         <h2 class="mt-10 mb-8" v-if="students.data.length"><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
-        <h2 class="mt-10 mb-8" v-else>Aucun étudiant a été enregistré</h2>
+        <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a été enregistré'}` }}</h2>
 
         <div class="pagination mb-2" v-if="students.data.length > 1">
             <Component

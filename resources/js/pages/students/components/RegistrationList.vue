@@ -13,27 +13,27 @@ defineProps({
 </script>
 
 <template>
-    <h2>Registrations history</h2>
+    <h2>Historique d'inscriptions</h2>
     <table class="max-w-2xl">
         <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="pl-2 py-2">
-                    university
+                    université
                 </th>
                 <th scope="col" class="px-2 py-2">
-                    faculty
+                    faculté/institut
                 </th>
                 <th scope="col" class="px-2 py-2">
-                    department
+                    departement
                 </th>
                 <th scope="col" class="px-2 py-2">
-                    level
+                    niveau
                 </th>
                 <th scope="col" class="px-2 py-2">
-                    enrolled
+                    inscrit le
                 </th>
                 <th scope="col" class="px-2 py-2">
-                    result status
+                    statut de résultat
                 </th>
             </tr>
         </thead>

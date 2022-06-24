@@ -1,7 +1,13 @@
-<script setup>
-defineProps({
-    students: Array
-})
+<script lang="ts" setup>
+import { Inertia } from '@inertiajs/inertia';
+
+defineProps<{
+    students: any
+}>()
+
+function takeme(url: string) {
+    Inertia.visit(url);
+}
 </script>
 
 <template>
@@ -24,7 +30,7 @@ defineProps({
         </thead>
 
         <tbody>
-            <tr v-for="student in students" class="cursor-pointer hover:bg-gray-100 text-sm odd:bg-white even:bg-gray-100" @click="takeme(`/students/${student.id}`)" data-test="student">
+            <tr v-for="student in students" class="cursor-pointer hover:bg-gray-400 text-sm odd:bg-white even:bg-gray-200" @click="takeme(`/students/${student.id}`)" data-test="student">
                 <td class="pl-2 py-2">{{ student.firstname }}</td>
                 <td class="pl-2 py-2">{{ student.lastname }}</td>
                 <td class="pl-2 py-2">{{ student.gender }}</td>

@@ -23,40 +23,40 @@ function createStudent() {
             <title>Create Student - Sysuniv</title>
         </Head>
 
-        <h1>Create new student</h1>
+        <h1>Créer un nouveaut étudiant</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="createStudent">
             <div class="mb-4">
-                <label for="firstname">Firstname</label>
+                <label for="firstname">nom</label>
                 <input type="text" id="firstname" v-model="form.firstname" class="input" autocomplete="off" autofocus required>
             </div>
 
             <div class="mb-4">
-                <label for="lastname">Lastname</label>
+                <label for="lastname">prénom</label>
                 <input type="text" id="lastname" v-model="form.lastname" class="input" autocomplete="off" autofocus required>
             </div>
 
             <div class="mb-4">
-                <label for="gender">Gender</label>
+                <label for="gender">sexe</label>
                 <div class="flex items-center space-x-2">
-                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>Male</span>
-                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>Female</span>
+                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>male</span>
+                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>femelle</span>
                 </div>
             </div>
 
             <div class="mb-4">
-                <label for="birth_date">Birth date</label>
+                <label for="birth_date">Année de naissance</label>
                 <input type="date" id="birth_date" class="input" v-model="form.birth_date" required>
             </div>
 
             <div class="mb-4">
-                <label for="address">Address</label>
+                <label for="address">adresse</label>
                 <textarea id="address" rows="4" class="textarea" v-model="form.address" required></textarea>
             </div>
 
-            <x-button :processing="form.processing">Create student</x-button>
+            <x-button :processing="form.processing">créer étudiant</x-button>
         </form>
     </div>
 </template>

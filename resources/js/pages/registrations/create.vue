@@ -69,22 +69,23 @@ const props = defineProps<{
             <title>Enroll new student - Sysuniv</title>
         </Head>
 
-        <h1>Enroll new student</h1>
+        <h1>Inscrire nouvel étudiant</h1>
 
         <div class="!isLoading">
-            <div class="font-bold text-sm mb-4">{{ form.student?.message }}</div>
+            <div class="font-bold text-sm mb-4" :class="{ 'text-red-500': !form.student?.data, 'text-green-700': form.student.data }">{{ form.student?.message }}</div>
         </div>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="EnrollStudent">
             <div class="mb-4">
-                <label>Please enter a student's registration number</label>
+                <label :class="{ 'hidden': form.student?.data }">Taper le numéro matricule d'un étudiat puis appuyer sur <strong>&lt;&lt;Enter&gt;&gt;</strong></label>
 
                 <input type="text" class="input"
                     v-model="registration_key"
                     @keydown.enter.prevent="verifyStudent"
                     :disabled="form.student?.data"
+                    :class="{ 'border-none bg-gray-200': form.student?.data }"
                     required />
 
                 <svg v-if="isLoading" role="status" class="absolute right-0 bottom-3 inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-white fill-teal-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,36 +95,36 @@ const props = defineProps<{
             </div>
 
             <div v-if="form.student?.data" class="mb-4">
-                <label for="field">Choose field</label>
+                <label for="field">choisir filière</label>
                 <div class="flex items-center space-x-2">
-                    <input type="radio" class="radio" name="field" v-model="field" value="0"><span>Faculty</span>
-                    <input type="radio" class="radio" name="field" v-model="field" value="1"><span>Institute</span>
+                    <input type="radio" class="radio" name="field" v-model="field" value="0"><span>Faculté</span>
+                    <input type="radio" class="radio" name="field" v-model="field" value="1"><span>Institut</span>
                 </div>
             </div>
 
             <div v-if="field == 0" class="mb-4">
-                <label for="faculties">Faculties</label>
-                <multiselect v-model="form.faculty_id" placeholder="select a faculty" :options="faculties" label="name"
+                <label for="faculties">faculté</label>
+                <multiselect v-model="form.faculty_id" placeholder="choisir faculté" :options="faculties" label="name"
                     track-by="id">
                 </multiselect>
             </div>
 
             <div v-if="field == 1" class="mb-4">
-                <label for="institutes">Institutes</label>
-                <multiselect v-model="form.institute_id" placeholder="select an institute" :options="institutes"
+                <label for="institutes">institut</label>
+                <multiselect v-model="form.institute_id" placeholder="choisir institut" :options="institutes"
                     label="name" track-by="id">
                 </multiselect>
             </div>
 
             <div v-if="field" class="mb-4">
-                <label for="departments">Departments</label>
+                <label for="departments">department</label>
                 <multiselect v-model="form.department_id" placeholder="select a department" :options="departments"
                     label="name" track-by="id">
                 </multiselect>
             </div>
 
             <div v-if="form.department_id" class="mb-4">
-                <label for="level">Choose level</label>
+                <label for="level">choisir année</label>
                 <select name="level" id="level" v-model="form.level" class="bg-gray-50 border border-teal-300 text-gray-900 text-sm rounded-sm block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 outline-none dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="0">BAC I</option>
                     <option value="1">BAC II</option>
@@ -131,7 +132,7 @@ const props = defineProps<{
                 </select>
             </div>
 
-            <x-button :processing="form.processing" v-if="form.level">Enroll</x-button>
+            <x-button :processing="form.processing" v-if="form.level">Inscrire</x-button>
         </form>
     </div>
 </template>
