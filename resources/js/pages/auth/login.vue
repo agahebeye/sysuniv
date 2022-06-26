@@ -33,10 +33,10 @@ export default {
     <div class="max-w-md w-full">
 
         <Head>
-            <title>Login - Sysuniv</title>
+            <title>Connexion - Ministère d'éducation du Burundi</title>
         </Head>
 
-        <h1>Login</h1>
+        <h1>Connexion</h1>
 
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
@@ -44,17 +44,17 @@ export default {
 
         <form @submit.prevent="form.post('/login')">
             <div class="mb-4">
-                <label for="email">Email</label>
+                <label for="email">email</label>
                 <input type="email" id="email" v-model="form.email" class="input" autocomplete="off" autofocus required>
             </div>
 
             <div class="mb-4">
-                <label for="password">Password</label>
+                <label for="password">mot de passe</label>
                 <input type="password" minlength="8" id="password" v-model="form.password" class="input" autocomplete="off" autofocus
                     required>
             </div>
 
-            <x-button :processing="form.processing">Login</x-button>
+            <x-button :processing="form.processing">Se connecter</x-button>
         </form>
     </div>
 </template>

@@ -15,7 +15,7 @@ defineProps<{
     <div>
 
         <Head>
-            <title>Employees - Sysuniv</title>
+            <title>Employées - Ministère d'éducation du Burundi</title>
         </Head>
 
         <h1>Employées</h1>

@@ -27,12 +27,12 @@ export default {
     <div>
 
         <Head>
-            <title>Dashboard - Sysuniv</title>
+            <title>Accueil - Ministère d'éducation du Burundi</title>
         </Head>
 
         <div>
 
-            <p>Welcome to the dashboard</p>
+            <p>Accueil</p>
 
             <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Réinitialiser votre mot de passe</Link>
 

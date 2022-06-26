@@ -20,7 +20,7 @@ function createEmployee() {
     <div class="max-w-sm">
 
         <Head>
-            <title>Create University - Sysuniv</title>
+            <title>Créer nouvelle employée - Ministère d'éducation du Burundi</title>
         </Head>
         <h1>Créer une nouvelle employée</h1>
 
