@@ -40,8 +40,6 @@ it('can store registrations', function () {
         'faculty_id' => $faculty->id,
         'department_id' => $department->id
     ]);
-    
-   // dd($response->json());
 
     test()->assertDatabaseHas('registrations', [
         'student_id' => $student->id,
@@ -54,9 +52,9 @@ it('can store registrations', function () {
 
     test()->assertDatabaseCount('results', 1);
 
-    $response->assertSessionHas('success', 'Student registered with success');
+    $response->assertSessionHas('success', "L'étudiant a été enregistré avec succès.");
 
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect(route('students.index'));
 });
 
 it('cannot register students twice in the same year', function () {

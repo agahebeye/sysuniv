@@ -7,7 +7,7 @@ use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\Institute;
 use App\Models\Department;
-use App\Providers\RouteServiceProvider;
+use App\Models\Registration;
 use App\Http\Requests\StoreRegistrationRequest;
 
 class RegistrationController
@@ -24,6 +24,8 @@ class RegistrationController
     public function store(Student $student, StoreRegistrationRequest $storeRegistrationRequest): \Illuminate\Http\RedirectResponse
     {
         $storeRegistrationRequest->verify($student->latestRegistration);
+        $freshRegistration = Registration::query()->create([...$storeRegistrationRequest->safe()->all(), 'student_id' => $student->id]);
+        $freshRegistration->result()->create();
         return to_route('students.index')->with('success', "L'étudiant a été enregistré avec succès.");
     }
 }

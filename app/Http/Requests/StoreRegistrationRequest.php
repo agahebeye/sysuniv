@@ -32,15 +32,17 @@ class StoreRegistrationRequest extends FormRequest
             // a student hasn't finished a year
             if ($registration->result_status == ResultStatus::PENDING) {
                 throw ValidationException::withMessages([
-                    'student_id' => "you have to finish "
-                        . ($registration->created_at->year == date('Y') ? "this year" : "the year " . $registration->created_at->year)
-                        . " to register anew"
+                    'student_id' => "Vous devez d'abord terminer "
+                        . ($registration->created_at->year == date('Y')
+                            ? "cette année" : "l'année " . $registration->created_at->year
+                        )
+                        . ($registration->university->id != auth()->id ? "à l'université {$registration->university->name}" : "") . " pour se réinscrire."
                 ]);
             }
 
             if ($registration->result_status == ResultStatus::PASSED && $registration->level->value == $this->input('level')) {
                 throw ValidationException::withMessages([
-                    'student_id' => "you cannot register twice in the year you passed"
+                    'student_id' => "Vous ne pouvez pas étudier la même année deux fois."
                 ]);
             }
             // a student has finished a year but wants to skip
@@ -51,7 +53,7 @@ class StoreRegistrationRequest extends FormRequest
                     && $this->input('level') == LevelType::BAC_3->value)
             ) {
                 throw ValidationException::withMessages([
-                    'student_id' => "you cannot register in the next year while you have not finished the previous one"
+                    'student_id' => "Vous ne pouvez pas s'inscrire dans l'année suivante sans avoir terminé la précedente."
                 ]);
             }
 
@@ -61,13 +63,16 @@ class StoreRegistrationRequest extends FormRequest
                 && $registration->level->value > $this->input('level')
             ) {
                 throw ValidationException::withMessages([
-                    'student_id' => "you cannot register in the year you've already studied"
+                    'student_id' => "Vous ne pouvez pas reprendre l'année précedente."
+                ]);
+            }
+
+            if ($registration->result_status == ResultStatus::ABANDONED && $registration->level->value != $this->input('level')) {
+                throw ValidationException::withMessages([
+                    'student_id' => "Vous deveze reprendre l'année abondonnée d'abord."
                 ]);
             }
         }
-
-        $freshRegistration = Registration::query()->create([...$this->safe()->all(), 'student_id' => $this->student->id]);
-        $freshRegistration->result()->create();
     }
 
     /**
