@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ResultStatus;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Student;
@@ -48,13 +49,15 @@ class StudentController
 
     public function show(Student $student): \Inertia\Response
     {
-        return Inertia::render('students/show', [
-            'student' => StudentResource::make($student->load([
+        $studentResource = StudentResource::make($student->load([
                 'photo',
                 'registrations.university',
                 'registrations.faculty',
                 'registrations.institute', 'registrations.department', 'registrations.result'
-            ]))
+        ]));
+        return Inertia::render('students/show', [
+            'student' => $studentResource,
+            'canAbandon' => $student->latestRegistration->result_status == ResultStatus::PENDING,
         ]);
     }
 

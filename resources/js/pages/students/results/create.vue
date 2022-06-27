@@ -36,7 +36,7 @@ defineProps<{
             </div>
 
             <div class="mb-4">
-                <label for="name">Credits</label>
+                <label for="name">Complément(s)</label>
                 <input type="text" id="name" class="input" v-model="form.credits" autocomplete="off" autofocus required>
             </div>
 

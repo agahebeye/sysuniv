@@ -2,10 +2,11 @@
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 import RegistrationList from './components/RegistrationList.vue';
-const { isAdmin, isEmployee, isUniversity } = useAuth();
+const { isUniversity } = useAuth();
 
 const props = defineProps<{
-    student: any
+    student: any,
+    canAbandon: boolean
 }>();
 
 </script>
@@ -34,11 +35,11 @@ const props = defineProps<{
                         <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                     </div>
 
-                    <div class="mt-4" v-if="isUniversity">
+                    <div class="mt-4" v-if="isUniversity && canAbandon">
                         <Link class="link" :href="`${student.id}/results/create`">Ajouter le resultat de cette année</Link>
                     </div>
 
-                    <div class="mt-4" v-if="isUniversity && student.registrations.length">
+                    <div class="mt-4" v-if="isUniversity && canAbandon">
                         <Link class="link text-white bg-red-600 p-2 border-none" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
                     </div>
 

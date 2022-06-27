@@ -36,7 +36,12 @@ export default {
 
             <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Réinitialiser votre mot de passe</Link>
 
-            <h1 class="capitalize">{{ authedUser.name }}</h1>
+            <div class="relative w-max mb-16">
+                <h1 class="!mb-0">
+                    {{ $page.props.auth['user'].name }}
+                </h1>
+                <div class="-rotate-[17deg] leading-3 p-1 bg-gray-600 absolute  translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
+            </div>
 
             <LinkList size="lg" class="flex flex-wrap gap-10 max-w-xl" />
         </div>
@@ -45,6 +50,6 @@ export default {
 
 <style scoped>
 a {
-    @apply !no-underline;
+    @apply  !no-underline;
 }
 </style>

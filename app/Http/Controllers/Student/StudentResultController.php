@@ -27,11 +27,15 @@ class StudentResultController
         // update correspondent result
         $registration->result()->update($data);
 
-        if ($data['notes'] < 54 || $data['credits'] > 4) {
+        if ($data['credits'] > 3) {
             $registration->update(['result_status' => ResultStatus::FAILED]);
         }
 
-        if ($data['notes'] > 54 && $data['credits'] < 5) {
+        if ($data['notes'] < 50 && $data['credits'] > 4) {
+            $registration->update(['result_status' => ResultStatus::FAILED]);
+        }
+
+        if ($data['notes'] > 50 && $data['credits'] < 4) {
             $registration->update(['result_status' => ResultStatus::PASSED]);
         }
         // redirect to students list page
