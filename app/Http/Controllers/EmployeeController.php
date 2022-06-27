@@ -24,6 +24,7 @@ class EmployeeController
 
       public function store(StoreEmployeeRequest $request)
     {
+        return $request;
         $employee = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
 
         $request->session()->flash('success', "L'employée <em>{$employee->name}</em> a été créé avec succès.");

@@ -28,11 +28,10 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|string|email|max:255|unique:users',
-            'password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
-            'website' => ['sometimes', 'url'],
-            'address' => ['sometimes', 'string'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'is_admin' => ['boolean', 'filled']
         ];
     }
 }

@@ -9,6 +9,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    is_admin: false,
 });
 
 function createEmployee() {
@@ -28,7 +29,7 @@ function createEmployee() {
 
         <form @submit.prevent="createEmployee">
             <div class="mb-4">
-                <label for="name">nom</label>
+                <label for="name">nom complet</label>
                 <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" required>
             </div>
 
@@ -48,6 +49,11 @@ function createEmployee() {
                     v-model="form.password_confirmation"
                     class="input"
                     autocomplete="off" required>
+            </div>
+
+            <div class="mb-4 space-x-2 inline-flex items-center">
+                <input type="checkbox" class="" name="is_admin" id="is_admin" v-model="form.is_admin">
+                <label for="is_admin">créer comme admininstrateur</label>
             </div>
 
             <x-button>créer employée</x-button>
