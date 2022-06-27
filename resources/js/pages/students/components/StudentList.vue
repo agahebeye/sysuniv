@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import { Inertia } from '@inertiajs/inertia';
+import { useAuth } from '~/composables/auth';
+const { isAdmin, isEmployee, isUniversity } = useAuth();
 
 defineProps<{
     students: any
@@ -11,20 +13,23 @@ function takeme(url: string) {
 </script>
 
 <template>
-    <table class="w-[540px] table-fixed">
+    <table class="w-[680px]">
         <thead class="text-xs text-gray-700 uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
             <tr class="text-left text-white">
                 <th scope="col" class="pl-2 py-2">
-                   nom 
+                    nom
                 </th>
                 <th scope="col" class="pl-2 py-2">
-                   prénom 
+                    prénom
                 </th>
                 <th scope="col" class="pl-2 py-2">
-                   sexe
+                    sexe
                 </th>
                 <th scope="col" class="pl-2 py-2">
-                   Année de naissance
+                    Année de naissance
+                </th>
+                <th scope="col" class="pl-2 py-2" v-if="!isUniversity">
+                    numéro matricule
                 </th>
             </tr>
         </thead>
@@ -35,6 +40,7 @@ function takeme(url: string) {
                 <td class="pl-2 py-2">{{ student.lastname }}</td>
                 <td class="pl-2 py-2">{{ student.gender }}</td>
                 <td class="pl-2 py-2">{{ student.birthDate }}</td>
+                <td class="pl-2 py-2" v-if="!isUniversity">{{ student.registration_number }}</td>
             </tr>
         </tbody>
 

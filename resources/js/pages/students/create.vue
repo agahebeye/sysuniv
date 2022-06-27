@@ -23,7 +23,7 @@ function createStudent() {
             <title>Create Student - Sysuniv</title>
         </Head>
 
-        <h1>Créer un nouveaut étudiant</h1>
+        <h1>Créer un nouveau étudiant</h1>
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
@@ -42,7 +42,7 @@ function createStudent() {
                 <label for="gender">sexe</label>
                 <div class="flex items-center space-x-2">
                     <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>male</span>
-                    <input type="radio" name="gender" value="FEMALE" class="radio" v-model="form.gender"><span>femelle</span>
+                    <input type="radio" name="gender" value="FEMELLE" class="radio" v-model="form.gender"><span>femelle</span>
                 </div>
             </div>
 

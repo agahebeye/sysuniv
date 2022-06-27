@@ -22,14 +22,17 @@ class EmployeeController
         return Inertia::render('employees/create');
     }
 
-      public function store(StoreEmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        return $request;
-        $employee = User::query()->create([...$request->validated(), 'role' => UserType::EMPLOYEE]);
+        $employee = User::query()->create(
+            [
+                ...$request->validated(),
+                'role' => $request->boolean('is_admin') ? UserType::ADMIN : UserType::EMPLOYEE
+            ]
+        );
 
         $request->session()->flash('success', "L'employée <em>{$employee->name}</em> a été créé avec succès.");
-        
+
         return redirect()->route('employees.index');
     }
-
 }

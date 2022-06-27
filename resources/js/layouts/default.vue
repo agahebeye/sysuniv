@@ -8,19 +8,20 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 
 <template>
     <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
-    <div class="container px-6 md:max-w-5xl mx-auto">
-        <AppHeader class="flex items-center space-x-8 justify-center mb-16">
-                <div class="text-xl">{{ $page.props.auth['user'].name }}</div>
-        </AppHeader>
-        <!-- <header >
-            <img class="w-32" src="/storage/images/armoiries-bi.svg" alt="armoiries du burundi" />
-            <div class="mt-4">
-                <div>Ministere de l'education nationale et de la recherche scientifique</div>
-                <div class="uppercase font-bold">Republique du Burundi</div>
-            </div>
-        </header> -->
+    <div class="">
+        <div class="bg-gray-200 w-full">
+            <AppHeader class="flex  items-center space-x-8 justify-center mb-16 md:max-w-5xl mx-auto">
+                <div class="text-lg relative w-max">
+                    <div>
+                        {{ $page.props.auth['user'].name }}
+                    </div>
+                    <div class="-rotate-[17deg] leading-3 p-1 bg-gray-600 absolute translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
+                </div>
+            </AppHeader>
+        </div>
 
-        <div class="flex space-x-32">
+
+        <div class="flex space-x-32  px-6 md:max-w-5xl mx-auto">
             <nav class="">
                 <div>
                     <LinkList size="sm" class="flex flex-col space-y-4">

@@ -21,7 +21,7 @@ class StudentResource extends JsonResource
 
             'id' => $this->getRouteKey(),
             'birthDate' => $this->birth_date->format('d/m/Y'),
-            $this->merge(Arr::except(parent::toArray($request), ['registration_number', 'birth_date'])),
+            $this->merge(Arr::except(parent::toArray($request), ['birth_date'])),
         ];
     }
 }
