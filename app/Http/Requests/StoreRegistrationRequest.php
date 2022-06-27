@@ -36,7 +36,7 @@ class StoreRegistrationRequest extends FormRequest
                         . ($registration->created_at->year == date('Y')
                             ? "cette année" : "l'année " . $registration->created_at->year
                         )
-                        . ($registration->university->id != auth()->id ? "à l'université {$registration->university->name}" : "") . " pour se réinscrire."
+                        . ($registration->university->id != auth()->id() ? "à l'université {$registration->university->name}" : "") . " pour se réinscrire."
                 ]);
             }
 

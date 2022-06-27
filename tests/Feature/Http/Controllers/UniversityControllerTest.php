@@ -82,7 +82,7 @@ it('can store universities', function () {
     ]);
 
     $university = User::university()->latest()->first();
-    $response->assertSessionHas('success', "University $university->name succefully registered.");
+    $response->assertSessionHas('success', "Université <em>$university->name</em> a été créée avec succès.");
     $response->assertRedirect(route('universities.photos.edit', $university->getRouteKey()));
 });
 

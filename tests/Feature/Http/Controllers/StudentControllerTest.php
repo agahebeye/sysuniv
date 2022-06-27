@@ -64,7 +64,7 @@ it('can store students', function () {
     $student = Student::latest()->first();
     $response->assertSessionHas(
         'success',
-        "{$student->firstname}'s Generated registration number is:  $student->registration_number"
+        "Le numéro matricule de {$student->firstname} uniquement généré est:  $student->registration_number"
     );
     $response->assertRedirect(route('students.photos.create', $student->getRouteKey()));
 });

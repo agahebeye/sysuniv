@@ -41,5 +41,5 @@ it('can update students results', function () {
         'result_status' => ResultStatus::FAILED->value
     ]);
 
-    $response->assertRedirect(route('students.index'));
+    $response->assertRedirect(route('students.show', $student->getRouteKey()));
 });

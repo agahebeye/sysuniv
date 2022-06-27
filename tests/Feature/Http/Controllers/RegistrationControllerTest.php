@@ -69,7 +69,7 @@ it('cannot register students twice in the same year', function () {
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you have to finish this year to register anew"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous devez d'abord terminer cette année pour se réinscrire."]);
 });
 
 it('cannot register failed students in the next year after failing', function () {
@@ -84,7 +84,7 @@ it('cannot register failed students in the next year after failing', function ()
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you cannot register in the next year while you have not finished the previous one"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous ne pouvez pas s'inscrire dans l'année suivante sans avoir terminé la précedente."]);
 });
 
 it('cannot allow passed students to skip unstudied year', function () {
@@ -97,7 +97,7 @@ it('cannot allow passed students to skip unstudied year', function () {
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you cannot register in the next year while you have not finished the previous one"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous ne pouvez pas s'inscrire dans l'année suivante sans avoir terminé la précedente."]);
 });
 
 it('cannot register failed students in the year they already studied', function () {
@@ -110,7 +110,7 @@ it('cannot register failed students in the year they already studied', function 
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you cannot register in the year you've already studied"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous ne pouvez pas reprendre l'année précedente."]);
 });
 
 it('cannot register passed students in the same year twice', function () {
@@ -124,7 +124,7 @@ it('cannot register passed students in the same year twice', function () {
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you cannot register twice in the year you passed"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous ne pouvez pas étudier la même année deux fois."]);
 });
 
 it('cannot register passed students in the year they already studied', function () {
@@ -138,7 +138,7 @@ it('cannot register passed students in the year they already studied', function 
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertSessionHasErrors(['student_id' => "you cannot register in the year you've already studied"]);
+    $response->assertSessionHasErrors(['student_id' => "Vous ne pouvez pas reprendre l'année précedente."]);
 });
 
 it('can register passed students in the next year', function () {
@@ -152,5 +152,5 @@ it('can register passed students in the next year', function () {
         'department_id' => Department::query()->latest()->first()->id
     ]);
 
-    $response->assertRedirect(RouteServiceProvider::HOME);
+    $response->assertRedirect(route('students.index'));
 });
