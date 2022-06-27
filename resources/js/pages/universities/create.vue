@@ -41,7 +41,7 @@ defineProps<{
     <div class="">
 
         <Head>
-            <title>Create University - Sysuniv</title>
+            <title>Créer université - Ministère d'éducation du Burundi</title>
         </Head>
         <h1>Créer une nouvelle université</h1>
 

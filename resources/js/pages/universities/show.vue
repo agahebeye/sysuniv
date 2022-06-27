@@ -11,19 +11,19 @@ defineProps<{
     <div>
 
         <Head>
-            <title>{{ university.name }} University - Sysuniv</title>
+            <title>Université "{{ university.name }}" - Ministère d'éducation du Burundi</title>
         </Head>
 
         <Link :href="`/universities/${university.id}/edit`" class="link">Modifier cette université</Link>
 
-        <div class="flex flex-col pb-10">
+        <div class="flex flex-col pb-10 mt-4">
             <div v-if="university.photo">
-                <img :src="`/storage/${university.photo.src}`" :alt="university.ame" class="w-32 h-32 rounded-full border-teal-500 border-2" />
+                <img :src="`/storage/${university.photo.src}`" :alt="university.ame" class="w-32 h-32 rounded-full" />
             </div>
 
             <h1 class="mt-10">{{ university.name }}</h1>
 
-            <div class="space-y-1 divide-y mt-6">
+            <div class="space-y-1 mt-6">
                 <div>Siteweb: {{ university.website }}</div>
                 <div>Adresse: {{ university.address }}</div>
                 <div><strong>{{ university.faculties_count }}</strong> faculté(s)</div>
