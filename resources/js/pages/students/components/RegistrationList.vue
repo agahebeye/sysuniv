@@ -2,7 +2,8 @@
 
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
 const resultColors = {
-    'PENDING': 'bg-gray-700',
+    'ABANDONED': 'bg-gray-700',
+    'PENDING': 'bg-blue-700',
     'FAILED': 'bg-red-700',
     'PASSED': 'bg-teal-700',
 }

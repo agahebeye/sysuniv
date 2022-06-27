@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Inertia } from '@inertiajs/inertia';
 import { useAuth } from '~/composables/auth';
-const { isAdmin, isEmployee, isUniversity } = useAuth();
+const { isUniversity } = useAuth();
 
 defineProps<{
     students: any

@@ -9,8 +9,7 @@ class StudentAbandonedController
 {
     public function __invoke(Student $student)
     {
-        return $student;
-        $student->latestRegistration->result_status = ResultStatus::ABANDONED;
+        $student->latestRegistration->update(['result_status' => ResultStatus::ABANDONED]);
         return back()->with('success', "L'étudiant $student->lastname $student->firstname a été marqué(e) abandonné(e).");
     }
 }

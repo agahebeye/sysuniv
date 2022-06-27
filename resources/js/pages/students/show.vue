@@ -14,7 +14,7 @@ const props = defineProps<{
     <div>
 
         <Head>
-            <title>Students/{{ student.firstname }} - Sysuniv</title>
+            <title>Etudiant {{ student.firstname }} - Ministère d'éducation du Burundi</title>
         </Head>
 
         <h1>Profil étudiant</h1>
