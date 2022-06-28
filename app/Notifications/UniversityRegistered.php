@@ -54,13 +54,12 @@ class UniversityRegistered extends Notification
         );
 
         return (new MailMessage)
-            ->subject('Verify your account')
-            ->line('Below are your account details to get yourself logged in')
-            ->line("email: $notifiable->email")
-            ->line("password: $this->password")
-            ->line('Note! You can still modify your details after login')
-            ->action('Verify your account', $url)
-            ->line('Thank you for using our application!');
+            ->subject("Enregistrement de l'université")
+            ->markdown('mail.university.stored', [
+                'url' => $url,
+                'university' => $notifiable,
+                'rawPassword' => $this->password
+            ]);
     }
 
     /**
