@@ -50,14 +50,16 @@ class StudentController
     public function show(Student $student): \Inertia\Response
     {
         $studentResource = StudentResource::make($student->load([
-                'photo',
-                'registrations.university',
-                'registrations.faculty',
-                'registrations.institute', 'registrations.department', 'registrations.result'
+            'photo',
+            'registrations.university',
+            'registrations.faculty',
+            'registrations.institute', 'registrations.department', 'registrations.result'
         ]));
         return Inertia::render('students/show', [
             'student' => $studentResource,
-            'canAbandon' => $student->latestRegistration->result_status == ResultStatus::PENDING,
+            'canAbandon' => request()->user()->role === UserType::UNIVERSITY ?
+                $student->latestRegistration->result_status == ResultStatus::PENDING
+                : null
         ]);
     }
 

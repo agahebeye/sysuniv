@@ -41,8 +41,8 @@ function createStudent() {
             <div class="mb-4">
                 <label for="gender">sexe</label>
                 <div class="flex items-center space-x-2">
-                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>male</span>
-                    <input type="radio" name="gender" value="FEMELLE" class="radio" v-model="form.gender"><span>femelle</span>
+                    <input type="radio" name="gender" value="MALE" class="radio" v-model="form.gender"><span>masculin</span>
+                    <input type="radio" name="gender" value="FEMELLE" class="radio" v-model="form.gender"><span>féminin</span>
                 </div>
             </div>
 
