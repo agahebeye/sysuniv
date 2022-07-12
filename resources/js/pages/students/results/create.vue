@@ -5,6 +5,7 @@ import XButton from '~/components/shared/XButton.vue';
 
 const form = useForm({
     notes: '',
+    photo: null,
     credits: '',
 });
 
@@ -30,13 +31,18 @@ defineProps<{
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
         <form @submit.prevent="form.put(`/students/${student.id}/results/update`)">
+            <div class="mb-4 space-y-4 mt-10">
+                <label for="name" class="">Ajouter le bulettin</label>
+                <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
+            </div>
+
             <div class="mb-4">
                 <label for="name">Notes (%)</label>
                 <input type="text" id="name" class="input" v-model="form.notes" autocomplete="off" autofocus required>
             </div>
 
             <div class="mb-4">
-                <label for="name">Complément(s)</label>
+                <label for="name">Mention</label>
                 <input type="text" id="name" class="input" v-model="form.credits" autocomplete="off" autofocus required>
             </div>
 

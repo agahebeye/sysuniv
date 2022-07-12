@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ResultStatus;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Models\Student;
@@ -24,8 +25,14 @@ class RegistrationController
     public function store(Student $student, StoreRegistrationRequest $storeRegistrationRequest): \Illuminate\Http\RedirectResponse
     {
         $storeRegistrationRequest->verify($student->latestRegistration);
-        $freshRegistration = Registration::query()->create([...$storeRegistrationRequest->safe()->all(), 'student_id' => $student->id]);
+
+        $freshRegistration = Registration::query()->create([
+            ...$storeRegistrationRequest->safe()->all(),
+            'result_status' => ResultStatus::PENDING,
+            'student_id' => $student->id
+        ]);
         $freshRegistration->result()->create();
+        
         return to_route('students.index')->with('success', "L'étudiant a été enregistré avec succès.");
     }
 }

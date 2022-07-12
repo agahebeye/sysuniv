@@ -41,7 +41,7 @@ async function verifyStudent() {
 
     try {
         isLoading.value = true;
-        await axios.get("/sanctum/csrf-cookie");
+       await axios.get("/sanctum/csrf-cookie");
         const { data } = await axios.get(
             `/api/students/verify/${registration_key.value}`
         );

@@ -2,10 +2,11 @@
 
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
 const resultColors = {
-    'ABANDONED': 'bg-gray-700',
-    'PENDING': 'bg-blue-700',
-    'FAILED': 'bg-red-700',
-    'PASSED': 'bg-teal-700',
+    'Abandonné': 'bg-gray-700',
+    'En suspens': 'bg-blue-700',
+    'Echoué': 'bg-red-700',
+    'Passé': 'bg-teal-700',
+    'Passé avec complément(s)': 'bg-teal-700',
 }
 
 defineProps({

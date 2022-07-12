@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('institute_id')->nullable()->constrained()->onUpdate('cascade');
             $table->foreignId('department_id')->constrained()->onUpdate('cascade');
-            $table->string('result_status')->default(ResultStatus::PENDING->value);
+            $table->string('result_status');
             $table->timestamps();
 
             $table->foreign('university_id')->references('id')->on('users');
