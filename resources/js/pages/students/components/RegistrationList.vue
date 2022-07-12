@@ -5,8 +5,8 @@ const resultColors = {
     'Abandonné': 'bg-gray-700',
     'En suspens': 'bg-blue-700',
     'Echoué': 'bg-red-700',
-    'Passé': 'bg-teal-700',
-    'Passé avec complément(s)': 'bg-teal-700',
+    'Réussi': 'bg-teal-700',
+    'Réussi avec complément(s)': 'bg-teal-700',
 }
 
 defineProps({

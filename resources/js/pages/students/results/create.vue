@@ -4,9 +4,9 @@ import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
 import XButton from '~/components/shared/XButton.vue';
 
 const form = useForm({
-    notes: '',
     photo: null,
-    credits: '',
+    notes: '',
+    mention: '',
 });
 
 defineProps<{
@@ -37,13 +37,23 @@ defineProps<{
             </div>
 
             <div class="mb-4">
-                <label for="name">Notes (%)</label>
-                <input type="text" id="name" class="input" v-model="form.notes" autocomplete="off" autofocus required>
+                <label for="notes">Notes (%)</label>
+                <input type="text" id="notes" class="input" v-model="form.notes" autocomplete="off" autofocus required>
             </div>
 
-            <div class="mb-4">
-                <label for="name">Mention</label>
-                <input type="text" id="name" class="input" v-model="form.credits" autocomplete="off" autofocus required>
+            <div class="mb-4 space-y-2">
+                <label for="mention">Mention</label>
+                <div class="flex flex-col mt-2 space-y-2">
+                    <div class="space-x-2">
+                        <input type="radio" name="mention" value="Réussi" class="radio" v-model="form.mention"><span>Réussi</span>
+                    </div>
+                    <div class="space-x-2">
+                        <input type="radio" name="mention" value="Réussi avec complément(s)" class="radio" v-model="form.mention"><span>Réussi avec complément(s)</span>
+                    </div>
+                    <div class="space-x-2">
+                        <input type="radio" name="mention" value="Echoué" class="radio" v-model="form.mention"><span>Echoué</span>
+                    </div>
+                </div>
             </div>
 
             <x-button :processing="form.processing">Créer resultat</x-button>
