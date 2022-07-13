@@ -6,7 +6,7 @@ const { isUniversity } = useAuth();
 
 const props = defineProps<{
     student: any,
-    canAbandon: boolean
+    canAbandon?: boolean
 }>();
 
 </script>

@@ -33,9 +33,6 @@ function addStudentPhoto(e: any) {
         <form @submit.prevent="addStudentPhoto">
             <div class="mb-6">
                 <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
-                <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                    {{ form.progress.percentage }}%
-                </progress>
             </div>
 
             <x-button :processing="form.processing" class="!m-0 button-sm">Add photo</x-button>
