@@ -11,11 +11,15 @@ class Result extends Model
 
     protected $fillable = [
         'notes',
-        'credits',
         'registration_id',
     ];
 
     const CREATED_AT = null;
+
+    public function report()
+    {
+        return $this->morphOne(Photo::class, 'photoable');
+    }
 
     public function registration()
     {

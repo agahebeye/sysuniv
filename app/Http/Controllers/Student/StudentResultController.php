@@ -19,8 +19,8 @@ class StudentResultController
     public function update(Student $student)
     {
         $data = request()->validate([
+            'photo' => ['image', 'dimensions:min_with=200,min_height=200', 'max:2000'],
             'notes' => ['required', 'numeric'],
-            'credits' => ['required', 'numeric'],
         ]);
         // retrieve student's last registration
         $registration = $student->latestRegistration;
