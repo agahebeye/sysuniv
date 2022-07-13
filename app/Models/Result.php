@@ -11,7 +11,12 @@ class Result extends Model
 
     protected $fillable = [
         'notes',
+        'mention',
         'registration_id',
+    ];
+
+    protected $casts = [
+        'mention' => ResultStatus::class
     ];
 
     const CREATED_AT = null;

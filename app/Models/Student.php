@@ -57,6 +57,11 @@ class Student extends Model
         return $this->hasOne(Registration::class)->latestOfMany();
     }
 
+    public function registrationResult()
+    {
+        return $this->hasOneThrough(Result::class, Registration::class);
+    }
+
     public function universities()
     {
         return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');

@@ -20,12 +20,10 @@ class Registration extends Model
         'faculty_id',
         'institute_id',
         'department_id',
-        'result_status',
     ];
 
     protected $casts = [
         'level' => LevelType::class,
-        'result_status' => ResultStatus::class
     ];
 
     public function student()
