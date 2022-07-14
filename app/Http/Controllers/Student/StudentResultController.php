@@ -26,7 +26,7 @@ class StudentResultController
         // retrieve student's last registration
         $registration = $student->latestRegistration;
         // update correspondent result
-        $result = $registration->result()->update([
+        $result = $registration->result()->create([
             'notes' => request()->input('notes'),
             'mention' => request()->input('mention'),
         ]);

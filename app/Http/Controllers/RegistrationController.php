@@ -28,10 +28,8 @@ class RegistrationController
 
         $freshRegistration = Registration::query()->create([
             ...$storeRegistrationRequest->safe()->all(),
-            'result_status' => ResultStatus::PENDING,
             'student_id' => $student->id
         ]);
-        $freshRegistration->result()->create();
         
         return to_route('students.index')->with('success', "L'étudiant a été enregistré avec succès.");
     }

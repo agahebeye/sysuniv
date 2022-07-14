@@ -34,7 +34,11 @@ export default {
 
             <p>Accueil</p>
 
-            <Link href="/request-password-reset" class="text-xs font-bold border-b border-teal-600 fixed top-10 right-10" v-if="isUniversity">Réinitialiser votre mot de passe</Link>
+            <div class="fixed top-10 right-10 space-x-6">
+                <Link href="/logout" method="post" as="button" class="font-bold text-red-600 text-xs border-b">Se déconnecter</Link>
+                <Link href="/request-password-reset" class="text-xs font-bold border-b border-red-600" v-if="isUniversity">Réinitialiser votre mot de passe</Link>
+            </div>
+
 
             <div class="relative w-max mb-16">
                 <h1 class="!mb-0">
