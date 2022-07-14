@@ -21,5 +21,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@sysuniv.org',
             'password' => 'introuvablex02'
         ]);
+
+        $this->call([
+            FacultySeeder::class,
+            InstituteSeeder::class,
+            DepartmentSeeder::class,
+        ]);
     }
 }
