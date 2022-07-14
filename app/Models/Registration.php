@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Enums\LevelType;
-use App\Enums\ResultStatus;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Concerns\HasRegistrationRelations;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Registration extends Model
 {
     use HasFactory;
+    use HasRegistrationRelations;
 
     const UPDATED_AT = null;
 
@@ -32,35 +33,5 @@ class Registration extends Model
     function hasAbondoned(): Attribute
     {
         return Attribute::make(fn ($value) => $value);
-    }
-
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
-    }
-
-    public function university()
-    {
-        return $this->belongsTo(User::class, 'university_id');
-    }
-
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class);
-    }
-
-    public function institute()
-    {
-        return $this->belongsTo(Institute::class);
-    }
-
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
-
-    public function result()
-    {
-        return $this->hasOne(Result::class);
     }
 }
