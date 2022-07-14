@@ -23,6 +23,8 @@ class InstituteSeeder extends Seeder
             'Institut Supérieur de Formation Agricole',
             'Institut Supérieur de Commerce',
             'Institut d’Education Physique et des Sports',
+            'Institut de maintenance informatique et réseaux',
+            'Institut interfacultaire de statistique'
         ])->each(fn ($name) => Institute::factory()->create(['name' => $name]));
     }
 }
