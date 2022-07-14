@@ -16,13 +16,16 @@ class StudentResultController
         ]);
     }
 
-    public function update(Student $student)
+    public function store(Student $student)
     {
+
         $data = request()->validate([
             'document' => ['image', 'dimensions:min_with=200,min_height=200', 'max:2000'],
-            'notes' => ['required', 'numeric'],
+            'notes' => ['required', 'integer', 'max:100'],
             'mention' => ['required', 'string'],
         ]);
+
+
         // retrieve student's last registration
         $registration = $student->latestRegistration;
         // update correspondent result
@@ -31,7 +34,7 @@ class StudentResultController
             'mention' => request()->input('mention'),
         ]);
 
-        $document = request()->file('doucment')->storePublicly('/reports', 'public');
+        $document = request()->file('document')->storePublicly('/reports', 'public');
         $result->report()->create(['src' => $document]);
         // redirect to students list page
         return to_route('students.show', $student->getRouteKey());

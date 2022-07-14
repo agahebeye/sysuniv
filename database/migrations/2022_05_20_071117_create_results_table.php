@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('results', function (Blueprint $table) {
             $table->id();
             $table->integer('notes')->nullable();
-            $table->integer('mention');
+            $table->string('mention');
             $table->foreignId('registration_id')->constrained();
             $table->timestamps();
         });

@@ -28,9 +28,15 @@ class StoreRegistrationRequest extends FormRequest
      */
     public function verify(Registration $registration = null)
     {
+        if (\is_null($registration) && $this->input('level') >  LevelType::BAC_1->value) {
+            throw ValidationException::withMessages([
+                'student_id' => "Vous devez commencer par BAC I"]);
+
+        }
+
         if ($registration) {
             // a student hasn't finished a year
-            if ($registration->result_status == ResultStatus::PENDING) {
+            if (is_null($registration->result)) {
                 throw ValidationException::withMessages([
                     'student_id' => "Vous devez d'abord terminer "
                         . ($registration->created_at->year == date('Y')
@@ -40,15 +46,15 @@ class StoreRegistrationRequest extends FormRequest
                 ]);
             }
 
-            if ($registration->result_status == ResultStatus::PASSED && $registration->level->value == $this->input('level')) {
+            if ($registration?->result->mention == ResultStatus::PASSED && $registration->level->value == $this->input('level')) {
                 throw ValidationException::withMessages([
                     'student_id' => "Vous ne pouvez pas étudier la même année deux fois."
                 ]);
             }
             // a student has finished a year but wants to skip
             if (
-                ($registration->result_status == ResultStatus::FAILED && $registration->level->value < $this->input('level'))
-                || ($registration->result_status == ResultStatus::PASSED &&
+                ($registration?->result->mention == ResultStatus::FAILED && $registration->level->value < $this->input('level'))
+                || ($registration?->result->mention == ResultStatus::PASSED &&
                     $registration->level == LevelType::BAC_1
                     && $this->input('level') == LevelType::BAC_3->value)
             ) {
@@ -59,7 +65,7 @@ class StoreRegistrationRequest extends FormRequest
 
             // a student wants to return to the previous year
             if (
-                ($registration->result_status == ResultStatus::FAILED || $registration->result_status == ResultStatus::PASSED)
+                ($registration?->result->mention == ResultStatus::FAILED || $registration?->result->mention == ResultStatus::PASSED)
                 && $registration->level->value > $this->input('level')
             ) {
                 throw ValidationException::withMessages([
@@ -67,9 +73,9 @@ class StoreRegistrationRequest extends FormRequest
                 ]);
             }
 
-            if ($registration->result_status == ResultStatus::ABANDONED && $registration->level->value != $this->input('level')) {
+            if ($registration->hasAbandoned && $registration->level->value != $this->input('level')) {
                 throw ValidationException::withMessages([
-                    'student_id' => "Vous deveze reprendre l'année abondonnée d'abord."
+                    'student_id' => "Vous devez reprendre l'année abondonnée d'abord."
                 ]);
             }
         }

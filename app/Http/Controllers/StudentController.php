@@ -53,12 +53,12 @@ class StudentController
             'photo',
             'registrations.university',
             'registrations.faculty',
-            'registrations.institute', 'registrations.department', 'registrations.result'
+            'registrations.institute', 'registrations.department', 'registrations.result',
         ]));
 
         return Inertia::render('students/show', [
             'student' => $studentResource,
-            'canAbandon' => request()->user()->role === UserType::UNIVERSITY && is_null($student->latestRegistration->canAbandon)
+            'hasAbandoned' => request()->user()->role === UserType::UNIVERSITY && is_null($student->latestRegistration->hasAbandoned)
         ]);
     }
 

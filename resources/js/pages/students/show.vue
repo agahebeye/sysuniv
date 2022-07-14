@@ -6,7 +6,7 @@ const { isUniversity } = useAuth();
 
 const props = defineProps<{
     student: any,
-    canAbandon?: boolean
+    hasAbandoned?: boolean
 }>();
 
 </script>
@@ -35,11 +35,11 @@ const props = defineProps<{
                         <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                     </div>
 
-                    <div class="mt-4" v-if="canAbandon">
+                    <div class="mt-4" v-if="hasAbandoned">
                         <Link class="link" :href="`${student.id}/results/create`">Ajouter le resultat de cette année</Link>
                     </div>
 
-                    <div class="mt-4" v-if="canAbandon">
+                    <div class="mt-4" v-if="hasAbandoned">
                         <Link class="link text-white bg-red-600 p-2 border-none" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
                     </div>
 

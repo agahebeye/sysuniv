@@ -30,7 +30,7 @@ class RegistrationController
             ...$storeRegistrationRequest->safe()->all(),
             'student_id' => $student->id
         ]);
-        
+
         return to_route('students.index')->with('success', "L'étudiant a été enregistré avec succès.");
     }
 }

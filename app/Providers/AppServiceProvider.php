@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
             'Student' => \App\Models\Student::class,
             'Employee' => \App\Models\User::class,
             'University' => \App\Models\User::class,
+            'Result' => \App\Models\Result::class,
         ]);
 
         JsonResource::withoutWrapping();

@@ -30,7 +30,7 @@ defineProps<{
 
         <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
-        <form @submit.prevent="form.put(`/students/${student.id}/results/update`)">
+        <form @submit.prevent="form.post(`/students/${student.id}/results/store`)">
             <div class="mb-4 space-y-4 mt-10">
                 <label for="name" class="">Ajouter le bulettin</label>
                 <input type="file" @input="form.document = $event.target['files']['0']" required class="input-file">
