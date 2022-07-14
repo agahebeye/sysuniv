@@ -19,19 +19,20 @@ class StudentResultController
     public function update(Student $student)
     {
         $data = request()->validate([
-            'photo' => ['image', 'dimensions:min_with=200,min_height=200', 'max:2000'],
+            'document' => ['image', 'dimensions:min_with=200,min_height=200', 'max:2000'],
             'notes' => ['required', 'numeric'],
             'mention' => ['required', 'string'],
         ]);
         // retrieve student's last registration
         $registration = $student->latestRegistration;
         // update correspondent result
-        $registration->result()->update([
+        $result = $registration->result()->update([
             'notes' => request()->input('notes'),
             'mention' => request()->input('mention'),
         ]);
 
-        
+        $document = request()->file('doucment')->storePublicly('/reports', 'public');
+        $result->report()->create(['src' => $document]);
         // redirect to students list page
         return to_route('students.show', $student->getRouteKey());
     }
