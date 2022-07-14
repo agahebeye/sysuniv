@@ -21,10 +21,10 @@ defineProps<{
         <h2 class="mt-10 mb-8" v-if="departments.length"><strong>{{ departments.length }}</strong> department(s)</h2>
         <h2 class="mt-10 mb-8" v-else>Aucune department a été enregistré</h2>
 
-        <div class="columns-3 gap-12 max-w-2xl">
-            <div v-for="department in departments" class="mb-2" data-test="department">
+        <ul class="columns-3 gap-12 max-w-2xl list-disc">
+            <li v-for="department in departments" class="mb-2" data-test="department">
                 {{ department.name }}
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </template>
