@@ -4,7 +4,7 @@ import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
 import XButton from '~/components/shared/XButton.vue';
 
 const form = useForm({
-    photo: null,
+    document: null,
     notes: '',
     mention: '',
 });
@@ -33,7 +33,7 @@ defineProps<{
         <form @submit.prevent="form.put(`/students/${student.id}/results/update`)">
             <div class="mb-4 space-y-4 mt-10">
                 <label for="name" class="">Ajouter le bulettin</label>
-                <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
+                <input type="file" @input="form.document = $event.target['files']['0']" required class="input-file">
             </div>
 
             <div class="mb-4">
