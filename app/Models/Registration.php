@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\LevelType;
 use App\Enums\ResultStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,11 +21,18 @@ class Registration extends Model
         'faculty_id',
         'institute_id',
         'department_id',
+        'has_abandoned',
     ];
 
     protected $casts = [
         'level' => LevelType::class,
+        'has_abandoned' => 'boolean'
     ];
+
+    function hasAbondoned(): Attribute
+    {
+        return Attribute::make(fn ($value) => $value);
+    }
 
     public function student()
     {
