@@ -58,7 +58,7 @@ class StudentController
 
         return Inertia::render('students/show', [
             'student' => $studentResource,
-            'canAbandon' => request()->user()->role === UserType::UNIVERSITY && is_null($student->latestRegistration->result)
+            'canAbandon' => request()->user()->role === UserType::UNIVERSITY && is_null($student->latestRegistration->canAbandon)
         ]);
     }
 
