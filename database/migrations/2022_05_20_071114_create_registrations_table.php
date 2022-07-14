@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->string('level');
+            $table->tinyInteger('has_abandoned')->default(0);
             $table->unsignedBigInteger('university_id');
             $table->foreignId('student_id')->constrained()->onUpdate('cascade');
             $table->foreignId('faculty_id')->nullable()->constrained()->onUpdate('cascade');
