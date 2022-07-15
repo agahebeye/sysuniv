@@ -3,6 +3,7 @@ import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Multiselect from 'vue-multiselect';
 import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
 import XButton from '~/components/shared/XButton.vue';
+import DefaultLayout from '~/layouts/default.vue';
 
 type Field = {
     id: number,
@@ -38,58 +39,54 @@ defineProps<{
 </script>
 
 <template>
-    <div class="">
 
-        <Head>
-            <title>Créer université - Ministère d'éducation du Burundi</title>
-        </Head>
-        <h1>Créer une nouvelle université</h1>
+    <Head>
+        <title>Créer université - Ministère d'éducation du Burundi</title>
+    </Head>
 
-        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
+    <DefaultLayout>
 
-        <form @submit.prevent="createUniversity" class="" >
-            <div class="mb-4 justify-between space-x-6 flex">
+        <div class="">
+            <h1>Créer une nouvelle université</h1>
+
+            <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
+
+            <form @submit.prevent="createUniversity" class="grid w-full grid-cols-2 bg-red-50">
                 <div>
                     <label for="name">nom</label>
-                    <input type="text" id="name" v-model="form.name" class="input w-80" autocomplete="off" autofocus required>
+                    <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" autofocus required>
                 </div>
 
                 <div>
                     <label for="email">email</label>
-                    <input type="email" id="email" v-model="form.email" class="input w-80" autocomplete="off" required>
+                    <input type="email" id="email" v-model="form.email" class="input" autocomplete="off" required>
                 </div>
-            </div>
 
-            <div class="flex mb-4 justify-between space-x-6">
                 <div>
                     <label for="password">mot de passe</label>
-                    <input type="password" id="password" v-model="form.password" class="input w-80" autocomplete="off" required>
+                    <input type="password" id="password" v-model="form.password" class="input" autocomplete="off" required>
                 </div>
 
                 <div>
                     <label for="password_confirmation">confirmer mot de passe</label>
                     <input type="password" id="password_confirmation"
                         v-model="form.password_confirmation"
-                        class="input w-80"
+                        class="input"
                         autocomplete="off" required>
                 </div>
-            </div>
 
-            <div class="flex mb-4 justify-between">
                 <div>
                     <label for="email">siteweb</label>
-                    <input type="url" id="website" v-model="form.website" class="input w-80" autocomplete="off" required>
+                    <input type="url" id="website" v-model="form.website" class="input" autocomplete="off" required>
                 </div>
 
                 <div>
                     <label for="address">adresse</label>
                     <textarea name="address" id="address"
-                        rows="4" class="textarea w-80"
+                        rows="4" class="textarea"
                         v-model="form.address" required></textarea>
                 </div>
-            </div>
 
-            <div class="flex gap-6 flex-wrap mb-8">
                 <div>
                     <label for="faculties">facultés</label>
                     <multiselect v-model="form.faculties" placeholder="choisir facultés" class="!w-60" :multiple="true"
@@ -110,11 +107,11 @@ defineProps<{
                         :close-on-select="false" :options="departments" label="name" track-by="id" required>
                     </multiselect>
                 </div>
-            </div>
 
-            <x-button class="col-span-2">créer université</x-button>
-        </form>
-    </div>
+                <x-button class="col-span-2">créer université</x-button>
+            </form>
+        </div>
+    </DefaultLayout>
 </template>
 
 <style src="vue-multiselect/dist/vue-multiselect.css">
