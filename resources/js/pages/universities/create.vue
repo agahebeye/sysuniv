@@ -52,7 +52,7 @@ defineProps<{
             <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
             <form @submit.prevent="createUniversity" class="grid w-full grid-cols-2 gap-2">
-                <div class="bg-red-50">
+                <div class="">
                     <label for="name">nom</label>
                     <input type="text" id="name" v-model="form.name" class="w-full input" autocomplete="off" autofocus required>
                 </div>
