@@ -12,8 +12,9 @@ import LinkList from '~/components/shared/LinkList.vue';
 
     <GuestLayout>
         <template #top_bar>
-            <div class="flex justify-end">
-                <Link href="/logout" method="post" as="button" class="text-sm text-red-600">déconnexion</Link>
+            <div class="flex items-center justify-end space-x-4 text-sm font-bold h-9">
+                <Link href="/request-password-reset" class="text-gray-700 border-b">Réinitialiser mot de passe</Link>
+                <Link href="/logout" method="post" as="button" class="text-red-600 border-b border-red-500">déconnexion</Link>
             </div>
         </template>
 
