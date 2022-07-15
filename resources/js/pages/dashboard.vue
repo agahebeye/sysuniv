@@ -24,7 +24,7 @@ import LinkList from '~/components/shared/LinkList.vue';
                 <h1 class="!mb-0">
                     {{ $page.props.auth['user'].name }}
                 </h1>
-                <div class="-rotate-[9deg] leading-3 py-1 px-4 -top-4  bg-gray-600 absolute text-xs  translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
+                <div class="-rotate-[17deg] leading-3 py-1 px-4 bg-gray-600 absolute text-xs  translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
             </div>
 
             <h2 class="pb-4 border-b">Options</h2>

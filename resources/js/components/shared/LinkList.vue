@@ -54,6 +54,7 @@ const sizeStyles = {
 
 <style scoped>
 a {
-    @apply uppercase flex items-center text-sm space-x-2  no-underline;
+    @apply flex items-center text-base capitalize space-x-2  no-underline;
+    @apply w-max;
 }
 </style>

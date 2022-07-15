@@ -8,25 +8,21 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 
 <template>
     <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
-    <div class="">
-        <div class="w-full bg-gray-200">
-            <AppHeader class="flex items-center justify-center mx-auto mb-16 space-x-8 md:max-w-5xl">
-                <div class="relative text-lg w-max">
-                    <div>
-                        {{ $page.props.auth['user'].name }}
-                    </div>
-                    <div class="-rotate-[17deg] leading-3 p-1 bg-gray-600 absolute translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
-                </div>
-            </AppHeader>
-        </div>
-
-        <div class="flex px-6 mx-auto space-x-32 md:max-w-5xl">
-            <nav class="">
+    <div class="min-h-screen pb-10">
+        <AppHeader class="">
+            <div class="relative text-lg w-max">
                 <div>
-                    <LinkList size="sm" class="flex flex-col space-y-4">
-                        <Link href="/logout" method="post" as="button" class="font-bold text-red-600 uppercase">deconnexion</Link>
-                    </LinkList>
+                    {{ $page.props.auth['user'].name }}
                 </div>
+                <div class="-rotate-[17deg] leading-3 py-1 px-3 bg-gray-600 absolute text-[0.6rem] font-bold translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
+            </div>
+        </AppHeader>
+
+        <div class="mt-10">
+            <nav class="">
+                <LinkList size="sm" class="flex flex-col space-y-4">
+                    <Link href="/logout" method="post" as="button" class="font-bold text-red-600 w-max">Déconnexion</Link>
+                </LinkList>
             </nav>
 
             <main class="">
@@ -41,3 +37,14 @@ import AppHeader from '~/components/shared/AppHeader.vue';
         </div>
     </div>
 </template>
+
+<style scoped>
+header {
+    @apply px-6 w-full py-7 flex items-center space-x-2 text-sm sticky top-0;
+}
+
+nav {
+    @apply fixed top-0 w-full min-h-screen bg-red-200;
+    @apply p-6;
+}
+</style>
