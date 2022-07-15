@@ -7,11 +7,11 @@
         @apply text-gray-800;
     }
     h1 {
-        @apply text-4xl font-medium my-4;
+        @apply my-4 text-4xl font-medium;
     }
 
     h2 {
-        @apply text-2xl font-medium my-4;
+        @apply my-4 text-2xl font-medium;
     }
 }
 
@@ -21,7 +21,7 @@
     }
 
     .link {
-        @apply inline-block text-gray-900 no-underline border-b border-black font-bold text-sm;
+        @apply inline-block text-sm font-bold text-gray-900 no-underline border-b border-black;
     }
 
     .input {
@@ -31,9 +31,7 @@
     }
 
     .input-file {
-        @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4
-      file:rounded-full file:border-0 file:text-sm file:font-semibold
-      file:bg-violet-50 file:text-teal-700 hover:file:bg-violet-100;
+        @apply block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-teal-700 hover:file:bg-violet-100;
     }
 
     .textarea {
@@ -43,14 +41,11 @@
     }
 
     .button {
-        @apply text-white bg-gradient-to-r from-teal-400 via-teal-500 
-        to-teal-600 hover:bg-gradient-to-br focus:outline-none 
-         dark:focus:ring-teal-800 shadow-lg shadow-teal-500/50 
-        dark:shadow-lg dark:shadow-teal-800/80 text-center mr-2 mb-2;
+        @apply mb-2 mr-2 text-center text-white shadow-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:outline-none dark:focus:ring-teal-800 shadow-teal-500/50 dark:shadow-lg dark:shadow-teal-800/80;
     }
 
     .button-large {
-        @apply font-medium text-base px-12 py-3;
+        @apply px-12 py-3 text-base font-medium;
     }
 
     .button-sm {
@@ -58,7 +53,6 @@
     }
 
     .radio {
-        @apply appearance-none rounded-lg w-4 h-4 bg-gray-200 border-teal-600 border 
-        checked:bg-teal-600;
+        @apply w-4 h-4 bg-gray-200 border border-teal-600 rounded-lg appearance-none checked:bg-teal-600;
     }
 }

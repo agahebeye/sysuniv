@@ -51,33 +51,33 @@ defineProps<{
 
             <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
-            <form @submit.prevent="createUniversity" class="grid w-full grid-cols-2 bg-red-50">
-                <div>
+            <form @submit.prevent="createUniversity" class="grid w-full grid-cols-2 gap-2">
+                <div class="bg-red-50">
                     <label for="name">nom</label>
-                    <input type="text" id="name" v-model="form.name" class="input" autocomplete="off" autofocus required>
+                    <input type="text" id="name" v-model="form.name" class="w-full input" autocomplete="off" autofocus required>
                 </div>
 
                 <div>
                     <label for="email">email</label>
-                    <input type="email" id="email" v-model="form.email" class="input" autocomplete="off" required>
+                    <input type="email" id="email" v-model="form.email" class="w-full input" autocomplete="off" required>
                 </div>
 
                 <div>
                     <label for="password">mot de passe</label>
-                    <input type="password" id="password" v-model="form.password" class="input" autocomplete="off" required>
+                    <input type="password" id="password" v-model="form.password" class="w-full input" autocomplete="off" required>
                 </div>
 
                 <div>
                     <label for="password_confirmation">confirmer mot de passe</label>
                     <input type="password" id="password_confirmation"
                         v-model="form.password_confirmation"
-                        class="input"
+                        class="w-full input"
                         autocomplete="off" required>
                 </div>
 
                 <div>
                     <label for="email">siteweb</label>
-                    <input type="url" id="website" v-model="form.website" class="input" autocomplete="off" required>
+                    <input type="url" id="website" v-model="form.website" class="w-full input" autocomplete="off" required>
                 </div>
 
                 <div>
@@ -108,7 +108,7 @@ defineProps<{
                     </multiselect>
                 </div>
 
-                <x-button class="col-span-2">créer université</x-button>
+                <x-button class="col-span-2 mt-4">créer université</x-button>
             </form>
         </div>
     </DefaultLayout>
