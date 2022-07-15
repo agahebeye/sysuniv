@@ -16,6 +16,6 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 
 <style scoped>
 header {
-   @apply px-6 w-full py-7 flex items-center space-x-2 text-sm;
+   @apply px-6 w-full py-7 flex items-center space-x-2 text-sm sticky top-0;
 }
 </style>

@@ -4,11 +4,10 @@ import GuestLayout from '~/layouts/GuestLayout.vue';
 import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
 import XButton from '~/components/shared/XButton.vue';
 
-defineProps({
+const props = defineProps({
     email: String,
     token: String,
 })
-
 
 const form = useForm({
     token: props.token,
@@ -17,16 +16,15 @@ const form = useForm({
     password_confirmation: '',
 });
 
-const submit = () => {
+function submit() {
     form.post('/reset-password', {
         onFinish: () => form.reset('password', 'password_confirmation')
     });
 }
-}
+
 </script>
 
 <template>
-
     <Head>
         <title>Reset password - Sysuniv</title>
     </Head>
