@@ -3,12 +3,12 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 </script>
 
 <template>
-    <div class="">
+    <div class="min-h-screen pb-10">
         <slot name="top_bar" />
         
         <AppHeader class="" />
 
-        <main class="flex items-center pl-20 pr-6 prose max-w-none">
+        <main class="prose max-w-none">
             <slot />
         </main>
     </div>
@@ -16,6 +16,6 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 
 <style scoped>
 header {
-   @apply bg-red-200 w-full  flex items-center space-x-2 text-sm;
+   @apply px-6 w-full py-7 flex items-center space-x-2 text-sm;
 }
 </style>
