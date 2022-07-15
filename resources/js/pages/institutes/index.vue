@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
-const { isAdmin, isEmployee } = useAuth();
+import DefaultLayout from '~/layouts/default.vue';
+const { isUniversity } = useAuth();
 
 defineProps<{
     institutes: Array<any>
@@ -9,23 +10,25 @@ defineProps<{
 </script>
 
 <template>
-    <div>
 
-        <Head>
-            <title>Institutes - Sysuniv</title>
-        </Head>
+    <Head>
+        <title>Instituts - Ministère de l'éducation du Burundi</title>
+    </Head>
+    
+    <DefaultLayout>
+        <div>
+            <h1>Instituts</h1>
 
-        <h1>Instituts</h1>
+            <Link v-if="!isUniversity" href="/institutes/create" class="link">Créer nouveau institut</Link>
 
-        <Link v-if="isAdmin || isEmployee" href="/institutes/create" class="link">Create new institute</Link>
+            <h2 class="mt-10 mb-8" v-if="institutes.length"><strong>{{ institutes.length }}</strong> institut(s)</h2>
+            <h2 class="mt-10 mb-8" v-else>Aucune institut a été enregistré</h2>
 
-        <h2 class="mt-10 mb-8" v-if="institutes.length"><strong>{{ institutes.length }}</strong> universitée(s)</h2>
-        <h2 class="mt-10 mb-8" v-else>Aucune institut a été enregistré</h2>
-
-        <ul class="columns-3 gap-12 max-w-2xl list-disc">
-            <li v-for="institute in institutes" class="mb-2" data-test="institute">
-                {{ institute.name }}
-            </li>
-        </ul>
-    </div>
+            <ul class="flex flex-col flex-wrap list-disc list-inside">
+                <li v-for="institute in institutes" class="mb-2" data-test="institute">
+                    {{ institute.name }}
+                </li>
+            </ul>
+        </div>
+    </DefaultLayout>
 </template>

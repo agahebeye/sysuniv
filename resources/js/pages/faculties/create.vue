@@ -14,7 +14,7 @@ const form = useForm({
     <DefaultLayout>
 
         <Head>
-            <title>Create faculty - Sysuniv</title>
+            <title>Créer faculté - Ministère d'éducation du Burunid</title>
         </Head>
 
         <div class="">
