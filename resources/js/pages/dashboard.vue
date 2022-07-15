@@ -28,7 +28,7 @@ import LinkList from '~/components/shared/LinkList.vue';
             </div>
 
             <h2 class="pb-4 border-b">Options</h2>
-            <LinkList size="lg" class="flex flex-wrap justify-between gap-10 p-6 border shadow-lg" />
+            <LinkList size="lg" class="flex flex-wrap justify-between gap-10" />
         </div>
     </GuestLayout>
 </template>
