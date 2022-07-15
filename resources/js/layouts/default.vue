@@ -9,9 +9,9 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 <template>
     <SuccessAlert v-if="$page.props.flash['success']" :message="$page.props.flash['success']" />
     <div class="">
-        <div class="bg-gray-200 w-full">
-            <AppHeader class="flex  items-center space-x-8 justify-center mb-16 md:max-w-5xl mx-auto">
-                <div class="text-lg relative w-max">
+        <div class="w-full bg-gray-200">
+            <AppHeader class="flex items-center justify-center mx-auto mb-16 space-x-8 md:max-w-5xl">
+                <div class="relative text-lg w-max">
                     <div>
                         {{ $page.props.auth['user'].name }}
                     </div>
@@ -20,8 +20,7 @@ import AppHeader from '~/components/shared/AppHeader.vue';
             </AppHeader>
         </div>
 
-
-        <div class="flex space-x-32  px-6 md:max-w-5xl mx-auto">
+        <div class="flex px-6 mx-auto space-x-32 md:max-w-5xl">
             <nav class="">
                 <div>
                     <LinkList size="sm" class="flex flex-col space-y-4">
@@ -32,7 +31,7 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 
             <main class="">
                 <Link href="/" class="inline-flex items-center mb-4 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                <svg class="mr-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                 </svg>
                 Accueil

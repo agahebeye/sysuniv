@@ -25,10 +25,7 @@ createApp({
                     );
                 }
                 const module = await importPage();
-                const page = module.default;
-
-                page.layout = page.layout || Default;
-                return page;
+                return module.default;
             },
             
         }),
