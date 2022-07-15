@@ -1,9 +1,10 @@
 <template>
     <header>
-        <img class="w-32" src="/images/armoiries.svg" alt="armoiries du burundi" />
+        <slot name="hamburger" />
+        <img class="w-24" src="/images/armoiries.svg" alt="armoiries du burundi" />
         <div class="mt-4">
-            <div class="text-lg">Ministere de l'education nationale et de la recherche scientifique</div>
-            <div class="uppercase font-bold">Republique du Burundi</div>
+            <div class="text-base">Ministere de l'education nationale et de la recherche scientifique</div>
+            <div class="font-bold uppercase">Republique du Burundi</div>
             <slot />
         </div>
     </header>

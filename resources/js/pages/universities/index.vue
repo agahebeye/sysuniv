@@ -27,8 +27,8 @@ defineProps<{
             <h2 class="mt-10 mb-8" v-if="universities.length"><strong>{{ universities.length }}</strong> université(s)</h2>
             <h2 class="mt-10 mb-8" v-else>Aucune université a été enregistrée</h2>
 
-            <ul class="max-w-2xl gap-12 list-disc columns-3">
-                <li v-for="university in universities" class="mb-2" data-test="university">
+            <ul class="flex flex-col flex-wrap list-disc list-inside">
+                <li v-for="university in universities" class="" data-test="university">
                     <Link :href="`/universities/${university.id}`" class="no-underline hover:underline">{{ university.name }}</Link>
                 </li>
             </ul>
