@@ -19,7 +19,7 @@ const form = useForm({
 
 const submit = () => {
     form.post('/reset-password', {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => form.reset('password', 'password_confirmation')
     });
 }
 }
@@ -32,12 +32,12 @@ const submit = () => {
     </Head>
 
     <GuestLayout>
-        <div>
+        <div class="px-6 mt-10">
             <h1>Réinitialiser mot de passe</h1>
 
             <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
-            <form @submit.prevent="submit">
+            <form @submit.prevent="submit" class="w-max">
                 <div class="mb-4">
                     <label for="email" value="Email">email</label>
                     <input id="email" type="email" v-model="form.email" class="input w-96" required autofocus autocomplete="username" />
