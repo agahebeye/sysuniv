@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ResultStatus;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Student;
@@ -58,7 +57,8 @@ class StudentController
 
         return Inertia::render('students/show', [
             'student' => $studentResource,
-            'hasAbandoned' => request()->user()->role === UserType::UNIVERSITY && is_null($student->latestRegistration->hasAbandoned)
+            'latestRegistration' => $latestRegistration = $student->latestRegistration?->load('result'),
+            'hasAbandoned' => $latestRegistration?->hasAbandoned
         ]);
     }
 

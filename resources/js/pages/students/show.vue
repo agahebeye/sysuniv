@@ -4,10 +4,10 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import DefaultLayout from '~/layouts/default.vue';
 import { useAuth } from '~/composables/auth';
 import RegistrationList from './components/RegistrationList.vue';
-const { isUniversity } = useAuth();
 
 const props = defineProps<{
     student: any,
+    lastestRegistration?: any,
     hasAbandoned?: boolean
 }>();
 
@@ -31,7 +31,7 @@ const avatarPlaceHolder = computed(() =>
                 <div class="">
                     <div class="flex flex-col pb-10">
                         <div class="rounded-full">
-                            <img class="rounded-full w-36 max-w-full"
+                            <img class="max-w-full rounded-full w-36"
                                 :src="`/storage/${student.photo?.src ?? 'avatars/' + avatarPlaceHolder}`"
                                 :alt="student.firstname" />
                         </div>
@@ -44,12 +44,12 @@ const avatarPlaceHolder = computed(() =>
                             <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                         </div>
 
-                        <div class="mt-4" v-if="!hasAbandoned">
+                        <div class="mt-4" v-if="useAuth().isUniversity.value">
                             <Link class="link" :href="`${ student.id } /results/create`">Ajouter le resultat de cette année</Link>
                         </div>
 
-                        <div class="mt-4" v-if="!hasAbandoned">
-                            <Link class="link text-white bg-red-600 p-2 border-none" as="button" method="put" :href="`${ student.id } /abandon`">Marquer abandonné(e)</Link>
+                        <div class="mt-4" v-if="useAuth().isUniversity.value">
+                            <Link class="p-2 text-white bg-red-600 border-none link" as="button" method="put" :href="`${ student.id } /abandon`">Marquer abandonné(e)</Link>
                         </div>
 
                         <RegistrationList v-if="student.registrations.length" :registrations="student.registrations" />
