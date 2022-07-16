@@ -16,7 +16,7 @@ class RegistrationResource extends JsonResource
     {
         return [
             'level' => $this->level,
-            'hasAbandoned' => $this->hasAbandoned,
+            'hasAbandoned' => $this->has_abandoned,
             'university' => UniversityResource::make($this->whenLoaded('university')),
             'faculty' => $this->whenLoaded('faculty'),
             'institute' => $this->whenLoaded('institute'),

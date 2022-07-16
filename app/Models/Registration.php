@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\LevelType;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Concerns\HasRegistrationRelations;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Registration extends Model
@@ -29,9 +28,4 @@ class Registration extends Model
         'level' => LevelType::class,
         'has_abandoned' => 'boolean'
     ];
-
-    function hasAbondoned(): Attribute
-    {
-        return Attribute::make(fn ($value) => $value);
-    }
 }
