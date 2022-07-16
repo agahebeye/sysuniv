@@ -14,7 +14,7 @@ class VerifyStudentController
         if (!$student) {
             return response()->json([
                 'data' => null,
-                'message' => "Oops! L'étudiant avec ce numéro matricule n'existe pas."
+                'message' => "L'étudiant avec ce numéro matricule n'existe pas."
             ]);
         }
 

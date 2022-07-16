@@ -20,7 +20,6 @@ const props = defineProps<{
 
         <div>
 
-
             <h1>Etudiants</h1>
 
             <Link v-if="!isUniversity" href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
