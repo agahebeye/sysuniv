@@ -57,8 +57,7 @@ class StudentController
 
         return Inertia::render('students/show', [
             'student' => $studentResource,
-            'latestRegistration' => $latestRegistration = $student->latestRegistration?->load('result'),
-            'hasAbandoned' => $latestRegistration?->hasAbandoned
+            'latestRegistration' =>  $student->latestRegistration?->load('result')->toArray(),
         ]);
     }
 

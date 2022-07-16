@@ -7,9 +7,10 @@ import RegistrationList from './components/RegistrationList.vue';
 
 const props = defineProps<{
     student: any,
-    lastestRegistration?: any,
-    hasAbandoned?: boolean
+    latestRegistration?: any,
 }>();
+
+console.log(props.latestRegistration)
 
 const avatarPlaceHolder = computed(() =>
     props.student.gender == 'Masculin' ? 'man_placeholder.png'
@@ -44,11 +45,11 @@ const avatarPlaceHolder = computed(() =>
                             <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                         </div>
 
-                        <div class="mt-4" v-if="useAuth().isUniversity.value">
+                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.result">
                             <Link class="link" :href="`${ student.id } /results/create`">Ajouter le resultat de cette année</Link>
                         </div>
 
-                        <div class="mt-4" v-if="useAuth().isUniversity.value">
+                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.hasAbandoned">
                             <Link class="p-2 text-white bg-red-600 border-none link" as="button" method="put" :href="`${ student.id } /abandon`">Marquer abandonné(e)</Link>
                         </div>
 
