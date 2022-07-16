@@ -25,7 +25,7 @@ defineProps({
                 <th scope="col" class="py-2 pl-2">
                     faculté/institut
                 </th>
-                <th scope="col" class="py-2 pl-2">
+                <th scope="col" class="py-2">
                     departement
                 </th>
                 <th scope="col" class="py-2 pl-2">
@@ -35,21 +35,22 @@ defineProps({
                     inscrit le
                 </th>
                 <th scope="col" class="py-2 pl-2">
-                    état d'inscription
+                    mention
                 </th>
             </tr>
         </thead>
 
         <tbody>
             <tr v-for="registration in registrations" class="text-sm cursor-pointer hover:bg-gray-400 odd:bg-white even:bg-gray-200">
-            {{ registration }}
                 <td class="py-1 pl-2">{{ registration.university.name }}</td>
                 <td class="py-1 pl-2">{{ registration.faculty.name }}</td>
-                <td class="py-1 pl-2">{{ registration.department.name }}</td>
+                <td class="py-1">{{ registration.department.name }}</td>
                 <td class="py-1 pl-2">{{ levelList[registration.level] }}</td>
                 <td class="py-1 pl-2">{{ registration.created_at }}</td>
                 <td class="py-1 pl-2 text-center">
-                    <span class="p-0.5 text-white font-bold text-xs" :class="resultColors[registration.resultStatus]">{{ registration.resultStatus }}</span>
+                    <span class="p-0.5 text-white font-bold text-xs" :class="resultColors[registration.result ? registration.result.mention : 'En suspens']">
+                        {{ registration.result ? registration.result.mention : 'En suspens' }}
+                    </span>
                 </td>
             </tr>
         </tbody>
