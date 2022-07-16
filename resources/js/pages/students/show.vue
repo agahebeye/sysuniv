@@ -10,8 +10,6 @@ const props = defineProps<{
     latestRegistration?: any,
 }>();
 
-console.log(props.latestRegistration)
-
 const avatarPlaceHolder = computed(() =>
     props.student.gender == 'Masculin' ? 'man_placeholder.png'
         : 'woman_placeholder.png'
@@ -45,11 +43,11 @@ const avatarPlaceHolder = computed(() =>
                             <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                         </div>
 
-                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.result">
+                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.result && !latestRegistration.has_abandoned">
                             <Link class="link" :href="`${ student.id } /results/create`">Ajouter le resultat de cette année</Link>
                         </div>
 
-                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.hasAbandoned">
+                        <div class="mt-4" v-if="useAuth().isUniversity.value && !latestRegistration.has_abandoned">
                             <Link class="p-2 text-white bg-red-600 border-none link" as="button" method="put" :href="`${ student.id } /abandon`">Marquer abandonné(e)</Link>
                         </div>
 
