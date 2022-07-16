@@ -13,7 +13,7 @@ function takeme(url: string) {
 </script>
 
 <template>
-    <table class="w-[680px]">
+    <table class="w-full">
         <thead class="text-xs text-gray-700 uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
             <tr class="text-left text-white">
                 <th scope="col" class="pl-2 py-2">

@@ -29,7 +29,7 @@ const props = defineProps<{
             <h2 class="mt-10 mb-8" v-if="students.data.length"><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
             <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a été enregistré'}` }}</h2>
 
-            <div class="mb-2 pagination" v-if="students.data.length > 1">
+            <div class="mb-2 pagination" v-if="students.data.length > 15">
                 <Component
                     :is="link.url ? Link : 'span'"
                     v-for="link in students.meta.links"
