@@ -30,11 +30,11 @@ const sizeStyles = {
         </Link>
         <Link v-if="isAdmin || isEmployee" href="/universities">
         <UniversityIcon :class="sizeStyles[size]"/>
-        <span>universites</span>
+        <span>universités</span>
         </Link>
         <Link href="/faculties">
         <FacultyIcon :class="sizeStyles[size]"/>
-        <span>facultes</span>
+        <span>facultés</span>
         </Link>
         <Link href="/institutes">
         <InstituteIcon :class="sizeStyles[size]"/>
@@ -42,7 +42,7 @@ const sizeStyles = {
         </Link>
         <Link href="/departments">
         <DepartmentIcon class="fill-white" :class="sizeStyles[size]"/>
-        <span>Departements</span>
+        <span>Départements</span>
         </Link>
         <Link href="/students">
         <StudentIcon :class="sizeStyles[size]"/>
