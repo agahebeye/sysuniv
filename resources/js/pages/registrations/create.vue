@@ -79,10 +79,10 @@ const props = defineProps<{
         <div>
             <h1>Inscrire nouvel étudiant</h1>
 
-            <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
-
             <form @submit.prevent="EnrollStudent" class="w-max">
-                <div v-if="!isLoading && form.student" class="">
+                <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
+
+                <div v-if="!isLoading && form.errors.length < 1" class="">
                     <div class="flex items-center mb-4 space-x-2 text-sm font-bold" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-700': form.student?.data }">
                         <Component
                             :is="form.student?.data ? CheckIcon : ExclamationIcon"
@@ -90,7 +90,7 @@ const props = defineProps<{
                         <span>{{ form.student?.message }}</span>
                     </div>
                 </div>
-                
+
                 <div class="mb-4 max-w-fit">
                     <label :class="{ 'hidden': form.student?.data }">Taper le numéro matricule d'un étudiat puis appuyer sur <strong>&lt;&lt;Enter&gt;&gt;</strong></label>
 
