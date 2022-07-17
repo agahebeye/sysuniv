@@ -21,11 +21,11 @@ const isMenuHidden = ref(true);
                 <MenuAlt1Icon class="w-8 h-8 mr-8 cursor-pointer" @click="isMenuHidden = false" />
             </template>
 
-            <div class="relative mt-4 text-lg w-max">
+            <div class="relative mt-4 text-2xl w-max">
                 <div class="">
                     {{ $page.props.auth['user'].name }}
                 </div>
-                <div class="-rotate-[17deg] leading-3 py-1 px-3 bg-gray-600 absolute text-[0.6rem] font-bold translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
+                <div class="leading-3 py-1 px-1 bg-gray-600 absolute text-[0.5rem] font-bold translate-x-6 right-0 inline text-white">{{ $page.props.auth['user'].role }}</div>
             </div>
         </AppHeader>
 
