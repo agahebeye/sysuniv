@@ -46,13 +46,10 @@ const avatarPlaceHolder = computed(() =>
                         <template v-if="useAuth().isUniversity.value">
                             <div class="mt-4" v-if="!latestRegistration.result && !latestRegistration.has_abandoned">
                                 <Link class="link" :href="`${student.id} /results/create`">Ajouter le resultat de cette année</Link>
+                                <Link class="p-2 text-white bg-red-600 border-noke link" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
                             </div>
 
-                            <div class="mt-4" v-if="!latestRegistration.has_abandoned">
-                                <Link class="p-2 text-white bg-red-600 border-none link" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
-                            </div>
-
-                            <div class="mt-4" v-else>
+                            <div class="mt-4" v-if="!latestRegistration.result && latestRegistration.has_abandoned">
                                 <Link class="text-gray-800 link" as="button" method="put" :href="`${student.id}/abandon`">Marquer pas abandonné(e)</Link>
                             </div>
                         </template>

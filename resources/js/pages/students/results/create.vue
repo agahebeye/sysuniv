@@ -49,7 +49,7 @@ defineProps<{
                             <input type="radio" name="mention" value="Réussi" class="radio" v-model="form.mention"><span>Réussi</span>
                         </div>
                         <div class="space-x-2">
-                            <input type="radio" name="mention" value="Réussi avec complément(s)" class="radio" v-model="form.mention"><span>Réussi avec complément(s)</span>
+                            <input type="radio" name="mention" value="Réussi" class="radio" v-model="form.mention"><span>Réussi avec complément(s)</span>
                         </div>
                         <div class="space-x-2">
                             <input type="radio" name="mention" value="Echoué" class="radio" v-model="form.mention"><span>Echoué</span>

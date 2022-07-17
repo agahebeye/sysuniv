@@ -41,14 +41,17 @@ defineProps({
         </thead>
 
         <tbody>
-            <tr v-for="registration in registrations" class="text-sm cursor-pointer hover:bg-gray-400 odd:bg-white even:bg-gray-200">
+            <tr v-for="registration in registrations" class="text-sm cursor-pointer odd:bg-white even:bg-gray-200">
                 <td class="py-1">{{ registration.university.name }}</td>
                 <td class="py-1 pl-2">{{ registration.faculty.name }}</td>
                 <td class="py-1 pl-2">{{ registration.department.name }}</td>
                 <td class="py-1 pl-2">{{ levelList[registration.level] }}</td>
                 <td class="py-1 pl-2">{{ registration.created_at }}</td>
                 <td class="py-1 pl-2 text-xs text-center">
-                    <span class="p-0.5 text-white font-bold" v-if="!registration.hasAbandoned" :class="resultColors[registration.result ? registration.result.mention : 'En suspens']">
+                    <span class="font-bold text-gray-800 link" v-if="registration.result">
+                        bulletin
+                    </span>
+                    <span class="p-0.5 text-white font-bold" v-else-if="!registration.hasAbandoned" :class="resultColors[registration.result ? registration.result.mention : 'En suspens']">
                         {{ registration.result ? registration.result.mention : 'En suspens' }}
                     </span>
                     <span :class="resultColors['Abandonné']" class="text-white p-0.5 font-bold" v-else>
