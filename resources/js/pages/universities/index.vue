@@ -14,13 +14,13 @@ defineProps<{
 <template>
 
     <Head>
-        <title>Universités - Ministère d'éducation du Burundi</title>
+        <title>Universités - Ministère d'éducation au Burundi</title>
     </Head>
 
     <DefaultLayout>
 
         <div>
-            <h1>Universitées</h1>
+            <h1>Universités</h1>
 
             <Link v-if="isAdmin || isEmployee" href="/universities/create" class="link">Créer une nouvelle université</Link>
 

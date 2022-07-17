@@ -18,7 +18,6 @@ const avatarPlaceHolder = computed(() =>
 </script>
 
 <template>
-
     <Head>
         <title>Etudiant {{ student.firstname }} - Ministère d'éducation au Burundi</title>
     </Head>

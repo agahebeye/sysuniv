@@ -7,7 +7,7 @@ import AppHeader from '~/components/shared/AppHeader.vue';
 import { XIcon, MenuAlt1Icon } from '@heroicons/vue/outline';
 
 import { useAuth } from '~/composables/auth';
-const homeLink = computed(() => useAuth().isUniversity.value ? '/registrations/create' : '/')
+const homeLink = computed(() => useAuth().isUniversity.value ? '/registrations/create' : '/universities')
 
 const isMenuHidden = ref(true);
 

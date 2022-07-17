@@ -18,7 +18,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/';
+    public const HOME = '/universities';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -52,13 +52,13 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
             foreach (File::allFiles(base_path('routes')) as $file) {
 
-                if (str_contains($file, 'channels') || str_contains($file, 'console'))
+                if (str_contains((string) $file, 'channels') || str_contains((string) $file, 'console'))
                     continue;
 
-                if (str_contains($file, 'api'))
+                if (str_contains((string) $file, 'api'))
                     Route::middleware('api')->prefix('api')->group($file);
 
-                if (str_contains($file, 'web'))
+                if (str_contains((string) $file, 'web'))
                     Route::middleware('web')->group($file);
             }
         });

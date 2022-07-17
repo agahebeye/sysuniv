@@ -20,15 +20,15 @@ const form = useForm({
             <title>Reset password link - Sysuniv</title>
         </Head>
 
-        <div class="px-6 mt-10">
-            <h1>Demande de réinitialisation de mot de passe</h1>
+        <div class="px-6 mt-10 w-max">
+            <h1 class="max-w-fit">Demande de réinitialisation de mot de passe</h1>
 
 
             <div class="errors" v-if="form.hasErrors">
                 <div v-for="error in form.errors">{{ error }}</div>
             </div>
 
-            <form @submit.prevent="form.post('/request-password-reset')" class="w-max">
+            <form @submit.prevent="form.post('/request-password-reset')" class="">
                 <p class="max-w-fit">
                     Informez-nous de votre email et on vous enverra le lien qui vous dirigera vers la page de réinitialisation de mot de passe
                 </p>
