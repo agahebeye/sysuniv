@@ -4,10 +4,10 @@ import { Link } from '@inertiajs/inertia-vue3';
 import LinkList from '~/components/shared/LinkList.vue';
 import SuccessAlert from '~/components/flash/SuccessAlert.vue';
 import AppHeader from '~/components/shared/AppHeader.vue';
-import {XIcon, MenuAlt1Icon} from '@heroicons/vue/outline';
+import { XIcon, MenuAlt1Icon } from '@heroicons/vue/outline';
 
-import {useAuth} from '~/composables/auth';
-const homeLink = computed(() => useAuth().isUniversity.value ? '/registrations/create': '/' )
+import { useAuth } from '~/composables/auth';
+const homeLink = computed(() => useAuth().isUniversity.value ? '/registrations/create' : '/')
 
 const isMenuHidden = ref(true);
 
@@ -20,7 +20,7 @@ const isMenuHidden = ref(true);
             <template #hamburger>
                 <MenuAlt1Icon class="w-8 h-8 mr-8 cursor-pointer" @click="isMenuHidden = false" />
             </template>
-            
+
             <div class="relative mt-4 text-lg w-max">
                 <div class="">
                     {{ $page.props.auth['user'].name }}
@@ -30,10 +30,13 @@ const isMenuHidden = ref(true);
         </AppHeader>
 
         <div class="px-6 mt-10">
-            <nav :class="{'visible': !isMenuHidden, 'invisible': isMenuHidden}">
-                <XIcon class="absolute w-10 h-10 cursor-pointer top-10 right-10" @click="isMenuHidden = true"/>
+            <nav :class="{ 'visible': !isMenuHidden, 'invisible': isMenuHidden }">
+                <XIcon class="absolute w-10 h-10 cursor-pointer top-10 right-10" @click="isMenuHidden = true" />
                 <LinkList size="sm" class="flex flex-col space-y-6">
-                    <Link href="/logout" method="post" as="button" class="font-bold text-red-600 w-max">Déconnexion</Link>
+                    <div class="flex flex-col pt-4 space-y-4 border-t border-gray-300">
+                        <Link href="/request-password-reset" v-if="useAuth().isUniversity.value" class="text-gray-800 border-b">Réinitialiser mot de passe</Link>
+                        <Link href="/logout" method="post" as="button" class="font-bold text-red-600 w-max">Déconnexion</Link>
+                    </div>
                 </LinkList>
             </nav>
 
