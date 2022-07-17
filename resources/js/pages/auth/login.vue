@@ -21,9 +21,10 @@ const form = useForm({
         <div class="px-6 mt-10">
             <h1>Connexion</h1>
 
-            <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
             <form @submit.prevent="form.post('/login')" class="w-max">
+                <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
+                
                 <div class="mb-4">
                     <label for="email">email</label>
                     <input type="email" id="email" v-model="form.email" class="input" autocomplete="off" autofocus required>
