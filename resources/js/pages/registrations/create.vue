@@ -14,9 +14,8 @@ import { CheckIcon, ExclamationIcon } from '@heroicons/vue/solid';
 const isLoading = ref(false);
 const field = ref(null);
 
-const registration_key = ref('');
-
-const form = useForm({
+const form = useForm('CreateRegistration', {
+    registration_key: '',
     student: null,
     level: null,
     faculty_id: null,
@@ -26,7 +25,6 @@ const form = useForm({
 })
 
 async function EnrollStudent() {
-
     form.transform(function (data) {
         const transformedData = {
             level: data.level,
@@ -42,18 +40,17 @@ async function EnrollStudent() {
 }
 
 async function verifyStudent() {
-    if (registration_key.value.length < 1)
+    if (form.registration_key.length < 1)
         return;
     try {
         isLoading.value = true;
         await axios.get("/sanctum/csrf-cookie");
         const { data } = await axios.get(
-            `/api/students/verify/${registration_key.value}`
+            `/api/students/verify/${form.registration_key}`
         );
 
         form.student = data;
         isLoading.value = false;
-        form.setError('student', 'how are you there');
 
     } catch (error) {
         isLoading.value = false;
@@ -99,7 +96,7 @@ const props = defineProps<{
                     <label :class="{ 'hidden': form.student?.data }">Taper le numéro matricule d'un étudiat puis appuyer sur <strong>&lt;&lt;Enter&gt;&gt;</strong></label>
 
                     <input type="text" class="mt-4 input"
-                        v-model="registration_key"
+                        v-model="form.registration_key"
                         @keydown.enter.prevent="verifyStudent"
                         :disabled="form.student?.data"
                         :class="{ 'border-none bg-gray-200': form.student?.data }"
