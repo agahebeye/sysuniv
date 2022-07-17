@@ -6,7 +6,7 @@ import AppHeader from '~/components/shared/AppHeader.vue';
     <div class="min-h-screen pb-10">
         <slot name="top_bar" />
         
-        <AppHeader class="" />
+        <AppHeader class="" asHome="true" />
 
         <main class="prose max-w-none">
             <slot />
