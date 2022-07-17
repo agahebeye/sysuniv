@@ -1,5 +1,6 @@
 <script setup>
-import {ref} from 'vue';
+import { ref } from 'vue';
+import { XIcon } from '@heroicons/vue/outline';
 
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
 const selectedReport = ref(null);
@@ -14,9 +15,10 @@ defineProps({
 </script>
 
 <template>
-    <div class="report-viewer">
+    <div class="report-viewer" v-if="selectedReport">
+        <XIcon class="absolute w-10 h-10 text-white cursor-pointer top-10 right-10" @click="selectedReport = null" />
+        <img :src="`/storage/${selectedReport.src}`" />
         <div class="bg-white">
-            Lorem.
         </div>
     </div>
     <h2 class="mt-8">Historique d'inscriptions</h2>
@@ -52,7 +54,7 @@ defineProps({
                 <td class="py-1 pl-2">{{ levelList[registration.level] }}</td>
                 <td class="py-1 pl-2">{{ registration.created_at }}</td>
                 <td class="py-1 pl-2 text-xs text-center">
-                    <span class="font-bold text-gray-800 link" v-if="registration.result">
+                    <span class="font-bold text-gray-800 link" v-if="registration.result" @click="selectedReport = registration.result.report">
                         bulletin
                     </span>
                     <span class="p-0.5 text-white font-bold" v-else-if="!registration.hasAbandoned" :class="resultColors[registration.result ? registration.result.mention : 'En suspens']">
