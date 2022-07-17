@@ -26,8 +26,7 @@ const form = useForm({
 })
 
 async function EnrollStudent() {
-    isLoading.value = true;
-
+    
     form.transform(function (data) {
         const transformedData = {
             level: data.level,
@@ -39,7 +38,7 @@ async function EnrollStudent() {
         return transformedData;
     }).post(`/registrations/${form.student.data.id}/store`);
 
-    isLoading.value = false;
+    form.student = null;
 }
 
 async function verifyStudent() {
@@ -81,8 +80,8 @@ const props = defineProps<{
 
             <form @submit.prevent="EnrollStudent" class="w-max">
                 <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
-
-                <div v-if="!isLoading && form.errors.length < 1" class="">
+                
+                <div v-if="!isLoading && form.student" class="">
                     <div class="flex items-center mb-4 space-x-2 text-sm font-bold" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-700': form.student?.data }">
                         <Component
                             :is="form.student?.data ? CheckIcon : ExclamationIcon"
