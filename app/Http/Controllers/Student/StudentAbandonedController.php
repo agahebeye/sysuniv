@@ -12,7 +12,14 @@ class StudentAbandonedController
     {
         $hasAbandoned = $student->latestRegistration->has_abandoned;
         $student->latestRegistration->update(['has_abandoned' => !$hasAbandoned]);
-        
-        return back()->with('success', "L'étudiant $student->lastname $student->firstname a été marqué(e) abandonné(e).");
+        $pas =  $hasAbandoned ? 'pas' : '';
+
+        return back()->with(
+            'success',
+            <<<SUCCESS
+                L'étudiant $student->lastname $student->firstname a été marqué(e)
+                $pas abandonné(e).
+             SUCCESS
+        );
     }
 }
