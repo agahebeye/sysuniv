@@ -7,7 +7,7 @@ import DefaultLayout from '~/layouts/default.vue';
 const { isAdmin, isEmployee } = useAuth();
 
 defineProps<{
-    universities: Array<User>
+    universities: Array<any>
 }>();
 </script>
 
@@ -27,11 +27,18 @@ defineProps<{
             <h2 class="mt-10 mb-8" v-if="universities.length"><strong>{{ universities.length }}</strong> université(s)</h2>
             <h2 class="mt-10 mb-8" v-else>Aucune université a été enregistrée</h2>
 
-            <ul class="flex flex-col flex-wrap list-disc list-inside">
-                <li v-for="university in universities" class="" data-test="university">
-                    <Link :href="`/universities/${university.id}`" class="no-underline hover:underline">{{ university.name }}</Link>
-                </li>
-            </ul>
+            <div class="grid grid-cols-2 gap-6">
+                <div v-for="university in universities" class="flex items-center space-x-3" data-test="university">
+                    <img class="w-10 max-w-full rounded-full"
+                        :src="`/storage/${university.photo?.src ?? 'avatars/university_placeholder.png'}`"
+                        :alt="university.name" />
+                    <div class="text-base">
+                        <Link :href="`/universities/${university.id}`">
+                        {{ university.name }}
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     </DefaultLayout>
 </template>

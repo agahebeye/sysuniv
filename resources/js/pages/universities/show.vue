@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import DefaultLayout from '~/layouts/default.vue'
+import UniversityPlaceholder from '~/../assets/icons/UniversityPlaceholder.svg';
 
 defineProps<{
     university: any
@@ -18,7 +19,8 @@ defineProps<{
             <Link :href="`/universities/${university.id}/edit`" class="link">Modifier cette université</Link>
 
             <div class="flex flex-col pb-10 mt-4">
-                <img :src="`/storage/${university.photo?.src ?? 'avatars/university_placeholder.png'}`" :alt="university.ame" class="w-48 h-48 rounded-full" />
+                <img v-if="university.photo" :src="`/storage/${university.photo?.src}`" :alt="university.ame" class="w-48 h-48 rounded-full" />
+                <UniversityPlaceholder class="w-56 h-56" />
 
                 <h1 class="mt-10">{{ university.name }}</h1>
 

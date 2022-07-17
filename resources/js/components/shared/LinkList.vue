@@ -25,27 +25,27 @@ const sizeStyles = {
 <template>
     <div>
         <Link v-if="isAdmin" href="/employees">
-        <EmployeeIcon :class="sizeStyles[size]"/>
-        <span>employees</span>
+        <EmployeeIcon class="w-8 h-8 text-black"/>
+        <span>employés</span>
         </Link>
         <Link v-if="isAdmin || isEmployee" href="/universities">
-        <UniversityIcon :class="sizeStyles[size]"/>
+        <UniversityIcon class="w-8 h-8 text-black"/>
         <span>universités</span>
         </Link>
         <Link href="/faculties">
-        <FacultyIcon :class="sizeStyles[size]"/>
+        <FacultyIcon class="w-8 h-8 text-black"/>
         <span>facultés</span>
         </Link>
         <Link href="/institutes">
-        <InstituteIcon :class="sizeStyles[size]"/>
+        <InstituteIcon class="w-8 h-8 text-black"/>
         <span>instituts</span>
         </Link>
         <Link href="/departments">
-        <DepartmentIcon class="fill-white" :class="sizeStyles[size]"/>
+        <DepartmentIcon class="w-8 h-8 text-black"/>
         <span>Départements</span>
         </Link>
         <Link href="/students">
-        <StudentIcon :class="sizeStyles[size]"/>
+        <StudentIcon class="w-8 h-8 text-black"/>
         <span>etudiants</span>
         </Link>
         <slot />

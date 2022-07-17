@@ -29,7 +29,7 @@ const isMenuHidden = ref(true);
             </div>
         </AppHeader>
 
-        <div class="px-6 lg:mt-20 mt-10 sm:px-14 md:max-w-[51rem] lg:flex mx-auto lg:gap-16 lg:px-0">
+        <div class="px-6 lg:mt-20 mt-10 sm:px-14 md:max-w-[51rem] lg:flex mx-auto lg:gap-24 lg:px-0">
             <nav class="nav lg:hidden" :class="{ 'visible': !isMenuHidden, 'invisible': isMenuHidden }">
                 <XIcon class="absolute w-10 h-10 cursor-pointer top-10 right-10 lg:hidden" @click="isMenuHidden = true" />
                 <LinkList size="sm" class="flex flex-col space-y-6">
