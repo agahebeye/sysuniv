@@ -1,5 +1,5 @@
 @component('mail::message')
-# Enregistrement de l'université
+# Demande de réinitialisation de mot de passe
 
 ## Bonjour,
 

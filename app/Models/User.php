@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserType;
-use App\Notifications\ResetPasswordNotification;
+use App\Notifications\PasswordResetRequested;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -74,7 +74,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $url = route('password.reset', ['token' => $token]);
-        $this->notify(new ResetPasswordNotification($url));
+        $this->notify(new PasswordResetRequested($url));
     }
 
     public function scopeUniversity(Builder $query)

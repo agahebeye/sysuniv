@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ResetPasswordNotification extends Notification
+class PasswordResetRequested extends Notification
 {
     use Queueable;
 
@@ -41,10 +41,9 @@ class ResetPasswordNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
-            ->subject("Enregistrement de l'université")
-            ->markdown('mail.university.password-requested', [
+            ->subject("Demande de réinitialisation de mot de passe")
+            ->markdown('mail.university.password-reset-requested', [
                 'url' => $this->url,
             ]);
     }
