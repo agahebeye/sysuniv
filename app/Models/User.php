@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserType;
+use App\Notifications\ResetPasswordNotification;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
@@ -68,6 +69,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return Attribute::make(
             get: fn ($value, $attributes): bool => $attributes['role'] == UserType::UNIVERSITY->value
         );
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = route('password.reset', ['token' => $token]);
+        $this->notify(new ResetPasswordNotification($url));
     }
 
     public function scopeUniversity(Builder $query)
