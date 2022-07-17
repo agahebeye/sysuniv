@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import DefaultLayout from '~/layouts/default.vue';
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm, Link } from "@inertiajs/inertia-vue3";
 import Multiselect from 'vue-multiselect';
 import axios from "axios";
 import { useAuth } from "~/composables/auth";
@@ -26,7 +26,7 @@ const form = useForm({
 })
 
 async function EnrollStudent() {
-    
+
     form.transform(function (data) {
         const transformedData = {
             level: data.level,
@@ -44,7 +44,6 @@ async function EnrollStudent() {
 async function verifyStudent() {
     if (registration_key.value.length < 1)
         return;
-
     try {
         isLoading.value = true;
         await axios.get("/sanctum/csrf-cookie");
@@ -54,6 +53,7 @@ async function verifyStudent() {
 
         form.student = data;
         isLoading.value = false;
+        form.setError('student', 'how are you there');
 
     } catch (error) {
         isLoading.value = false;
@@ -80,13 +80,18 @@ const props = defineProps<{
 
             <form @submit.prevent="EnrollStudent" class="w-max">
                 <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
-                
+
                 <div v-if="!isLoading && form.student" class="">
-                    <div class="flex items-center mb-4 space-x-2 text-sm font-bold" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-700': form.student?.data }">
+                    <div class="flex items-center mb-4 space-x-2 text-sm font-medium" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-800': form.student?.data }">
                         <Component
                             :is="form.student?.data ? CheckIcon : ExclamationIcon"
                             class="w-6 h-6" />
-                        <span>{{ form.student?.message }}</span>
+                        <div>
+                            <p>{{ form.student?.message }}</p>
+                            <p v-if="form.student?.data">
+                                <Link :href="`/students/${form.student?.data.id}`" class="italic font-bold border-b border-green-800">En savoir plus</Link>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
