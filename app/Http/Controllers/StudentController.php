@@ -50,9 +50,13 @@ class StudentController
     {
         $studentResource = StudentResource::make($student->load([
             'photo',
-            'registrations.university',
-            'registrations.faculty',
-            'registrations.institute', 'registrations.department', 'registrations.result',
+            'registrations' => [
+                'university',
+                'faculty',
+                'institute',
+                'department',
+                'result' => ['report']
+            ]
         ]));
 
         return Inertia::render('students/show', [

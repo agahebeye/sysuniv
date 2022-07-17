@@ -50,11 +50,11 @@ const isMenuHidden = ref(true);
 <style scoped>
 header {
     @apply px-6 w-full py-7 flex items-center space-x-2 text-sm sticky top-0;
-    @apply bg-white z-50;
+    @apply bg-white z-20;
 }
 
 nav {
-    @apply fixed top-0 w-full min-h-screen bg-gray-200 z-50 left-0;
+    @apply fixed top-0 w-full min-h-screen bg-gray-200 z-30 left-0;
     @apply flex justify-center items-center text-3xl font-bold;
 }
 </style>

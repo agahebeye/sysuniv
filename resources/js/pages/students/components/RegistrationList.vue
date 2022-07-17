@@ -1,12 +1,11 @@
 <script setup>
+import {ref} from 'vue';
 
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
+const selectedReport = ref(null);
 const resultColors = {
     'Abandonné': 'bg-gray-700',
     'En suspens': 'bg-blue-700',
-    'Echoué': 'bg-red-700',
-    'Réussi': 'bg-teal-700',
-    'Réussi avec complément(s)': 'bg-teal-700',
 }
 
 defineProps({
@@ -15,6 +14,11 @@ defineProps({
 </script>
 
 <template>
+    <div class="report-viewer">
+        <div class="bg-white">
+            Lorem.
+        </div>
+    </div>
     <h2 class="mt-8">Historique d'inscriptions</h2>
     <table class="">
         <thead class="text-xs text-gray-700 uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
@@ -63,3 +67,10 @@ defineProps({
 
     </table>
 </template>
+
+<style scoped>
+.report-viewer {
+    @apply fixed top-0 bottom-0 left-0 right-0 z-40 min-h-screen bg-black/80;
+    @apply flex justify-center items-center;
+}
+</style>
