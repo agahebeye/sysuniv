@@ -29,9 +29,9 @@ const isMenuHidden = ref(true);
             </div>
         </AppHeader>
 
-        <div class="px-6 mt-10">
-            <nav :class="{ 'visible': !isMenuHidden, 'invisible': isMenuHidden }">
-                <XIcon class="absolute w-10 h-10 cursor-pointer top-10 right-10" @click="isMenuHidden = true" />
+        <div class="px-6 mx-auto mt-10 sm:max-w-2xl md:flex md:justify-start md:bg-gray-300">
+            <nav id="" :class="{ 'visible': !isMenuHidden, 'invisible': isMenuHidden }">
+                <XIcon class="absolute w-10 h-10 cursor-pointer top-10 right-10 md:hidden" @click="isMenuHidden = true" />
                 <LinkList size="sm" class="flex flex-col space-y-6">
                     <div class="flex flex-col pt-4 space-y-4 border-t border-gray-300">
                         <Link href="/request-password-reset" v-if="useAuth().isUniversity.value" class="text-gray-800 border-b">Réinitialiser mot de passe</Link>
@@ -40,7 +40,16 @@ const isMenuHidden = ref(true);
                 </LinkList>
             </nav>
 
-            <main class="">
+            <nav class="invisible md:visible">
+                <LinkList size="sm" class="flex flex-col space-y-6">
+                    <div class="flex flex-col pt-4 space-y-4 border-t border-gray-300">
+                        <Link href="/request-password-reset" v-if="useAuth().isUniversity.value" class="text-gray-800 border-b">Réinitialiser mot de passe</Link>
+                        <Link href="/logout" method="post" as="button" class="font-bold text-red-600 w-max">Déconnexion</Link>
+                    </div>
+                </LinkList>
+            </nav>
+
+            <main class="w">
                 <slot></slot>
             </main>
         </div>
@@ -56,5 +65,21 @@ header {
 nav {
     @apply fixed top-0 w-full min-h-screen bg-gray-200 z-30 left-0;
     @apply flex justify-center items-center text-3xl font-bold;
+}
+
+@screen sm {
+    header {
+        @apply max-w-2xl mx-auto;
+    }
+}
+
+@screen md {
+    header {
+        @apply max-w-4xl mx-auto;
+    }
+
+    nav {
+        @apply relative bg-white min-h-full;
+    }
 }
 </style>
