@@ -48,7 +48,7 @@ const avatarPlaceHolder = computed(() =>
                                 <Link class="link" :href="`${student.id} /results/create`">Ajouter le resultat de cette année</Link>
                             </div>
 
-                            <div class="mt-4" v-else-if="!latestRegistration.has_abandoned">
+                            <div class="mt-4" v-if="!latestRegistration.has_abandoned">
                                 <Link class="p-2 text-white bg-red-600 border-none link" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
                             </div>
 
