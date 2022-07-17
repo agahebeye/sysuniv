@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -60,6 +61,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setPasswordAttribute(string $value): void
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function isUniversity(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes): bool => $attributes['role'] == UserType::UNIVERSITY->value
+        );
     }
 
     public function scopeUniversity(Builder $query)

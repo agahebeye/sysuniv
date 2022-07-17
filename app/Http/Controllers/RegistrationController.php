@@ -15,6 +15,7 @@ class RegistrationController
 {
     public function create(): \Inertia\Response
     {
+        dump(request()->user()->isUniversity);
         return Inertia::render('registrations/create', [
             'faculties' => Faculty::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
             'institutes' => Institute::query()->whereRelation('universities', 'users.id', auth()->id())->get(['id', 'name']),
