@@ -33,7 +33,9 @@ class AuthenticatedUserController
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return $request->user()->isUniversity
+            ? redirect()->intended(route('registrations.create'))
+            : redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
