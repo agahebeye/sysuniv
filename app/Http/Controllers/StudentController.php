@@ -11,6 +11,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Resources\StudentResource;
+use App\Http\Resources\UniversityResource;
+use App\Models\User;
 
 class StudentController
 {
@@ -23,7 +25,8 @@ class StudentController
             )->paginate(15);
 
         return Inertia::render('students/index', [
-            'students' => StudentResource::collection($students)
+            'students' => StudentResource::collection($students),
+            'universities' => UniversityResource::collection(User::university()->get())
         ]);
     }
 

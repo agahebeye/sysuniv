@@ -1,13 +1,18 @@
-<script lang="ts" setup>
+<script setup>
 import { Head, Link } from '@inertiajs/inertia-vue3';
 import DefaultLayout from '~/layouts/default.vue';
 import { useAuth } from '~/composables/auth';
 import StudentList from './components/StudentList.vue';
+import { FilterIcon } from '@heroicons/vue/solid';
+import FilterList from './components/FilterList.vue';
+import StudentPagination from './components/StudentPagination.vue';
+
 const { isUniversity } = useAuth();
 
-const props = defineProps<{
-    students: any
-}>();
+const props = defineProps({
+    students: Object,
+    universities: Array,
+});
 
 </script>
 
@@ -25,18 +30,14 @@ const props = defineProps<{
             <Link v-if="!isUniversity" href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
 
-            <h2 class="mt-10 mb-8" v-if="students.data.length"><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
+            <div v-if="students.data.length" class="flex flex-col mt-10 mb-8">
+                <h2 class=""><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
+               <FilterList :universities="universities" /> 
+            </div>
+
             <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a été enregistré'}` }}</h2>
 
-            <div class="mb-2 pagination" v-if="students.data.length > 15">
-                <Component
-                    :is="link.url ? Link : 'span'"
-                    v-for="link in students.meta.links"
-                    :href="link.url"
-                    v-html="link.label"
-                    class="px-1 text-xs no-underline"
-                    :class="{ 'text-black': link.url, 'font-bold': link.active }" />
-            </div>
+            <StudentPagination :data="students.data" :links="students?.meta.links" />
 
             <StudentList v-if="students.data.length" :students="students.data" />
         </div>
