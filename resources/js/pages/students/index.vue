@@ -32,12 +32,16 @@ const props = defineProps({
             <Link v-if="!isUniversity" href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
 
-            <div v-if="students.data.length" class="relative flex flex-wrap items-center mt-10 mb-8">
-                <h2 class="w-full"><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
+            <div v-if="students.data.length" class="relative flex flex-col mt-10 mb-8">
+                <h2 class=""><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
                 <div class="relative">
                     <div @click="isFiltered = !isFiltered" class="flex mt-2 space-x-2 text-sm uppercase cursor-pointer">
                         <AdjustmentsIcon class="w-5 h-5" />
                         <span>filters</span>
+                    </div>
+                    
+                    <div class="absolute right-0 top-2" v-if="!isFiltered">
+                        <input id="search" class="max-w-[15rem] input py-1" placeholder="Rechercher..." />
                     </div>
 
                     <div v-if="isFiltered"
@@ -94,10 +98,6 @@ const props = defineProps({
                         </div>
                         <!--sort-->
                     </div>
-                </div>
-
-                <div class="mt-2 ml-auto">
-                    <input id="search" class="max-w-[15rem] input py-1" placeholder="Rechercher..." />
                 </div>
 
             </div>
