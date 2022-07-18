@@ -3,13 +3,18 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import DefaultLayout from '~/layouts/default.vue';
 import { useAuth } from '~/composables/auth';
 import StudentList from './components/StudentList.vue';
-import { FilterIcon } from '@heroicons/vue/solid';
 import StudentPagination from './components/StudentPagination.vue';
 import { AdjustmentsIcon } from '@heroicons/vue/solid';
-import { ref } from 'vue';
+import { ref, watch, watchEffect } from 'vue';
 
 const { isUniversity } = useAuth();
 const isFiltered = ref(false);
+const filters = ref({});
+
+function applyFilter() {
+    console.log(filters.value);
+}
+
 
 const props = defineProps({
     students: Object,
@@ -23,6 +28,7 @@ const props = defineProps({
     <Head>
         <title>Etudiants - Ministère d'éducation au Burundi</title>
     </Head>
+    
     <DefaultLayout>
 
         <div>
@@ -49,7 +55,7 @@ const props = defineProps({
                         <!--filters-->
                         <div class="flex flex-col ">
                             <label class="mb-2 font-bold">Université</label>
-                            <select class="outline-none ">
+                            <select class="outline-none " @change="filters = $event.target.value">
                                 <option v-for="university in universities">{{ university.name }}</option>
                             </select>
                         </div>
