@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->get(
     '/',
     fn () =>
-    request()->user()->isUniveristy
+    request()->user()->isUniversity
         ? to_route('registrations.create')
         : redirect(RouteServiceProvider::HOME)
 );

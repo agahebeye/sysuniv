@@ -7,10 +7,6 @@ import AppHeader from '~/components/shared/AppHeader.vue';
         <slot name="top_bar" />
 
         <AppHeader class="">
-            <template #hamburger>
-                <MenuAlt1Icon class="w-8 h-8 mr-8 cursor-pointer" @click="isMenuHidden = false" />
-            </template>
-
             <div class="relative mt-4 text-2xl w-max" v-if="$page.props.auth?.user">
                 <div class="">
                     {{ $page.props.auth.user.name }}
