@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Student;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,9 +37,7 @@ class StudentController
     public function store(StoreStudentRequest $request): \Illuminate\Http\RedirectResponse | array
     {
         $data = $request->validated();
-
         $student = DB::transaction(fn () => Student::query()->create($data));
-
         $request->session()->flash(
             'success',
             "Le numéro matricule de {$student->firstname} uniquement généré est:  <strong>$student->registration_number</strong>"
@@ -78,9 +75,7 @@ class StudentController
     public function update(StoreStudentRequest $request, Student $student)
     {
         $data = $request->validated();
-
         $student->update($data);
-
         return redirect(RouteServiceProvider::HOME);
     }
 }
