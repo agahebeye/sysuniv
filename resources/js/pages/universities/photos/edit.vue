@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import DefaultLayout from '~/layouts/default.vue';
 import { User } from '~/types/users';
 
 import ValidationErrorList from '~/components/shared/ValidationErrorList.vue';
@@ -23,23 +24,24 @@ function updateUniversityPhoto(e: any) {
 </script>
 
 <template>
-    <div class="max-w-sm">
 
-        <Head>
-            <title>Edit university photo - Sysuniv</title>
-        </Head>
+    <Head>
+        <title>Edit university photo - Sysuniv</title>
+    </Head>
+    <DefaultLayout>
+        <div class="w-max">
+            <h1 class="">Ajouter une photo de l'université</h1>
 
-        <h1>Ajouter une photo de l'université</h1>
+            <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
 
-        <ValidationErrorList v-if="form.hasErrors" :errors="form.errors" />
+            <form @submit.prevent="updateUniversityPhoto" method="post" enctype="multipart/form-data" class="mt-10">
+                <div class="mb-6">
+                    <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
+                </div>
 
-        <form @submit.prevent="updateUniversityPhoto" method="post" enctype="multipart/form-data" class="mt-10">
-            <div class="mb-6">
-                <input type="file" @input="form.photo = $event.target['files']['0']" required class="input-file">
-            </div>
+                <x-button :processing="form.processing" class="!m-0 button-sm">Ajouter photo</x-button>
 
-            <x-button :processing="form.processing" class="!m-0 button-sm">Ajouter photo</x-button>
-
-        </form>
-    </div>
+            </form>
+        </div>
+    </DefaultLayout>
 </template>
