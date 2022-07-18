@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/inertia-vue3';
 import DefaultLayout from '~/layouts/default.vue';
 import { useAuth } from '~/composables/auth';
 import RegistrationList from './components/RegistrationList.vue';
+import { ExclamationCircleIcon } from '@heroicons/vue/solid';
 
 const props = defineProps<{
     student: any,
@@ -18,6 +19,7 @@ const avatarPlaceHolder = computed(() =>
 </script>
 
 <template>
+
     <Head>
         <title>Etudiant {{ student.firstname }} - Ministère d'éducation au Burundi</title>
     </Head>
@@ -54,6 +56,10 @@ const avatarPlaceHolder = computed(() =>
                         </template>
 
                         <RegistrationList v-if="student.registrations.length" :registrations="student.registrations" />
+                        <div class="flex mt-4 space-x-2 text-sm font-bold text-gray-600" v-else>
+                            <ExclamationCircleIcon class="w-5 h-5" />
+                            <p>Cet étudiant n'a fréquenté aucune université</p>
+                        </div>
                     </div>
                 </div>
             </div>
