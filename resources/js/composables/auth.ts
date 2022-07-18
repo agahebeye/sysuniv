@@ -2,14 +2,14 @@ import { usePage } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
 
 export function useAuth() {
-    const authedUser = usePage().props.value.auth['user'];
+    const auth = usePage().props.value.auth['user'];
 
-    const isAdmin = computed(() => authedUser.role === "ADMIN");
-    const isEmployee = computed(() => authedUser.role === "EMPLOYEE");
-    const isUniversity = computed(() => authedUser.role === "UNIVERSITY");
+    const isAdmin = computed(() => auth.role === "ADMIN");
+    const isEmployee = computed(() => auth.role === "EMPLOYEE");
+    const isUniversity = computed(() => auth.role === "UNIVERSITY");
 
     return {
-        authedUser,
+        auth,
         isAdmin,
         isEmployee,
         isUniversity,

@@ -6,6 +6,8 @@ import { useAuth } from '~/composables/auth';
 import RegistrationList from './components/RegistrationList.vue';
 import { ExclamationCircleIcon } from '@heroicons/vue/solid';
 
+const { isUniversity, auth } = useAuth();
+
 const props = defineProps<{
     student: any,
     latestRegistration?: any,
@@ -44,15 +46,15 @@ const avatarPlaceHolder = computed(() =>
                             <div class="text-sm">Né(e) {{ student.birthDate }}</div>
                         </div>
 
-                        <template v-if="useAuth().isUniversity.value">
-                            <div class="mt-4 space-y-4" v-if="latestRegistration && !latestRegistration?.result && !latestRegistration?.has_abandoned">
-                                <Link class="block link w-max" :href="`${student.id} /results/create`">Ajouter le resultat de cette année</Link>
-                                <Link class="p-2 text-white bg-red-600 bl border-noke link" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
-                            </div>
+                        <template v-if="isUniversity && auth.id === latestRegistration?.university_id">
+                                <div class="mt-4 space-y-4" v-if="latestRegistration && !latestRegistration?.result && !latestRegistration.has_abandoned">
+                                    <Link class="block link w-max" :href="`${student.id} /results/create`">Ajouter le resultat de cette année</Link>
+                                    <Link class="p-2 text-white bg-red-600 bl border-noke link" as="button" method="put" :href="`${student.id}/abandon`">Marquer abandonné(e)</Link>
+                                </div>
 
-                            <div class="mt-4" v-if="!latestRegistration?.result && latestRegistration?.has_abandoned">
-                                <Link class="text-gray-800 link" as="button" method="put" :href="`${student.id}/abandon`">Marquer pas abandonné(e)</Link>
-                            </div>
+                                <div class="mt-4" v-if="!latestRegistration?.result && latestRegistration?.has_abandoned">
+                                    <Link class="text-gray-800 link" as="button" method="put" :href="`${student.id}/abandon`">Marquer pas abandonné(e)</Link>
+                                </div>
                         </template>
 
                         <RegistrationList v-if="student.registrations.length" :registrations="student.registrations" />

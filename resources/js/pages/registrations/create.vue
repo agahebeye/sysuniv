@@ -21,7 +21,7 @@ const form = useForm('CreateRegistration', {
     faculty_id: null,
     institute_id: null,
     department_id: null,
-    university_id: useAuth().authedUser.id,
+    university_id: useAuth().auth.id,
 })
 
 async function EnrollStudent() {
