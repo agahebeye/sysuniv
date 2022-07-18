@@ -29,14 +29,12 @@ async function EnrollStudent() {
         const transformedData = {
             level: data.level,
             university_id: data.university_id,
-            department_id: data.department_id.id,
+            department_id: data.department_id?.id,
             [field.value == 0 ? 'faculty_id' : 'institute_id']: form.faculty_id?.id ?? form.institute_id?.id
         }
 
         return transformedData;
     }).post(`/registrations/${form.student.data.id}/store`);
-
-    form.student = null;
 }
 
 async function verifyStudent() {
@@ -76,7 +74,7 @@ const props = defineProps<{
             <h1>Inscrire nouvel étudiant</h1>
 
             <form @submit.prevent="EnrollStudent" class="w-max">
-                <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
+                <ValidationErrorList class="max-w-full" v-if="form.hasErrors" :errors="form.errors" />
 
                 <div v-if="!isLoading && form.student" class="">
                     <div class="flex items-center mb-4 space-x-2 text-sm font-medium" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-800': form.student?.data }">
@@ -92,7 +90,7 @@ const props = defineProps<{
                     </div>
                 </div>
 
-                <div class="mb-4 max-w-fit">
+                <div class="relative mb-4 max-w-fit">
                     <label :class="{ 'hidden': form.student?.data }">Taper le numéro matricule d'un étudiat puis appuyer sur <strong>&lt;&lt;Enter&gt;&gt;</strong></label>
 
                     <input type="text" class="mt-4 input"
@@ -130,14 +128,14 @@ const props = defineProps<{
                     </multiselect>
                 </div>
 
-                <div v-if="field" class="mb-4">
+                <div v-if="form.faculty_id || form.institute_id" class="mb-4">
                     <label for="departments">department</label>
                     <multiselect v-model="form.department_id" placeholder="select a department" :options="departments"
                         label="name" track-by="id">
                     </multiselect>
                 </div>
 
-                <div v-if="form.department_id" class="mb-4">
+                <div v-if="form.faculty_id || form.institute_id" class="mb-4">
                     <label for="level">choisir année</label>
                     <select name="level" id="level" v-model="form.level" class="bg-gray-50 border border-teal-300 text-gray-900 text-sm rounded-sm block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 outline-none dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="0">BAC I</option>

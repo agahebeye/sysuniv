@@ -79,7 +79,7 @@ class StoreRegistrationRequest extends FormRequest
         return [
             'level' => ['required', new Enum(LevelType::class)],
             'university_id' => ['required', 'numeric'],
-            'department_id' => ['required', 'numeric'],
+            'department_id' => ['nullable', 'numeric'],
             'faculty_id' => ['sometimes', 'numeric'],
             'institute_id' => ['sometimes', 'numeric'],
         ];
