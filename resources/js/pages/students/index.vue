@@ -6,6 +6,7 @@ import StudentList from './components/StudentList.vue';
 import { FilterIcon } from '@heroicons/vue/solid';
 import FilterList from './components/FilterList.vue';
 import StudentPagination from './components/StudentPagination.vue';
+import { AdjustmentsIcon } from '@heroicons/vue/solid';
 
 const { isUniversity } = useAuth();
 
@@ -30,12 +31,63 @@ const props = defineProps({
             <Link v-if="!isUniversity" href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
 
-            <div v-if="students.data.length" class="flex flex-col mt-10 mb-8">
+            <div v-if="students.data.length" class="relative flex flex-col mt-10 mb-8">
                 <h2 class=""><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
-               <FilterList :universities="universities" /> 
+                <div class="relative ">
+                    <div class="flex mt-2 space-x-2 text-sm uppercase cursor-pointer">
+                        <AdjustmentsIcon class="w-5 h-5" />
+                        <span>filters</span>
+                    </div>
+
+                    <div
+                        class="absolute z-10 grid w-full h-48 grid-cols-2 gap-6 p-6 mt-2 overflow-y-auto text-sm bg-white border shadow-lg">
+                        <!--filters-->
+                        <div class="flex flex-col w-max">
+                            <label class="mb-2 font-bold">Université</label>
+                            <select class="outline-none w-max">
+                                <option v-for="university in universities">{{ university.name }}</option>
+                            </select>
+                        </div>
+                        <!--universities-->
+                        <div class="">
+                            <label class="block mb-2 font-bold">sexe</label>
+                            <input type="radio" name="sexe" id=""><span>Féminin</span>
+                            <input type="radio" name="sexe" id=""><span>Masculin</span>
+                        </div>
+                        <!--sexe-->
+                        <div class="w-max">
+                            <label class="block mb-2 font-bold">Année</label>
+                            <div class="flex items-center space-x-2">
+                                <label for="">nouveaux inscripts</label>
+                                <input type="checkbox" name="new_students" id="">
+                            </div>
+                            <div>
+                                <label for="start_date">inscrits entre</label>
+                                <input type="text" id="start_date" class="w-10 mb-2 font-bold border-gray-300" />
+                                <label for="end_date">et</label>
+                                <input type="text" id="end_date" class="w-10 mb-2 font-bold border-gray-300" />
+                            </div>
+                          
+                        </div>
+                        <!--annee-->
+                          <div>
+                                <label class="block mb-2 font-bold" for="level">Niveau</label>
+                                <select name="level" id="level" class="outline-none">
+                                    <option value="0">BAC I</option>
+                                    <option value="1">BAC II</option>
+                                    <option value="2">BAC III</option>
+                                </select>
+                            </div>
+                        <div>
+                            <label for=""></label>
+                        </div>
+                        <!--sort-->
+                    </div>
+                </div>
+
             </div>
 
-            <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a été enregistré'}` }}</h2>
+            <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a étéenregistré'}` }}</h2>
 
             <StudentPagination :data="students.data" :links="students?.meta.links" />
 
@@ -43,3 +95,9 @@ const props = defineProps({
         </div>
     </DefaultLayout>
 </template>
+
+<style scoped>
+input {
+    @apply outline-none;
+}
+</style>
