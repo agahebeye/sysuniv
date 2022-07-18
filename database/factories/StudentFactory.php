@@ -21,7 +21,7 @@ class StudentFactory extends Factory
         return [
             'firstname' => $this->faker->firstName(),
             'lastname' => $this->faker->lastName(),
-            'gender' => GenderType::MALE->value,
+            'gender' => array('Masculin', 'Féminin')[rand(0,1)],
             'birth_date' => $this->faker->date(),
             'address' => $this->faker->address
         ];

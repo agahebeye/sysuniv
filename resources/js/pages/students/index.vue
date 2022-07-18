@@ -39,7 +39,9 @@ const props = defineProps({
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
 
             <div v-if="students.data.length" class="relative flex flex-col mt-10 mb-8">
-                <h2 class=""><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
+                <h2 v-if="students.meta.total > 15">De {{ students.meta.from}} à {{ students.meta.to }} sur {{ students.meta.total}} étudiants</h2>
+                <h2 class="" v-else><strong>{{ students.data.length }}</strong> étudiant(s)</h2>
+
                 <div class="relative">
                     <div @click="isFiltered = !isFiltered" class="flex mt-2 space-x-2 text-sm uppercase cursor-pointer">
                         <AdjustmentsIcon class="w-5 h-5" />
@@ -53,7 +55,7 @@ const props = defineProps({
                     <div v-if="isFiltered"
                         class="z-10 grid w-full min-h-full grid-cols-2 gap-6 p-6 mt-2 overflow-y-auto text-sm bg-white border shadow-lg">
                         <!--filters-->
-                        <div class="flex flex-col ">
+                        <div class="flex flex-col " v-if="!isUniversity">
                             <label class="mb-2 font-bold">Université</label>
                             <select class="outline-none " @change="filters = $event.target.value">
                                 <option v-for="university in universities">{{ university.name }}</option>
@@ -108,11 +110,11 @@ const props = defineProps({
 
             </div>
 
-            <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a étéenregistré'}` }}</h2>
-
-            <StudentPagination :data="students.data" :links="students?.meta.links" />
+            <h2 class="mt-10 mb-8" v-else>{{ `${isUniversity ? 'Aucun étudiant a été inscrit' : 'Aucun étudiant a été enregistré'}` }}</h2>
 
             <StudentList v-if="students.data.length" :students="students.data" />
+            
+            <StudentPagination v-if="students.meta.total > 15" :links="students?.meta.links" />
         </div>
     </DefaultLayout>
 </template>

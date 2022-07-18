@@ -1,12 +1,11 @@
 <script setup>
 import { Link } from '@inertiajs/inertia-vue3';
 defineProps({
-    data: Array,
     links: Array
 })
 </script>
 <template>
-    <div class="mb-2 pagination" v-if="data.length > 15">
+    <div class="flex justify-center mt-6">
         <Component
             :is="link.url ? Link : 'span'"
             v-for="link in links"
