@@ -42,11 +42,6 @@ class Student extends Model
         return $this->morphOne(Photo::class, 'photoable');
     }
 
-    public function documents()
-    {
-        return $this->morphMany(Photo::class, 'photoable');
-    }
-
     public function registrations()
     {
         return $this->hasMany(Registration::class);
