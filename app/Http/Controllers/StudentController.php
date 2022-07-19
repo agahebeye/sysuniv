@@ -7,25 +7,22 @@ use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\StudentResource;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Resources\UniversityResource;
+use Illuminate\Pipeline\Pipeline;
 
 class StudentController
 {
     public function index(): \Inertia\Response
     {
-        $students = QueryBuilder::for(Student::class)
-            ->allowedFilters(['gender', 'registrations.level'])
-            ->when(
-                auth()->user()->role == UserType::UNIVERSITY,
-                fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-            )
+        $students = Student::query()
+            ->filterByUniversity()
             ->paginate()
             ->withQueryString();
+
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students),

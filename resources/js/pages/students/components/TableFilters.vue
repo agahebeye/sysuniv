@@ -8,13 +8,6 @@ import axios from 'axios';
 
 const { isUniversity } = useAuth();
 
-defineProps({
-    universities: {
-        type: Array,
-        required: true
-    },
-})
-
 const isFiltered = ref(false);
 const universities = ref([]);
 
@@ -50,9 +43,9 @@ function applyFilters() {
 
 onMounted(async () => {
     await axios.get("/sanctum/csrf-cookie");
-    const { data } = await axios.get(`/api/universities/`);
+    const { data } = await axios.get(`/api/universities`);
 
-    console.log(data);
+    universities.value = data;
 });
 </script>
 

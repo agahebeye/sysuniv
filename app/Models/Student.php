@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\UserType;
 use App\Enums\GenderType;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Student extends Model
@@ -30,6 +32,13 @@ class Student extends Model
     protected static function booted()
     {
         static::creating(fn ($student) => $student->registration_number = strtoupper(Str::random(20)));
+        static::addGlobalScope('forUniversities', function (Builder $builder) {
+            $builder
+                ->when(
+                    auth()->user()->role == UserType::UNIVERSITY,
+                    fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+                );
+        });
     }
 
     public function getRouteKey()
@@ -37,6 +46,9 @@ class Student extends Model
         return  \Hashids::connection(get_called_class())->encode($this->getKey());
     }
 
+    /**
+     * Relationships
+     */
     public function photo()
     {
         return $this->morphOne(Photo::class, 'photoable');
@@ -70,5 +82,19 @@ class Student extends Model
     public function institutes()
     {
         return $this->belongsToMany(Institute::class, 'registrations')->wherePivotNotNull('institute_id');
+    }
+
+    /**
+     * Scope queryies
+     */
+     public function scopeFilterByUniversity($query)
+    {
+        $query->when(
+            request('filter') && array_key_exists('universities.name', request('filter')),
+            function (Builder $query) {
+                $query->whereRelation('universities', 'users.name', request('filter')['universities.name']);
+                // dump(request('filter')['universities.name']);
+            }
+        );
     }
 }

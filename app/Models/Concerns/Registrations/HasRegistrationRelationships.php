@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Concerns;
+namespace App\Models\Concerns\Registrations;
 
 use App\Models\User;
 use App\Models\Result;
@@ -9,7 +9,7 @@ use App\Models\Student;
 use App\Models\Institute;
 use App\Models\Department;
 
-trait HasRegistrationRelations
+trait HasRegistrationRelationships
 {
     public function student()
     {

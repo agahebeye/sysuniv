@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Enums\LevelType;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Concerns\HasRegistrationRelations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Concerns\Registrations\HasRegistrationRelationships;
 
 class Registration extends Model
 {
     use HasFactory;
-    use HasRegistrationRelations;
+    use HasRegistrationRelationships;
 
     const UPDATED_AT = null;
 
