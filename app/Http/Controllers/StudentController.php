@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
-use App\Enums\UserType;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\StudentResource;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Resources\UniversityResource;
-use Illuminate\Pipeline\Pipeline;
 
 class StudentController
 {

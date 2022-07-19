@@ -28,4 +28,37 @@ class Registration extends Model
         'level' => LevelType::class,
         'has_abandoned' => 'boolean'
     ];
+
+    /**
+     * Relationships
+     */
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function university()
+    {
+        return $this->belongsTo(User::class, 'university_id');
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class);
+    }
+
+    public function institute()
+    {
+        return $this->belongsTo(Institute::class);
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function result()
+    {
+        return $this->hasOne(Result::class);
+    }
 }
