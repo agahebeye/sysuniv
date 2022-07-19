@@ -8,7 +8,7 @@ const { isUniversity } = useAuth();
 const form = useForm({
     university: null,
     gender: null,
-    year: null,
+    freshmen: null,
     start_date: null,
     end_date: null,
     level: null,
@@ -24,6 +24,8 @@ function applyFilters() {
                 case 'university': filters['users.name'] = v; break;
                 case 'level': filters['registrations.level'] = v; break;
                 case 'mention': filters['results.level'] = v; break;
+                case 'start_date': filters['registrations.start_date'] = v; break;
+                case 'mention': filters['registrations.end_date'] = v; break;
                 default: filters[k] = v;
             }
         }
@@ -65,7 +67,7 @@ defineProps({
             <label class="block mb-2 font-bold">Année</label>
             <div class="flex items-center space-x-2">
                 <label for="">nouveaux inscripts</label>
-                <input type="checkbox" name="new_students" v-model="form.year" id="">
+                <input type="checkbox" name="new_students" v-model="form.freshmen" id="">
             </div>
 
             <div class="space-x-2">

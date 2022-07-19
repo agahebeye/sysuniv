@@ -17,11 +17,12 @@ class StudentController
 {
     public function index(): \Inertia\Response
     {
-        $results = Student::query()
-            ->when(request('filter')['gender'], fn ($query) => $query->where('gender', request('filter')['gender']))
-            ->get();
+        dump(request('filter'));
+        // $results = Student::query()
+        //     ->when(request('filter')['gender'], fn ($query) => $query->where('gender', request('filter')['gender']))
+        //     ->get();
 
-        dump($results->toArray());
+        // dump($results->toArray());
 
         $students = Student::query()
             ->when(
