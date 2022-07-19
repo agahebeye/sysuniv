@@ -87,14 +87,19 @@ class Student extends Model
     /**
      * Scope queryies
      */
-     public function scopeFilterByUniversity($query)
+    public function scopeFilterByUniversity($query)
     {
         $query->when(
-            request('filter') && array_key_exists('universities.name', request('filter')),
-            function (Builder $query) {
-                $query->whereRelation('universities', 'users.name', request('filter')['universities.name']);
-                // dump(request('filter')['universities.name']);
-            }
+            request()->has('filter') && array_key_exists('universities.name', request('filter')),
+            fn (Builder $query) => $query->whereRelation('universities', 'users.name', request('filter')['universities.name'])
+        );
+    }
+
+    public function scopeFilterByGender($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('gender', request('filter')),
+            fn ($query) => $query->whereGender(request('filter')['gender'])
         );
     }
 }
