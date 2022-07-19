@@ -1,9 +1,10 @@
 <script  setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 import { Inertia } from '@inertiajs/inertia';
 import { AdjustmentsIcon } from '@heroicons/vue/solid';
+import axios from 'axios';
 
 const { isUniversity } = useAuth();
 
@@ -15,6 +16,7 @@ defineProps({
 })
 
 const isFiltered = ref(false);
+const universities = ref([]);
 
 const form = useForm({
     university: null,
@@ -46,7 +48,12 @@ function applyFilters() {
     Inertia.get('/students', { filter: filters }, { preserveState: true });
 }
 
+onMounted(async () => {
+    await axios.get("/sanctum/csrf-cookie");
+    const { data } = await axios.get(`/api/universities/`);
 
+    console.log(data);
+});
 </script>
 
 <template>
