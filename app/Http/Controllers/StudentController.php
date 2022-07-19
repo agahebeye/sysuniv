@@ -2,28 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Enums\UserType;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Resources\StudentResource;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\StoreStudentRequest;
-use App\Http\Resources\StudentResource;
 use App\Http\Resources\UniversityResource;
-use App\Models\User;
 
 class StudentController
 {
     public function index(): \Inertia\Response
     {
-       
-        $students = Student::query()
+        $students = QueryBuilder::for(Student::class)
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-            )->paginate(15);
-
+            )
+            ->paginate();
+        // $students = Student::query()
+        //     ->when(
+        //         auth()->user()->role == UserType::UNIVERSITY,
+        //         fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+        //     )->paginate(15);
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students),
