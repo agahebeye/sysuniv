@@ -19,16 +19,13 @@ class StudentController
     public function index(): \Inertia\Response
     {
         $students = QueryBuilder::for(Student::class)
+            ->allowedFilters(['gender', 'registrations.level'])
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
             )
-            ->paginate();
-        // $students = Student::query()
-        //     ->when(
-        //         auth()->user()->role == UserType::UNIVERSITY,
-        //         fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-        //     )->paginate(15);
+            ->paginate()
+            ->withQueryString();
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students),
