@@ -17,11 +17,13 @@ class StudentController
 {
     public function index(): \Inertia\Response
     {
+        dump(request()->all());
         $students = Student::query()
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
                 fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
             )->paginate(15);
+
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students),
