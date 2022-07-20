@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use App\Enums\LevelType;
 use App\Enums\ResultStatus;
+use App\Models\Faculty;
+use App\Models\Institute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,21 +21,29 @@ class RegistrationFactory extends Factory
     public function definition()
     {
         return [
-            'result_status' => ResultStatus::PENDING->value
+            'university_id' => User::university()->inRandomOrder()->value('id'),
+            'department_id' => Department::inRandomOrder()->value('id'),
         ];
     }
 
-    public function failed()
+    public function inFaculty()
     {
         return $this->state(
-            fn (array $attributes) => ['result_status' => ResultStatus::FAILED]
+            fn (array $attributes) => ['faculty_id' => Faculty::inRandomOrder()->value('id')]
         );
     }
 
-    public function passed()
+    public function inInstitute()
     {
         return $this->state(
-            fn (array $attributes) => ['result_status' => ResultStatus::PASSED]
+            fn (array $attributes) => ['institute_id' => Institute::inRandomOrder()->value('id')]
+        );
+    }
+
+    public function abandoned()
+    {
+        return $this->state(
+            fn (array $attributes) => ['has_abandoned' => true]
         );
     }
 }
