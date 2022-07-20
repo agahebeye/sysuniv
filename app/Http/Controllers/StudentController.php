@@ -18,6 +18,7 @@ class StudentController
         $students = Student::query()
             ->filterByUniversity()
             ->filterByGender()
+            ->filterByLevel()
             ->paginate()
             ->withQueryString();
 

@@ -5,12 +5,10 @@ namespace App\Models;
 use App\Enums\LevelType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Concerns\Registrations\HasRegistrationRelationships;
 
 class Registration extends Model
 {
     use HasFactory;
-    use HasRegistrationRelationships;
 
     const UPDATED_AT = null;
 

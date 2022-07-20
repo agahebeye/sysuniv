@@ -85,7 +85,7 @@ class Student extends Model
     }
 
     /**
-     * Scope queryies
+     * Scope queries
      */
     public function scopeFilterByUniversity($query)
     {
@@ -100,6 +100,14 @@ class Student extends Model
         $query->when(
             request()->has('filter') && array_key_exists('gender', request('filter')),
             fn ($query) => $query->whereGender(request('filter')['gender'])
+        );
+    }
+
+    public function scopeFilterByLevel($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('registrations.level', request('filter')),
+            fn (Builder $query) => $query->whereRelation('registrations', 'level', request('filter')['registrations.level'])
         );
     }
 }
