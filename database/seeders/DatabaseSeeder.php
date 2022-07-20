@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             FacultySeeder::class,
             InstituteSeeder::class,
             DepartmentSeeder::class,
+            StudentSeeder::class
         ]);
     }
 }

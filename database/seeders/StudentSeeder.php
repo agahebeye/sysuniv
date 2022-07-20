@@ -14,6 +14,14 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Student::factory()->has(Registration::factory()->inFaculty()->abandoned())->create();
+        \App\Models\Student::factory()
+            ->has(Registration::factory()->inFaculty()->abandoned())
+            ->count(120)
+            ->create();
+
+        \App\Models\Student::factory()
+            ->has(Registration::factory()->inFaculty()->abandoned())
+            ->count(30)
+            ->create();
     }
 }
