@@ -29,8 +29,8 @@ defineProps<{
 
             <div class="grid grid-cols-2 gap-6">
                 <div v-for="university in universities" class="flex items-center space-x-3" data-test="university">
-                    <img v-if="university.photo" :src="`/storage/${university.photo?.src}`" :alt="university.ame" class="w-48 h-48 rounded-full" />
-                    <UniversityPlaceholder class="w-10 h-10" />
+                    <img v-if="university.photo" :src="`/storage/${university.photo?.src}`" :alt="university.ame" class="w-24 h-24 max-w-full" />
+                    <UniversityPlaceholder v-else class="w-10 h-10" />
                     <div class="text-base">
                         <Link :href="`/universities/${university.id}`">
                         {{ university.name }}

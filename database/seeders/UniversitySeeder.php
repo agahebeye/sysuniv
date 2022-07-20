@@ -3,12 +3,18 @@
 namespace Database\Seeders;
 
 use App\Enums\UserType;
+use App\Models\Department;
 use App\Models\Faculty;
+use App\Models\Institute;
+use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UniversitySeeder extends Seeder
 {
+    public function __construct()
+    {
+    }
     /**
      * Run the database seeds.
      *
@@ -55,24 +61,22 @@ class UniversitySeeder extends Seeder
                 'photo_url' => 'leardership-university.jpg'
             ]
         ])->each(function ($university) {
-            $faker =  \Faker\Factory::create();
 
-            $attributes = [
-                'name' => $university['name'],
-                'email' => $university['email'],
-                'password' => 'introuvablex02',
-                'role' => UserType::UNIVERSITY,
-                'website' => "https://www.$faker->domainName",
-                'address' => $faker->streetAddress(),
-            ];
+            $photo_url = 'avatars/universities/' . $university['photo_url'];
+            $university = $this->createUniversity($university);
+            $university->photo()->create(['src' => $photo_url]);
+            
+            $university->faculties()->attach(
+                $this->createUniversityRelationshipIds(Faculty::class)
+            );
 
-            $university = User::query()->create($attributes);
+            $university->institutes()->attach(
+                $this->createUniversityRelationshipIds(Institute::class)
+            );
 
-            $university->photos()->create(['src' => "/storage/avatars/universities/{$university['photo_url']}"]);
-
-            $university->faculties()->attach([]);
-            $university->institutes()->attach([]);
-            $university->departments()->attach([]);
+            $university->departments()->attach(
+                $this->createUniversityRelationshipIds(Department::class)
+            );
         });
     }
 
@@ -80,10 +84,25 @@ class UniversitySeeder extends Seeder
      * create the university model
      * @return \App\Models\User
      */
-    private function createUniversity($attributes)
+    private function createUniversity($university)
     {
+        $attributes = [
+            'name' => $university['name'],
+            'email' => $university['email'],
+            'password' => 'introuvablex02',
+            'role' => UserType::UNIVERSITY,
+            'website' => 'https://www.' . fake()->domainName(),
+            'address' => fake()->streetAddress(),
+        ];
+
+        return User::query()->create($attributes);;
     }
 
+    /**
+     * @param string $class
+     * 
+     * @return array
+     */
     private function createUniversityRelationshipIds(string $class): array
     {
         return app($class)::inRandomOrder()

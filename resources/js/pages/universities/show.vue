@@ -19,8 +19,8 @@ defineProps<{
             <Link :href="`/universities/${university.id}/edit`" class="link">Modifier cette université</Link>
 
             <div class="flex flex-col pb-10 mt-4">
-                <img v-if="university.photo" :src="`/storage/${university.photo?.src}`" :alt="university.ame" class="w-48 h-48 rounded-full" />
-                <UniversityPlaceholder class="w-56 h-56" />
+                <img v-if="university.photo" :src="`/storage/${university.photo?.src}`" :alt="university.ame" class="object-contain w-48 h-48" />
+                <UniversityPlaceholder v-else class="w-56 h-56" />
 
                 <h1 class="mt-10">{{ university.name }}</h1>
 

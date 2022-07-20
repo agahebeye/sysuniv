@@ -32,8 +32,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'Faculty' => \App\Models\Faculty::class,
             'Student' => \App\Models\Student::class,
-            'Employee' => \App\Models\User::class,
-            'University' => \App\Models\User::class,
+            'User' => \App\Models\User::class,
             'Result' => \App\Models\Result::class,
         ]);
 

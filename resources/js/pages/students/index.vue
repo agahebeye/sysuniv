@@ -5,13 +5,11 @@ import { useAuth } from '~/composables/auth';
 import StudentList from './components/StudentList.vue';
 import StudentPagination from './components/StudentPagination.vue';
 import TableFilters from './components/TableFilters.vue';
-import { reactive } from 'vue';
 
 const { isUniversity } = useAuth();
 
-const props = defineProps({
+defineProps({
     students: Object,
-    universities: Array,
 });
 
 </script>
