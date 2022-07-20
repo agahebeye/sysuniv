@@ -24,7 +24,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => 'secretsecret', // password
             'remember_token' => Str::random(10),
-            'role' => UserType::EMPLOYEE->value,
         ];
     }
 
