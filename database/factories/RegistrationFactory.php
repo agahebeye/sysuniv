@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\LevelType;
-use App\Enums\ResultStatus;
+use App\Models\User;
 use App\Models\Faculty;
 use App\Models\Institute;
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +21,7 @@ class RegistrationFactory extends Factory
     public function definition()
     {
         return [
+            'level' => rand(0, 2),
             'university_id' => User::university()->inRandomOrder()->value('id'),
             'department_id' => Department::inRandomOrder()->value('id'),
         ];
