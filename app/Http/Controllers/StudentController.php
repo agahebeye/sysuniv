@@ -16,11 +16,7 @@ class StudentController
     public function index(): \Inertia\Response
     {
         $students = Student::query()
-            ->filterByUniversity()
-            ->filterByGender()
-            ->filterByLevel()
-            ->filterByFreshmen()
-            ->filterByCategory()
+            ->applyFilters()
             ->paginate()
             ->withQueryString();
 

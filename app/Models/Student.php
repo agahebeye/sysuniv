@@ -86,9 +86,21 @@ class Student extends Model
     }
 
     /**
-     * Scope queries
+     * Fqueries
      */
-    public function scopeFilterByUniversity($query)
+    public function ScopeApplyFilters($query)
+    {
+        $this->filterByGender($query);
+        $this->filterByCategory($query);
+        $this->filterByFreshmen($query);
+        $this->filterByStartDateOfRegistration($query);
+        $this->filterByEndDateOfRegistration($query);
+        $this->filterByBetweenDatesOfRegistration($query);
+        $this->filterByLevel($query);
+        $this->filterByUniversity($query);
+    }
+
+    public function filterByUniversity($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('universities.name', request('filter')),
@@ -96,7 +108,7 @@ class Student extends Model
         );
     }
 
-    public function scopeFilterByGender($query)
+    public function filterByGender($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('gender', request('filter')),
@@ -104,14 +116,14 @@ class Student extends Model
         );
     }
 
-    public function scopeFilterByLevel($query)
+    public function filterByLevel($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('registrations.level', request('filter')),
             fn (Builder $query) => $query->whereRelation('registrations', 'level', request('filter')['registrations.level'])
         );
     }
-    public function scopeFilterByStartDateOfRegistration($query)
+    public function FilterByStartDateOfRegistration($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('registrations.start_date', request('filter')),
@@ -119,14 +131,14 @@ class Student extends Model
 
         );
     }
-    public function scopeFilterByEndDateOfRegistration($query)
+    public function FilterByEndDateOfRegistration($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('registrations.end_date', request('filter')),
             fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', '<=', date('Y')))
         );
     }
-    public function scopeFilterByBetweenDatesOfRegistration($query)
+    public function FilterByBetweenDatesOfRegistration($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('registrations.start_date', request('filter')) && array_key_exists('registrations.end_date', request('filter')),
@@ -137,7 +149,7 @@ class Student extends Model
         );
     }
 
-    public function scopeFilterByFreshmen($query)
+    public function FilterByFreshmen($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('freshmen', request('filter')),
@@ -145,7 +157,7 @@ class Student extends Model
         );
     }
 
-    public function scopeFilterByCategory($query)
+    public function FilterByCategory($query)
     {
         $query->when(
             request()->has('filter') && array_key_exists('results.mention', request('filter')),
