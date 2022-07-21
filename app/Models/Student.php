@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserType;
 use App\Enums\GenderType;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -108,6 +109,31 @@ class Student extends Model
         $query->when(
             request()->has('filter') && array_key_exists('registrations.level', request('filter')),
             fn (Builder $query) => $query->whereRelation('registrations', 'level', request('filter')['registrations.level'])
+        );
+    }
+    public function scopeFilterByStartDateOfRegistration($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('registrations.start_date', request('filter')),
+            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', '>=', date('Y')))
+
+        );
+    }
+    public function scopeFilterByEndDateOfRegistration($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('registrations.end_date', request('filter')),
+            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', '<=', date('Y')))
+        );
+    }
+    public function scopeFilterByBetweenDatesOfRegistration($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('registrations.start_date', request('filter')) && array_key_exists('registrations.end_date', request('filter')),
+            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereBetween('created_at', [
+                Carbon::now()->startOfYear(),
+                Carbon::now()->endOfYear(),
+            ]))
         );
     }
 
