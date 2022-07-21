@@ -142,10 +142,12 @@ class Student extends Model
     {
         $query->when(
             request()->has('filter') && array_key_exists('registrations.start_date', request('filter')) && array_key_exists('registrations.end_date', request('filter')),
-            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereBetween('created_at', [
-                Carbon::now()->startOfYear(),
-                Carbon::now()->endOfYear(),
-            ]))
+            fn (Builder $query) =>
+            fn (Builder $query) => $query->whereHas(
+                'registrations',
+                fn (Builder $query) => $query->whereYear('created_at', '>=', date('Y'))
+                    ->whereYear('created_at', '<=', date('Y'))
+            )
         );
     }
 
