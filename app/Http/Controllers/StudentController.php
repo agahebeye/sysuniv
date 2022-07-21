@@ -19,6 +19,8 @@ class StudentController
             ->filterByUniversity()
             ->filterByGender()
             ->filterByLevel()
+            ->filterByFreshmen()
+            ->filterByCategory()
             ->paginate()
             ->withQueryString();
 

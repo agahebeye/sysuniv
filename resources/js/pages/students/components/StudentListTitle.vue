@@ -32,10 +32,8 @@ if (params['filter[universities.name]']) {
     temp += `à ${params['filter[universities.name]']} `
 }
 
-console.log(temp);
-
 </script>
 
 <template>
-    <h2 v-if="meta.total > 15">De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants</h2>
+    <h2>De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants</h2>
 </template>

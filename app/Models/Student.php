@@ -110,4 +110,22 @@ class Student extends Model
             fn (Builder $query) => $query->whereRelation('registrations', 'level', request('filter')['registrations.level'])
         );
     }
+
+    public function scopeFilterByFreshmen($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('freshmen', request('filter')),
+            fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', date('Y')))
+        );
+    }
+
+    public function scopeFilterByCategory($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('results.mention', request('filter')),
+            function (Builder $query) {
+                $query->whereRelation('registrations.result', 'mention', request('filter')['results.mention']);
+            }
+        );
+    }
 }
