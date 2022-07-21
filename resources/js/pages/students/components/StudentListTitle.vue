@@ -1,47 +1,41 @@
 <script setup>
+import { ref, onMounted, onUpdated } from 'vue';
+
 defineProps({
     meta: Object
 })
 
-const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());
+
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
 
-let temp = '';
-if (params['filter[gender]']) {
-    temp += `${params['filter[gender]']} `.toLowerCase()
-}
+let filteredTitle = ref('');
 
-if (params['filter[results.mention]']) {
-    temp += `${params['filter[results.mention]']} `.toLowerCase()
-}
+onMounted(function () {
+    filteredTitle.value = setFilteredTitle();
+})
 
-if (params['filter[freshmen]']) {
-    temp += `inscrits cette année `
-}
+onUpdated(function () {
+    filteredTitle.value = setFilteredTitle();
+})
 
-if (params['filter[registrations.start_date]']) {
-    temp += `inscrits de ${params['filter[registrations.start_date]']} `
-}
+function setFilteredTitle() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
 
-if (params['filter[registrations.end_date]']) {
-    temp += `inscrits jusqu'à' + params['filter[registrations.end_date]']} `
-}
+    let temp = '';
 
-if (params['filter[registrations.start_date]'] && params['filter[registrations.end_date]']) {
-    temp += `inscrits de ${params['filter[registrations.start_date]'] + 'à' + params['filter[registrations.end_date]']} `
-}
+    if (params['filter[gender]']) temp += `${params['filter[gender]']}s `.toLowerCase();
+    if (params['filter[results.mention]']) temp += `${params['filter[results.mention]']} `.toLowerCase();
+    if (params['filter[freshmen]']) temp += `inscrits cette année `;
+    if (params['filter[registrations.start_date]'] && params['filter[registrations.end_date]']) temp += `inscrits entre ${params['filter[registrations.start_date]'] + ' et ' + params['filter[registrations.end_date]']} `
+    if (params['filter[registrations.level]']) temp += `en ${levelList[params['filter[registrations.level]']]} `;
+    if (params['filter[universities.name]']) temp += `à ${params['filter[universities.name]']} `
 
-if (params['filter[registrations.level]']) {
-    temp += `en ${levelList[params['filter[registrations.level]']]} `
+    console.log(temp);
+    return temp;
 }
-
-if (params['filter[universities.name]']) {
-    temp += `à ${params['filter[universities.name]']} `
-}
-
 </script>
 
 <template>
-    <h2>De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants</h2>
+    <h2>De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants {{ filteredTitle }}</h2>
 </template>

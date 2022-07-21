@@ -29,9 +29,9 @@ function applyFilters() {
             switch (k) {
                 case 'university': filters['universities.name'] = v; break;
                 case 'level': filters['registrations.level'] = v; break;
-                case 'mention': filters['results.mention'] = v; break;
+                case 'mention': v === 'Abandonné' ? filters['abandoned'] = 1 : filters['results.mention'] = v; break;
                 case 'start_date': filters['registrations.start_date'] = v; break;
-                case 'mention': filters['registrations.end_date'] = v; break;
+                case 'end_date': filters['registrations.end_date'] = v; break;
                 default: filters[k] = v;
             }
         }

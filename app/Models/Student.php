@@ -90,14 +90,13 @@ class Student extends Model
      */
     public function ScopeApplyFilters($query)
     {
+        $this->filterByUniversity($query);
         $this->filterByGender($query);
         $this->filterByCategory($query);
         $this->filterByFreshmen($query);
-        $this->filterByStartDateOfRegistration($query);
-        $this->filterByEndDateOfRegistration($query);
         $this->filterByBetweenDatesOfRegistration($query);
         $this->filterByLevel($query);
-        $this->filterByUniversity($query);
+        $this->FilterByAbandoned($query);
     }
 
     public function filterByUniversity($query)
@@ -123,21 +122,7 @@ class Student extends Model
             fn (Builder $query) => $query->whereRelation('registrations', 'level', request('filter')['registrations.level'])
         );
     }
-    public function FilterByStartDateOfRegistration($query)
-    {
-        $query->when(
-            request()->has('filter') && array_key_exists('registrations.start_date', request('filter')),
-            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', '>=', date('Y')))
 
-        );
-    }
-    public function FilterByEndDateOfRegistration($query)
-    {
-        $query->when(
-            request()->has('filter') && array_key_exists('registrations.end_date', request('filter')),
-            fn (Builder $query) => fn (Builder $query) => $query->whereHas('registrations', fn (Builder $query) => $query->whereYear('created_at', '<=', date('Y')))
-        );
-    }
     public function FilterByBetweenDatesOfRegistration($query)
     {
         $query->when(
@@ -165,6 +150,16 @@ class Student extends Model
             request()->has('filter') && array_key_exists('results.mention', request('filter')),
             function (Builder $query) {
                 $query->whereRelation('registrations.result', 'mention', request('filter')['results.mention']);
+            }
+        );
+    }
+
+    public function FilterByAbandoned($query)
+    {
+        $query->when(
+            request()->has('filter') && array_key_exists('abandoned', request('filter')),
+            function (Builder $query) {
+                $query->whereRelation('registrations', 'has_abandoned', true);
             }
         );
     }
