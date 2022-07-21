@@ -23,6 +23,7 @@ if (params['filter[freshmen]']) {
 if (params['filter[registrations.start_date]']) {
     temp += `inscrits de ${params['filter[registrations.start_date]']} `
 }
+
 if (params['filter[registrations.end_date]']) {
     temp += `inscrits jusqu'à' + params['filter[registrations.end_date]']} `
 }
