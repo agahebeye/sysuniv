@@ -18,45 +18,40 @@ const universities = ref([]);
 const search = ref(filters.value['search'])
 
 const form = useForm({
-    university: filters.value['universities.name'] ?? null,
+    'universities.name': filters.value['universities.name'] ?? null,
     gender: filters.value['gender'] ?? null,
     freshmen: filters.value['freshmen'] ?? null,
-    start_date: filters.value['registrations.start_date'] ?? null,
-    end_date: filters.value['registrations.end_date'] ?? null,
-    level: filters.value['registrations.level'] ?? null,
-    mention: filters.value['results.mention'] ?? null,
+    'registrations.start_date': filters.value['registrations.start_date'] ?? null,
+    'registrations.end_date': filters.value['registrations.end_date'] ?? null,
+    'registrations.level': filters.value['registrations.level'] ?? null,
+    'results.mention': filters.value['results.mention'] ?? null,
 })
 
 watch(search, value => {
     if (value.length > 0)
-        Inertia.get('/students', { search: value }, { preserveState: true })
+        Inertia.get('/students', { filter: filters.value, search: value }, { preserveState: true })
     else
         Inertia.get('/students')
 })
 
 function applyFilters() {
-    let filters = {};
-
     if (form.isDirty) {
         for (const [k, v] of Object.entries(form.data())) {
             if (v) {
-                switch (k) {
-                    case 'university': filters['universities.name'] = v; break;
-                    case 'level': filters['registrations.level'] = v; break;
-                    case 'mention': filters['results.mention'] = v; break;
-                    case 'start_date': filters['registrations.start_date'] = v; break;
-                    case 'end_date': filters['registrations.end_date'] = v; break;
-                    default: filters[k] = v;
-                }
+                filters.value[k] = v
             }
         }
 
-        isFiltered.value = false;
-        Inertia.get('/students', { filter: filters }, { preserveState: true });
+        isFiltered.value = false
+
+        if (search.value)
+            return Inertia.get('/students', { filter: filters.value, search: search.value }, { preserveState: true })
+        return Inertia.get('/students', { filter: filters.value }, { preserveState: true })
     }
 }
 
 function clearFilters() {
+    Inertia.get('/students', {}, { preserveScroll: true, preserveState: true });
     form.reset();
 }
 
@@ -84,7 +79,7 @@ onMounted(async () => {
 
         <form
             v-if="isFiltered"
-            @submit.prevent=""
+            @submit.prevent
             class="z-10 grid w-full min-h-full grid-cols-2 gap-6 p-6 mt-2 overflow-y-auto text-sm bg-white border shadow-lg">
             <!--filters-->
             <div v-if="form.hasErrors" class="flex items-center col-span-2 mb-4 space-x-2 text-sm font-medium alert">
@@ -94,7 +89,7 @@ onMounted(async () => {
 
             <div class="flex flex-col " v-if="!isUniversity">
                 <label class="mb-2 font-bold">Université</label>
-                <select v-model="form.university">
+                <select v-model="form['universities.name']">
                     <option v-for="university in universities">{{ university.name }}</option>
                 </select>
             </div>
@@ -116,16 +111,16 @@ onMounted(async () => {
 
                 <div class="space-x-2" v-if="!form.freshmen">
                     <label for="start_date">inscrits entre</label>
-                    <input type="text" id="start_date" v-model="form.start_date" class="w-10 mb-2 border-b-2 border-gray-300" />
+                    <input type="text" id="start_date" v-model="form['registrations.start_date']" class="w-10 mb-2 border-b-2 border-gray-300" />
                     <label for="end_date">et</label>
-                    <input type="text" id="end_date" v-model="form.end_date" class="w-10 mb-2 border-b-2 border-gray-300" />
+                    <input type="text" id="end_date" v-model="form['registrations.end_date']" class="w-10 mb-2 border-b-2 border-gray-300" />
                 </div>
 
             </div>
             <!--annee-->
             <div>
                 <label class="block mb-2 font-bold" for="level">Niveau</label>
-                <select v-model="form.level" name="level" id="level">
+                <select v-model="form['registrations.level']" name="level" id="level">
                     <option value="0">BAC I</option>
                     <option value="1">BAC II</option>
                     <option value="2">BAC III</option>
@@ -134,7 +129,7 @@ onMounted(async () => {
 
             <div>
                 <label class="block mb-2 font-bold" for="type">Catégorie des étudiants</label>
-                <select v-model="form.mention" name="type" id="type">
+                <select v-model="form['results.mention']" name="type" id="type">
                     <option value="Réussi">Réussi</option>
                     <option value="Echoué">Echoué</option>
                     <option value="Abandonné">Abandonné</option>
@@ -143,7 +138,7 @@ onMounted(async () => {
 
             <div class="col-span-2 space-x-4 text-center">
                 <button class="px-6 py-2 button" type="button" @click="applyFilters">Appliquer</button>
-                <button class="px-6 py-1.5 border border-teal-600" type="button" @click="clearFilters">Effacer</button>
+                <button class="px-6 py-1.5 border border-teal-600" type="button" @click="clearFilters(); isFiltered.value = true;">Effacer</button>
             </div>
             <!--sort-->
         </form>
