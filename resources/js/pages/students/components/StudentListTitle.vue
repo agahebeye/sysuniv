@@ -5,7 +5,6 @@ defineProps({
     meta: Object
 })
 
-
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
 
 let filteredTitle = ref('');
@@ -26,12 +25,12 @@ function setFilteredTitle() {
 
     if (params['filter[gender]']) temp += `${params['filter[gender]']}s `.toLowerCase();
     if (params['filter[results.mention]']) temp += `${params['filter[results.mention]']} `.toLowerCase();
+    if (params['filter[abandoned]']) temp += 'abandonnés ';
     if (params['filter[freshmen]']) temp += `inscrits cette année `;
     if (params['filter[registrations.start_date]'] && params['filter[registrations.end_date]']) temp += `inscrits entre ${params['filter[registrations.start_date]'] + ' et ' + params['filter[registrations.end_date]']} `
     if (params['filter[registrations.level]']) temp += `en ${levelList[params['filter[registrations.level]']]} `;
     if (params['filter[universities.name]']) temp += `à ${params['filter[universities.name]']} `
 
-    console.log(temp);
     return temp;
 }
 </script>

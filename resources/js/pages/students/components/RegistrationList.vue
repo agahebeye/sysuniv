@@ -49,7 +49,8 @@ defineProps({
         <tbody>
             <tr v-for="registration in registrations" class="text-sm cursor-pointer odd:bg-white even:bg-gray-200">
                 <td class="py-1">{{ registration.university.name }}</td>
-                <td class="py-1 pl-2">{{ registration.faculty.name }}</td>
+                <td class="py-1 pl-2" v-if="registration.faculty">{{ registration.faculty.name }}</td>
+                <td class="py-1 pl-2" v-if="registration.institute">{{ registration.institute.name }}</td>
                 <td class="py-1 pl-2">{{ registration.department.name }}</td>
                 <td class="py-1 pl-2">{{ levelList[registration.level] }}</td>
                 <td class="py-1 pl-2">{{ registration.created_at }}</td>

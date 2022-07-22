@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 import { Inertia } from '@inertiajs/inertia';
-import { AdjustmentsIcon } from '@heroicons/vue/solid';
+import { AdjustmentsIcon, ExclamationIcon } from '@heroicons/vue/solid';
 import axios from 'axios';
 
 const { isUniversity } = useAuth();
@@ -24,21 +24,25 @@ const form = useForm({
 function applyFilters() {
     let filters = {};
 
-    for (const [k, v] of Object.entries(form.data())) {
-        if (v) {
-            switch (k) {
-                case 'university': filters['universities.name'] = v; break;
-                case 'level': filters['registrations.level'] = v; break;
-                case 'mention': v === 'Abandonné' ? filters['abandoned'] = 1 : filters['results.mention'] = v; break;
-                case 'start_date': filters['registrations.start_date'] = v; break;
-                case 'end_date': filters['registrations.end_date'] = v; break;
-                default: filters[k] = v;
+    if (form.isDirty) {
+        for (const [k, v] of Object.entries(form.data())) {
+            if (v) {
+                switch (k) {
+                    case 'university': filters['universities.name'] = v; break;
+                    case 'level': filters['registrations.level'] = v; break;
+                    case 'mention': v === 'Abandonné' ? filters['abandoned'] = 1 : filters['results.mention'] = v; break;
+                    case 'start_date': filters['registrations.start_date'] = v; break;
+                    case 'end_date': filters['registrations.end_date'] = v; break;
+                    default: filters[k] = v;
+                }
             }
         }
-    }
 
-    isFiltered.value = false;
-    Inertia.get('/students', { filter: filters }, { preserveState: true });
+        isFiltered.value = false;
+        Inertia.get('/students', { filter: filters }, { preserveState: true });
+    } else {
+        form.setError('filters', 'Veuillez selectionner au moins un filtre pour procèder')
+    }
 }
 
 onMounted(async () => {
@@ -62,9 +66,14 @@ onMounted(async () => {
 
         <form
             v-if="isFiltered"
-            @submit.prevent="applyFilters"
+            @submit.prevent=""
             class="z-10 grid w-full min-h-full grid-cols-2 gap-6 p-6 mt-2 overflow-y-auto text-sm bg-white border shadow-lg">
             <!--filters-->
+            <div v-if="form.hasErrors" class="flex items-center col-span-2 mb-4 space-x-2 text-sm font-medium alert">
+                <ExclamationIcon class="w-6 h-6" />
+                {{ form.errors.filters }}
+            </div>
+
             <div class="flex flex-col " v-if="!isUniversity">
                 <label class="mb-2 font-bold">Université</label>
                 <select v-model="form.university">
@@ -114,8 +123,9 @@ onMounted(async () => {
                 </select>
             </div>
 
-            <div class="col-span-2 text-center">
-                <button class="px-6 py-2 button">Appliquer</button>
+            <div class="col-span-2 space-x-4 text-center">
+                <button class="px-6 py-2 button" @click="applyFilters">Appliquer</button>
+                <button class="px-6 py-1.5 border border-teal-600" @click="(e) => { e.preventDefault(); form.reset(); }">Effacer</button>
             </div>
             <!--sort-->
         </form>
