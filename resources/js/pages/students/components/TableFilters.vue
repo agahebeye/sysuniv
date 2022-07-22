@@ -8,23 +8,30 @@ import axios from 'axios';
 
 const { isUniversity } = useAuth();
 
+const props = defineProps({
+    filters: Object
+});
+
+const filters = ref(props.filters);
 const isFiltered = ref(false);
 const universities = ref([]);
-const search = ref('')
+const search = ref(filters.value['search'])
 
 const form = useForm({
-    university: null,
-    gender: null,
-    freshmen: null,
-    start_date: null,
-    end_date: null,
-    level: null,
-    mention: null,
+    university: filters.value['universities.name'] ?? null,
+    gender: filters.value['gender'] ?? null,
+    freshmen: filters.value['freshmen'] ?? null,
+    start_date: filters.value['registrations.start_date'] ?? null,
+    end_date: filters.value['registrations.end_date'] ?? null,
+    level: filters.value['registrations.level'] ?? null,
+    mention: filters.value['results.mention'] ?? null,
 })
 
 watch(search, value => {
-    console.log(value);
-    Inertia.get('/students', { search: value }, { preserveState: true })
+    if (value.length > 0)
+        Inertia.get('/students', { search: value }, { preserveState: true })
+    else
+        Inertia.get('/students')
 })
 
 function applyFilters() {
@@ -36,7 +43,7 @@ function applyFilters() {
                 switch (k) {
                     case 'university': filters['universities.name'] = v; break;
                     case 'level': filters['registrations.level'] = v; break;
-                    case 'mention': v === 'Abandonné' ? filters['abandoned'] = 1 : filters['results.mention'] = v; break;
+                    case 'mention': filters['results.mention'] = v; break;
                     case 'start_date': filters['registrations.start_date'] = v; break;
                     case 'end_date': filters['registrations.end_date'] = v; break;
                     default: filters[k] = v;
@@ -46,16 +53,11 @@ function applyFilters() {
 
         isFiltered.value = false;
         Inertia.get('/students', { filter: filters }, { preserveState: true });
-    } else {
-        form.setError('filters', 'Vous devez selectionner au moins un filtre pour procèder')
     }
 }
 
 function clearFilters() {
-    if (form.isDirty) {
-        form.reset();
-        form.clearErrors()
-    }
+    form.reset();
 }
 
 onMounted(async () => {
@@ -67,7 +69,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="relative">
+    <div class="relative flex flex-col mb-8">
         <div @click="isFiltered = !isFiltered" class="flex mt-2 space-x-2 text-sm uppercase cursor-pointer">
             <AdjustmentsIcon class="w-5 h-5" />
             <span>filters</span>
@@ -140,8 +142,8 @@ onMounted(async () => {
             </div>
 
             <div class="col-span-2 space-x-4 text-center">
-                <button class="px-6 py-2 button" @click="applyFilters">Appliquer</button>
-                <button class="px-6 py-1.5 border border-teal-600" @click="clearFilters">Effacer</button>
+                <button class="px-6 py-2 button" type="button" @click="applyFilters">Appliquer</button>
+                <button class="px-6 py-1.5 border border-teal-600" type="button" @click="clearFilters">Effacer</button>
             </div>
             <!--sort-->
         </form>

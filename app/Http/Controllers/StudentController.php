@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\StudentResource;
 use App\Providers\RouteServiceProvider;
 use App\Http\Requests\StoreStudentRequest;
-use App\Http\Resources\UniversityResource;
+use Illuminate\Support\Facades\Request;
 
 class StudentController
 {
@@ -20,10 +20,14 @@ class StudentController
             ->paginate()
             ->withQueryString();
 
+        $requestFilters = Request::has('filter') ? Request::only(['filter'])['filter'] : [];
+        $requestSearch = Request::has('search') ? Request::only(['search'])['search'] : null;
+
+        $filters = [...$requestFilters, 'search' => $requestSearch];
 
         return Inertia::render('students/index', [
             'students' => StudentResource::collection($students),
-            'universities' => UniversityResource::collection(User::university()->get())
+            'filters' => $filters,
         ]);
     }
 

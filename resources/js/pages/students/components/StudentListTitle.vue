@@ -2,7 +2,8 @@
 import { ref, onMounted, onUpdated } from 'vue';
 
 defineProps({
-    meta: Object
+    meta: Object,
+    filters: Object,
 })
 
 const levelList = ['BAC I', 'BAC II', 'BAC III'];
@@ -36,7 +37,7 @@ function setFilteredTitle() {
 </script>
 
 <template>
-    <h2 v-if="meta.total">
+    <h2>
         De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants {{ filteredTitle }}
     </h2>
     <h2 v-else>

@@ -96,7 +96,6 @@ class Student extends Model
         $this->filterByFreshmen($query);
         $this->filterByBetweenDatesOfRegistration($query);
         $this->filterByLevel($query);
-        $this->FilterByAbandoned($query);
         $this->search($query);
     }
 
@@ -148,19 +147,13 @@ class Student extends Model
     public function FilterByCategory($query)
     {
         $query->when(
-            request()->has('filter') && array_key_exists('results.mention', request('filter')),
+            Request::has('filter') && array_key_exists('results.mention', Request::input('filter')),
             function (Builder $query) {
-                $query->whereRelation('registrations.result', 'mention', request('filter')['results.mention']);
-            }
-        );
-    }
+                if (request('filter')['results.mention'] == 'Abandonné') {
+                    return  $query->whereRelation('registrations', 'has_abandoned', true);
+                }
 
-    public function FilterByAbandoned($query)
-    {
-        $query->when(
-            request()->has('filter') && array_key_exists('abandoned', request('filter')),
-            function (Builder $query) {
-                $query->whereRelation('registrations', 'has_abandoned', true);
+                return  $query->whereRelation('registrations.result', 'mention', request('filter')['results.mention']);
             }
         );
     }
