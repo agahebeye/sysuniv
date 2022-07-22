@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\UserType;
 use App\Enums\GenderType;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -97,6 +97,7 @@ class Student extends Model
         $this->filterByBetweenDatesOfRegistration($query);
         $this->filterByLevel($query);
         $this->FilterByAbandoned($query);
+        $this->search($query);
     }
 
     public function filterByUniversity($query)
@@ -162,5 +163,13 @@ class Student extends Model
                 $query->whereRelation('registrations', 'has_abandoned', true);
             }
         );
+    }
+
+    public function search($query)
+    {
+        $query->when(Request::input('search'), function ($query, $value) {
+            $query->where('firstname', 'LIKE', "%{$value}%")
+                ->orWhere('lastname', 'LIKE', "%{$value}%");
+        });
     }
 }

@@ -36,5 +36,10 @@ function setFilteredTitle() {
 </script>
 
 <template>
-    <h2>De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants {{ filteredTitle }}</h2>
+    <h2 v-if="meta.total">
+        De {{ meta.from }} à {{ meta.to }} sur {{ meta.total }} étudiants {{ filteredTitle }}
+    </h2>
+    <h2 v-else>
+        Aucun étudiant {{ filteredTitle }} trouvé
+    </h2>
 </template>

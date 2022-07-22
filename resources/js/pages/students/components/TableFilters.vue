@@ -1,5 +1,5 @@
 <script  setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { useAuth } from '~/composables/auth';
 import { Inertia } from '@inertiajs/inertia';
@@ -10,6 +10,7 @@ const { isUniversity } = useAuth();
 
 const isFiltered = ref(false);
 const universities = ref([]);
+const search = ref('')
 
 const form = useForm({
     university: null,
@@ -19,6 +20,11 @@ const form = useForm({
     end_date: null,
     level: null,
     mention: null,
+})
+
+watch(search, value => {
+    console.log(value);
+    Inertia.get('/students', { search: value }, { preserveState: true })
 })
 
 function applyFilters() {
@@ -67,9 +73,12 @@ onMounted(async () => {
             <span>filters</span>
         </div>
 
-        <div class="absolute right-0 top-2" v-if="!isFiltered">
-            <input id="search" class="max-w-[15rem] input py-1" placeholder="Rechercher..." />
-        </div>
+        <form class="absolute right-0 top-2" v-if="!isFiltered">
+            <input id="search"
+                class="max-w-[15rem] input py-1"
+                placeholder="Rechercher..."
+                v-model="search" />
+        </form>
 
         <form
             v-if="isFiltered"

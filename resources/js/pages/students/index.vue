@@ -30,7 +30,7 @@ defineProps({
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
             <Link v-else href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
 
-            <div v-if="students.data.length" class="relative flex flex-col mt-10 mb-8">
+            <div class="relative flex flex-col mt-10 mb-8">
                 <StudentListTitle :meta="students.meta" />
                 <TableFilters />
             </div>
