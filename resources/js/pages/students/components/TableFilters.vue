@@ -41,7 +41,14 @@ function applyFilters() {
         isFiltered.value = false;
         Inertia.get('/students', { filter: filters }, { preserveState: true });
     } else {
-        form.setError('filters', 'Veuillez selectionner au moins un filtre pour procèder')
+        form.setError('filters', 'Vous devez selectionner au moins un filtre pour procèder')
+    }
+}
+
+function clearFilters() {
+    if (form.isDirty) {
+        form.reset();
+        form.clearErrors()
     }
 }
 
@@ -96,7 +103,7 @@ onMounted(async () => {
                     <input type="checkbox" name="new_students" v-model="form.freshmen" id="">
                 </div>
 
-                <div class="space-x-2">
+                <div class="space-x-2" v-if="!form.freshmen">
                     <label for="start_date">inscrits entre</label>
                     <input type="text" id="start_date" v-model="form.start_date" class="w-10 mb-2 border-b-2 border-gray-300" />
                     <label for="end_date">et</label>
@@ -125,7 +132,7 @@ onMounted(async () => {
 
             <div class="col-span-2 space-x-4 text-center">
                 <button class="px-6 py-2 button" @click="applyFilters">Appliquer</button>
-                <button class="px-6 py-1.5 border border-teal-600" @click="(e) => { e.preventDefault(); form.reset(); }">Effacer</button>
+                <button class="px-6 py-1.5 border border-teal-600" @click="clearFilters">Effacer</button>
             </div>
             <!--sort-->
         </form>
