@@ -44,15 +44,8 @@ function applyFilters() {
 
         isFiltered.value = false
 
-        if (search.value)
-            return Inertia.get('/students', { filter: filters.value, search: search.value }, { preserveState: true })
-        return Inertia.get('/students', { filter: filters.value }, { preserveState: true })
+        Inertia.get('/students', { filter: filters.value }, { preserveState: true })
     }
-}
-
-function clearFilters() {
-    Inertia.get('/students', {}, { preserveScroll: true, preserveState: true });
-    form.reset();
 }
 
 onMounted(async () => {
@@ -74,6 +67,7 @@ onMounted(async () => {
             <input id="search"
                 class="max-w-[15rem] input py-1"
                 placeholder="Rechercher..."
+                autocomplete="off"
                 v-model="search" />
         </form>
 
@@ -111,7 +105,7 @@ onMounted(async () => {
 
                 <div class="space-x-2" v-if="!form.freshmen">
                     <label for="start_date">inscrits entre</label>
-                    <input type="text" id="start_date" v-model="form['registrations.start_date']" class="w-10 mb-2 border-b-2 border-gray-300" />
+                    <input type="text" id="start_date" v-model="form['registrations.start_date']" @change="form.freshmen = false" class="w-10 mb-2 border-b-2 border-gray-300" />
                     <label for="end_date">et</label>
                     <input type="text" id="end_date" v-model="form['registrations.end_date']" class="w-10 mb-2 border-b-2 border-gray-300" />
                 </div>
@@ -138,7 +132,6 @@ onMounted(async () => {
 
             <div class="col-span-2 space-x-4 text-center">
                 <button class="px-6 py-2 button" type="button" @click="applyFilters">Appliquer</button>
-                <button class="px-6 py-1.5 border border-teal-600" type="button" @click="clearFilters(); isFiltered.value = true;">Effacer</button>
             </div>
             <!--sort-->
         </form>

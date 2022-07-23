@@ -30,6 +30,7 @@ function generateFilteredTitle() {
     if (filters['registrations.start_date'] && filters['registrations.end_date']) temp += `inscrit(s) entre ${filters['registrations.start_date'] + ' et ' + filters['registrations.end_date']} `
     if (filters['registrations.level']) temp += `en ${levelList[filters['registrations.level']]} `;
     if (filters['universities.name']) temp += ` à ${filters['universities.name']} `
+    if (filters['search']) temp += `dont le nom commence <strong>"${filters['search']}"</strong> `
 
     return temp;
 }
@@ -49,9 +50,9 @@ function generateFilteredTitle() {
             <Link v-if="isUniversity" href="/registrations/create" class="link">Inscrire un nouveau étudiant</Link>
             <Link v-else href="/students/create" class="link">Enregistrer un nouveau étudiant</Link>
 
-            <h2 class="mt-8" v-if="students.meta.total > 15">De {{ students.meta.from }} à {{ students.meta.to }} sur {{ students.meta.total }} étudiants {{ filteredTitle }}</h2>
-            <h2 class="mt-8" v-if="students.meta.total > 0 && students.meta.total < 15">{{ students.meta.total }} étudiants {{ filteredTitle }}</h2>
-            <h2 class="mt-8" v-if="students.meta.total === 0">Aucun étudiant {{ filteredTitle }}</h2>
+            <h2 class="mt-8" v-if="students.meta.total > 15">De {{ students.meta.from }} à {{ students.meta.to }} sur {{ students.meta.total }} étudiants <span v-html="filteredTitle"></span></h2>
+            <h2 class="mt-8" v-if="students.meta.total > 0 && students.meta.total < 15">{{ students.meta.total }} étudiants <span v-html="filteredTitle"></span></h2>
+            <h2 class="mt-8" v-if="students.meta.total === 0">Aucun étudiant <span v-html="filteredTitle"></span></h2>
 
             <TableFilters :filters="filters" />
 
