@@ -21,7 +21,7 @@ class RegistrationFactory extends Factory
     public function definition()
     {
         return [
-            'level' => rand(0, 2),
+            'level' => 0,
             'university_id' => User::university()->inRandomOrder()->value('id'),
             'department_id' => Department::inRandomOrder()->value('id'),
             'created_at' => $this->faker->dateTimeBetween('-10years')
