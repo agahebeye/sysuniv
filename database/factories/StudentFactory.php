@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\GenderType;
-use App\Enums\ResultStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

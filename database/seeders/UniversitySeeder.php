@@ -58,7 +58,7 @@ class UniversitySeeder extends Seeder
             ], [
                 'name' => 'International Leadership University of Bujumbura',
                 'email' => 'ilub.bi@sysuniv.org',
-                'photo_url' => 'leardership-university.jpg'
+                'photo_url' => 'leadership-university.jpg'
             ]
         ])->each(function ($university) {
 
