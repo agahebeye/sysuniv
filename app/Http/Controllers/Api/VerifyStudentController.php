@@ -7,9 +7,9 @@ use App\Models\Student;
 
 class VerifyStudentController
 {
-    public function __invoke($id)
+    public function __invoke($number)
     {
-        $student = Student::query()->where('registration_number', $id)->first();
+        $student = Student::query()->withoutGlobalScope('forUniversities')->whereRegistrationNumber($number)->first();
 
         if (!$student) {
             return response()->json([

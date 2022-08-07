@@ -33,13 +33,13 @@ class Student extends Model
     protected static function booted()
     {
         static::creating(fn ($student) => $student->registration_number = strtoupper(Str::random(20)));
-        static::addGlobalScope('forUniversities', function (Builder $builder) {
-            $builder
-                ->when(
-                    auth()->user()->role == UserType::UNIVERSITY,
-                    fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
-                );
-        });
+        // static::addGlobalScope('forUniversities', function (Builder $builder) {
+        //     $builder
+        //         ->when(
+        //             auth()->user()->role == UserType::UNIVERSITY,
+        //             fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+        //         );
+        // });
     }
 
     public function getRouteKey()
@@ -90,6 +90,12 @@ class Student extends Model
      */
     public function ScopeApplyFilters($query)
     {
+        $query
+            ->when(
+                auth()->user()->role == UserType::UNIVERSITY,
+                fn (Builder $query) => $query->whereRelation('universities', 'users.id', auth()->id())
+            );
+
         $this->filterByUniversity($query);
         $this->filterByGender($query);
         $this->filterByCategory($query);
