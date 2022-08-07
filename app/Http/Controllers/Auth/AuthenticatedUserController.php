@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserType;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class AuthenticatedUserController
 
         $request->session()->regenerate();
 
-        return $request->user()->isUniversity
+        return $request->user()->role == UserType::UNIVERSITY
             ? redirect()->intended(route('registrations.create'))
             : redirect()->intended(RouteServiceProvider::HOME);
     }
