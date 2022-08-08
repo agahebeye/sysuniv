@@ -23,7 +23,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // return redirect(RouteServiceProvider::HOME);
+                return request()->user()->isUniversity
+                    ? redirect()->intended(route('registrations.create'))
+                    : redirect()->intended(RouteServiceProvider::HOME);
             }
         }
 

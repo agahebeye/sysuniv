@@ -1,0 +1,1 @@
+import{y as u,s as e}from"./main.f1e6f1a4.js";function i(){const s=u().props.value.auth.user,o=e(()=>s.role==="ADMIN"),t=e(()=>s.role==="EMPLOYEE"),r=e(()=>s.role==="UNIVERSITY");return{auth:s,isAdmin:o,isEmployee:t,isUniversity:r}}export{i as u};
