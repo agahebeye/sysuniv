@@ -4,8 +4,6 @@ namespace App\Actions;
 
 use App\Models\User;
 use App\Enums\UserType;
-use App\Http\Requests\User\StoreUniversityRequest;
-use App\Models\Faculty;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 

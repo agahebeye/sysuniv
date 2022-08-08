@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
             FacultySeeder::class,
             InstituteSeeder::class,
             DepartmentSeeder::class,
-            UniversitySeeder::class,
-            StudentSeeder::class
+            // UniversitySeeder::class,
+            // StudentSeeder::class
         ]);
     }
 }

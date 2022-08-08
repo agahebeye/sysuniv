@@ -22,6 +22,7 @@ function createStudent() {
     <Head>
         <title>Create Student - Sysuniv</title>
     </Head>
+    
     <DefaultLayout>
 
         <div class="">
