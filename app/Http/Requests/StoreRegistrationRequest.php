@@ -98,9 +98,9 @@ class StoreRegistrationRequest extends FormRequest
         throw ValidationException::withMessages([
             'student_id' => "Vous devez d'abord terminer "
                 . ($registration->created_at->year == date('Y')
-                    ? "cette année" : "l'année " . $registration->created_at->year
+                    ? "cette année" : " l'année " . $registration->created_at->year
                 )
-                . ($registration->university->id != auth()->id() ? "à l'université {$registration->university->name}" : "") . " pour se réinscrire."
+                . ($registration->university->id != auth()->id() ? " à l'université {$registration->university->name}" : "") . " pour se réinscrire."
         ]);
     }
 

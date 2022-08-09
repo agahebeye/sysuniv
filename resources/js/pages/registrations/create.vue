@@ -12,6 +12,7 @@ import XButton from "~/components/shared/XButton.vue";
 import { CheckIcon, ExclamationIcon } from '@heroicons/vue/solid';
 
 const isLoading = ref(false);
+const isShown = ref(true);
 const field = ref(null);
 
 const form = useForm('CreateRegistration', {
@@ -49,9 +50,11 @@ async function verifyStudent() {
 
         form.student = data;
         isLoading.value = false;
+        isShown.value = true;
 
     } catch (error) {
         isLoading.value = false;
+        isShown.value = true;
     }
 }
 
@@ -72,12 +75,11 @@ const props = defineProps<{
     <DefaultLayout>
         <div>
             <h1>Inscrire nouvel étudiant</h1>
+            <ValidationErrorList class="max-w-fit" v-if="form.hasErrors" :errors="form.errors" />
 
             <form @submit.prevent="EnrollStudent" class="w-max">
-                <ValidationErrorList class="max-w-full" v-if="form.hasErrors" :errors="form.errors" />
-
-                <div v-if="!isLoading && form.student" class="">
-                    <div class="flex items-center mb-4 space-x-2 text-sm font-medium" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-800': form.student?.data }">
+                <div v-if="!isLoading && form.student" class="relative">
+                    <div v-if="isShown" class="flex items-center mb-4 space-x-2 text-sm font-medium" :class="{ 'alert': !form.student?.data, 'alert bg-green-300 text-green-800': form.student?.data }">
                         <Component
                             :is="form.student?.data ? CheckIcon : ExclamationIcon"
                             class="w-6 h-6" />
@@ -87,6 +89,9 @@ const props = defineProps<{
                                 <Link :href="`/students/${form.student?.data.id}`" class="italic font-bold border-b border-green-800">En savoir plus</Link>
                             </p>
                         </div>
+                        <svg @click="isShown = false" class="absolute w-3 h-3 cursor-pointer top-2 right-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
                     </div>
                 </div>
 
@@ -137,14 +142,14 @@ const props = defineProps<{
 
                 <div v-if="form.faculty_id || form.institute_id" class="mb-4">
                     <label for="level">choisir année</label>
-                    <select name="level" id="level" v-model="form.level" class="bg-gray-50 border border-teal-300 text-gray-900 text-sm rounded-sm block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 outline-none dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select name="level" id="level" v-model="form.level" class="bg-gray-50 border border-teal-300 text-gray-900 text-sm rounded-sm block p-2.5 dark:bg-gray-700 dark:border-gray-600 outline-none dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full">
                         <option value="0">BAC I</option>
                         <option value="1">BAC II</option>
                         <option value="2">BAC III</option>
                     </select>
                 </div>
 
-                <x-button :processing="form.processing" v-if="form.level">Inscrire</x-button>
+                <x-button class="" :processing="form.processing" v-if="form.level">Inscrire</x-button>
             </form>
         </div>
     </DefaultLayout>
