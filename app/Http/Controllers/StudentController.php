@@ -15,6 +15,7 @@ class StudentController
     public function index(): \Inertia\Response
     {
         $students = Student::query()
+            ->latest('id')
             ->applyFilters()
             ->paginate()
             ->withQueryString();

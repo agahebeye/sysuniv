@@ -59,13 +59,13 @@ class StoreRegistrationRequest extends FormRequest
                     'student_id' => "Vous ne pouvez pas reprendre l'année précedente."
                 ]);
             }
+        }
 
-            // must finish the year abandoned
-            if ($registration->has_abandoned && $registration->level->value != $this->input('level')) {
-                throw ValidationException::withMessages([
-                    'student_id' => "Vous devez reprendre l'année abondonnée d'abord."
-                ]);
-            }
+        // must finish the year abandoned
+        if ($registration->has_abandoned && $registration->level->value != $this->input('level')) {
+            throw ValidationException::withMessages([
+                'student_id' => "Vous devez reprendre l'année abondonnée d'abord."
+            ]);
         }
     }
 
