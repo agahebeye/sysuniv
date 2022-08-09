@@ -32,7 +32,7 @@ const form = useForm({
 
                 <div class="mb-4">
                     <label for="password">mot de passe</label>
-                    <input type="password" minlength="8" id="password" v-model="form.password" class="input" autocomplete="off" autofocus
+                    <input type="password" id="password" v-model="form.password" class="input" autocomplete="off" autofocus
                         required>
                 </div>
 

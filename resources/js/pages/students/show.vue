@@ -38,9 +38,11 @@ const avatarPlaceHolder = computed(() =>
                                 :alt="student.firstname" />
                         </div>
 
+
                         <h2 class="">{{ student.firstname }} {{ student.lastname }}</h2>
 
                         <div class="space-y-1">
+                            <div v-if="!isUniversity">Numéro matricule: {{ student.registration_number }}</div>
                             <div>Sexe: {{ student.gender }}</div>
                             <div>Habite à {{ student.address }}</div>
                             <div class="text-sm">Né(e) {{ student.birthDate }}</div>

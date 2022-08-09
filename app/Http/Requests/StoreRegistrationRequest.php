@@ -39,34 +39,37 @@ class StoreRegistrationRequest extends FormRequest
             if (is_null($registration->result) && !$registration->has_abandoned) {
                 $this->warnStudentHasnotFinished($registration);
             }
-
-            // wants to redo a year
-            if ($registration?->result->mention == ResultStatus::PASSED && $registration->level->value == $this->input('level')) {
+            // must finish the year abandoned
+            if ($registration->has_abandoned && $registration->level->value != $this->input('level')) {
                 throw ValidationException::withMessages([
-                    'student_id' => "Vous ne pouvez pas étudier la même année deux fois."
-                ]);
-            }
-            // a student has finished a year but wants to skip
-            if ($this->wantsSkip($registration)) {
-                throw ValidationException::withMessages([
-                    'student_id' => "Vous ne pouvez pas s'inscrire dans l'année suivante sans avoir terminé la précedente."
+                    'student_id' => "Vous devez reprendre l'année abondonnée d'abord."
                 ]);
             }
 
-            // a student wants to return to the previous year
-            if ($this->wantsPreviousYear($registration)) {
-                throw ValidationException::withMessages([
-                    'student_id' => "Vous ne pouvez pas reprendre l'année précedente."
-                ]);
-            }
-        }
+            if ($registration->result) {
 
-        // must finish the year abandoned
-        if ($registration->has_abandoned && $registration->level->value != $this->input('level')) {
-            throw ValidationException::withMessages([
-                'student_id' => "Vous devez reprendre l'année abondonnée d'abord."
-            ]);
-        }
+                // wants to redo a year
+                if ($registration?->result->mention == ResultStatus::PASSED && $registration->level->value == $this->input('level')) {
+                    throw ValidationException::withMessages([
+                        'student_id' => "Vous ne pouvez pas étudier la même année deux fois."
+                    ]);
+                }
+                // a student has finished a year but wants to skip
+                if ($this->wantsSkip($registration)) {
+                    throw ValidationException::withMessages([
+                        'student_id' => "Vous ne pouvez pas s'inscrire dans l'année suivante sans avoir terminé la précedente."
+                    ]);
+                }
+                
+                // a student wants to return to the previous year
+                if ($this->wantsPreviousYear($registration)) {
+                    throw ValidationException::withMessages([
+                        'student_id' => "Vous ne pouvez pas reprendre l'année précedente."
+                    ]);
+                }
+            }
+            }
+
     }
 
     /**
