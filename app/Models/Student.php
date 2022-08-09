@@ -89,10 +89,8 @@ class Student extends Model
     /**
      * Fqueries
      */
-    public function ScopeApplyFilters($query)
+    public function ScopeApplyFilters(Builder $query)
     {
-        // dd($query->whereRelation('universities', 'users.id', auth()->id())->toSql());
-
         $query
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
