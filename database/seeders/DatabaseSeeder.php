@@ -16,15 +16,20 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         \App\Models\User::factory()->admin()->create([
             'email' => 'admin@sysuniv.org',
-            'password' => 'introuvablex02'
+            'password' => 'secret'
+        ]);
+
+          \App\Models\User::factory()->employee()->create([
+            'email' => 'ministere@sysuniv.org',
+            'password' => 'secret'
         ]);
 
         $this->call([
             FacultySeeder::class,
             InstituteSeeder::class,
             DepartmentSeeder::class,
-            // UniversitySeeder::class,
-            // StudentSeeder::class
+            UniversitySeeder::class,
+            StudentSeeder::class
         ]);
     }
 }

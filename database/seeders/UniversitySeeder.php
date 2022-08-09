@@ -89,7 +89,7 @@ class UniversitySeeder extends Seeder
         $attributes = [
             'name' => $university['name'],
             'email' => $university['email'],
-            'password' => 'introuvablex02',
+            'password' => 'secret',
             'role' => UserType::UNIVERSITY,
             'website' => 'https://www.' . fake()->domainName(),
             'address' => fake()->streetAddress(),

@@ -8,13 +8,13 @@ import StudentList from './components/StudentList.vue';
 import StudentPagination from './components/StudentPagination.vue';
 import TableFilters from './components/TableFilters.vue';
 
-const { isUniversity } = useAuth();
-const filteredTitle = useFilteredTitle(props.filters)
-
 const props = defineProps({
     students: Object,
     filters: Object,
 });
+
+const { isUniversity } = useAuth();
+const filteredTitle = useFilteredTitle(props.filters)
 
 
 </script>
@@ -35,7 +35,7 @@ const props = defineProps({
             <h2 class="mt-8" v-if="students.meta.total > 15">De {{ students.meta.from }} à {{ students.meta.to }} sur {{ students.meta.total }} étudiants <span v-html="filteredTitle"></span></h2>
             <h2 class="mt-8" v-if="students.meta.total > 0 && students.meta.total < 15">{{ students.meta.total }} étudiants <span v-html="filteredTitle"></span></h2>
             <h2 class="mt-8" v-if="students.meta.total === 0">Aucun étudiant <span v-html="filteredTitle"></span></h2>
-
+            
             <TableFilters :filters="filters" v-if="students.data.length || Object.keys(filters).length > 0" />
 
             <StudentList v-if="students.data.length" :students="students.data" />
