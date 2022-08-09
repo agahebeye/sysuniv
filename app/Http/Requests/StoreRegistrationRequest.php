@@ -36,7 +36,7 @@ class StoreRegistrationRequest extends FormRequest
 
         if ($registration) {
             // a student hasn't finished a year
-            if (is_null($registration->result && !$registration->has_abandoned)) {
+            if (is_null($registration->result) && !$registration->has_abandoned) {
                 $this->warnStudentHasnotFinished($registration);
             }
 

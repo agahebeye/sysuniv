@@ -72,7 +72,8 @@ class Student extends Model
 
     public function universities()
     {
-        return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id');
+        return $this->belongsToMany(User::class, 'registrations', relatedPivotKey: 'university_id')
+            ->withPivot('created_at');
     }
 
     public function faculties()
@@ -90,6 +91,8 @@ class Student extends Model
      */
     public function ScopeApplyFilters($query)
     {
+        // dd($query->whereRelation('universities', 'users.id', auth()->id())->toSql());
+
         $query
             ->when(
                 auth()->user()->role == UserType::UNIVERSITY,
