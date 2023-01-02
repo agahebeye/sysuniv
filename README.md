@@ -1,1 +1,1 @@
-Systeme informatique de suivi automatise des etudiants dans des differentes universites
+Web system for automated monitoring of students in different universities in Burundi 
